@@ -1,16 +1,15 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Goal from './Component/Goal/Goal'
-import YourGoal from './Component/Goal/YourGoal'
+import './App.css'
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './services/providers/AuthContext';
+import AppRoutes from './routes/AppRoutes';
 
 function App() {
-
   return (
-    <Router>
-     <Routes>
-     <Route path="" element={<Goal/>}/>
-     <Route path="/your-goal" element={<YourGoal />} />
-     </Routes>
-    </Router>
+        <AuthProvider>
+          <BrowserRouter>
+            <AppRoutes />
+          </BrowserRouter>
+        </AuthProvider>
   )
 }
 
