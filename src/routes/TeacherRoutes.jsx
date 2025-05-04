@@ -3,19 +3,13 @@ import TeacherLayout from '../layouts/TeacherLayout';
 import { Dashboard } from '../pages/student/Dashboard/Dashboard';
 import { Semester } from '../pages/student/Semester/Semester';
 import { Academy } from '../pages/student/Academy/Academy';
-import RequireRole from '../layouts/RequireRole';
 
-const TeacherRoutes = ({ userRole }) => [
-  <Route
-    element={<RequireRole allowedRoles={['teacher']} userRole={userRole} />}
-    key="teacher"
-  >
+const TeacherRoutes = () => [
     <Route path="/" element={<TeacherLayout />}>
-      <Route index element={<Dashboard />} />
+      {/* <Route index element={<Dashboard />} />
       <Route path="semester-goals" element={<Semester />} />
-      <Route path="achievement" element={<Academy />} />
+      <Route path="achievement" element={<Academy />} /> */}
     </Route>
-  </Route>
 ];
 
 export default TeacherRoutes;

@@ -8,7 +8,7 @@ const StudentLayout = () => {
     <div className="app-container">
       <Sidebar />
       <main className="main-content-area">
-        <Header />
+      <Header />
         <div className="main-content">
           <Outlet />
         </div>
