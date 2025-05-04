@@ -1,9 +1,9 @@
 import { Route } from 'react-router-dom';
-import { StudentLayout, TeacherLayout } from '../layouts';
+import TeacherLayout from '../layouts/TeacherLayout';
 import { Dashboard } from '../pages/student/Dashboard/Dashboard';
 import { Semester } from '../pages/student/Semester/Semester';
 import { Academy } from '../pages/student/Academy/Academy';
-import RequireRole from '../components/shared/RequireRole';
+import RequireRole from '../layouts/RequireRole';
 
 const TeacherRoutes = ({ userRole }) => [
   <Route
