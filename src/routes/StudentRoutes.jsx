@@ -3,19 +3,14 @@ import StudentLayout from '../layouts/StudentLayout';
 import { Dashboard } from '../pages/student/Dashboard/Dashboard';
 import { Semester } from '../pages/student/Semester/Semester';
 import { Academy } from '../pages/student/Academy/Academy';
-import RequireRole from '../layouts/RequireRole';
 
-const StudentRoutes = ({ userRole }) => [
-  <Route
-    element={<RequireRole allowedRoles={['student']} userRole={userRole} />}
-    key="student"
-  >
+const StudentRoutes = () => [
     <Route path="/" element={<StudentLayout />}>
       <Route index element={<Dashboard />} />
+      <Route path="dashboard" element={<Dashboard />} />
       <Route path="semester-goals" element={<Semester />} />
       <Route path="achievement" element={<Academy />} />
     </Route>
-  </Route>
 ];
 
 export default StudentRoutes;

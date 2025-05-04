@@ -13,10 +13,6 @@ const AppRoutes = () => {
     <Routes>
         {user.role === 'student' && StudentRoutes({ userRole: user.role })}
         {user.role === 'teacher' && TeacherRoutes({ userRole: user.role })}
-        {/* {user.role === 'admin' && AdminRoutes({ userRole: user.role })} */}
-      {/* {TeacherRoutes({ userRole: user.role })}
-      {AdminRoutes({ userRole: user.role })} */}
-      {/* <Route path="/unauthorized" element={<Unauthorized />} /> */}
     </Routes>
   );
 };
