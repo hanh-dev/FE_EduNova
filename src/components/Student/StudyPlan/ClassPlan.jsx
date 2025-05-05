@@ -1,4 +1,5 @@
 import React from 'react';
+import Buttons from '../Buttons/Buttons';
 import './ClassPlan.css';
 
 function ClassPlan() {
@@ -16,6 +17,7 @@ function ClassPlan() {
               <th>My difficulties</th>
               <th>My plan</th>
               <th>Problem Solved</th>
+              <th>Actions</th>
             </tr>
           </thead>
           <tbody>
@@ -27,6 +29,7 @@ function ClassPlan() {
               <td>I struggle with a, an, the.</td>
               <td></td>
               <td><span className="status red"></span></td>
+              <Buttons/>
             </tr>
             <tr>
               <td>14 Apr</td>
@@ -36,6 +39,7 @@ function ClassPlan() {
               <td>I have no difficult</td>
               <td></td>
               <td><span className="status green"></span></td>
+              <Buttons/>
             </tr>
             <tr>
               <td>14 Apr</td>
@@ -45,6 +49,7 @@ function ClassPlan() {
               <td>I have no difficult</td>
               <td></td>
               <td><span className="status green"></span></td>
+              <Buttons/>
             </tr>
           </tbody>
         </table>
