@@ -3,6 +3,8 @@ import StudentLayout from '../layouts/StudentLayout';
 import { Dashboard } from '../pages/student/Dashboard/Dashboard';
 import { Semester } from '../pages/student/Semester/Semester';
 import { Academy } from '../pages/student/Academy/Academy';
+import StudyPlan from '../pages/student/StudyPlan/StudyPlan';
+import Logout from '../pages/Logout/Logout';
 
 const StudentRoutes = () => [
     <Route path="/" element={<StudentLayout />}>
@@ -10,6 +12,8 @@ const StudentRoutes = () => [
       <Route path="dashboard" element={<Dashboard />} />
       <Route path="semester-goals" element={<Semester />} />
       <Route path="achievement" element={<Academy />} />
+      <Route path="study-plans" element={<StudyPlan />} />
+      <Route path="logout" element={<Logout />} />
     </Route>
 ];
 
