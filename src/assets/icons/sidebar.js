@@ -6,5 +6,5 @@ const sidebarItems = [
     { label: 'Schedule', icon: '📅', href: '/schedule' },            
     { label: 'Logout', icon: '🚪', href: '/logout' },                
   ];
-  
+
 export { sidebarItems }
