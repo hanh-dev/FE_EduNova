@@ -1,0 +1,56 @@
+import React from 'react';
+import './ClassPlan.css';
+
+function ClassPlan() {
+  return (
+    <div className="main-content">
+      <div className="table-section">
+        <h2>In class</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Skill/Module</th>
+              <th>My lesson - What did I learn today?</th>
+              <th>Self-assessment</th>
+              <th>My difficulties</th>
+              <th>My plan</th>
+              <th>Problem Solved</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>14 Apr</td>
+              <td>TOEIC</td>
+              <td>Preposition</td>
+              <td>1</td>
+              <td>I struggle with a, an, the.</td>
+              <td></td>
+              <td><span className="status red"></span></td>
+            </tr>
+            <tr>
+              <td>14 Apr</td>
+              <td>TOEIC</td>
+              <td>Preposition</td>
+              <td>3</td>
+              <td>I have no difficult</td>
+              <td></td>
+              <td><span className="status green"></span></td>
+            </tr>
+            <tr>
+              <td>14 Apr</td>
+              <td>TOEIC</td>
+              <td>Preposition</td>
+              <td>3</td>
+              <td>I have no difficult</td>
+              <td></td>
+              <td><span className="status green"></span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+export default ClassPlan;
