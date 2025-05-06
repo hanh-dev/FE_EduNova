@@ -7,10 +7,9 @@
 
 /* Self-study Table Section */
 .study-table-container {
-  margin-top: 30px;
-  background-color: white;
-  border-radius: 10px;
-  box-shadow: 0 0 5px rgba(0,0,0,0.05);
+
+  padding-top: 50px;
+  margin-left: 140px;
   padding-bottom: 15px;
 }
 
@@ -21,22 +20,24 @@
   border-radius: 10px 10px 0 0;
   font-size: 20px;
   margin: 0;
-  width: 100%;
-  box-sizing: border-box;
+  /* width: 100%; */
+  width: 1568px; 
+  box-sizing: border-box;  
 }
 
 /* Table */
 .study-table {
-  width: 1200px; /* fixed width to force scroll */
+  width: 1568px; 
   border-collapse: collapse;
   background-color: white;
+  display: table;    
 }
 
 .study-table th,
 .study-table td {
   border: 1px solid #ddd;
   padding: 12px;
-  text-align: center;
+  text-align: left;
   font-size: 15px;
 }
 
@@ -46,7 +47,7 @@
 }
 
 /* Responsive tweak */
-/* @media (max-width: 768px) {
+@media (max-width: 768px) {
   .study-table-container h2 {
     font-size: 18px;
     padding: 10px 15px;
@@ -61,4 +62,4 @@
   .study-table {
     width: 1000px;
   }
-} */
+}

@@ -1,5 +1,6 @@
 import React from 'react';
 import './SelfStudyPlan.css';
+import Buttons from '../Buttons/Buttons';
 
 function SelfStudy() {
   return (
@@ -22,6 +23,8 @@ function SelfStudy() {
               <th>Evaluation of My Work</th>
               <th>Reinforcing Learning</th>
               <th>Notes</th>
+              <th>Actions</th>
+
             </tr>
           </thead>
           <tbody>
@@ -37,6 +40,7 @@ function SelfStudy() {
               <td>Not so bad</td>
               <td>Review regularly</td>
               <td>Nothing</td>
+              <Buttons/>
             </tr>
             <tr>
               <td>14 Apr</td>
@@ -50,6 +54,7 @@ function SelfStudy() {
               <td>Not so bad</td>
               <td>Review regularly</td>
               <td>Nothing</td>
+              <Buttons/>
             </tr>
             <tr>
               <td>14 Apr</td>
@@ -63,7 +68,9 @@ function SelfStudy() {
               <td>Not so bad</td>
               <td>Review regularly</td>
               <td>Nothing</td>
+              <Buttons/>
             </tr>
+            
           </tbody>
         </table>
       </div>
