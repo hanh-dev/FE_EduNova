@@ -4,7 +4,6 @@
     padding: 20px;
     box-sizing: border-box;
     background-color: white;
-    min-height: 100vh;
     font-family: Arial, sans-serif;
   }
   
@@ -71,7 +70,7 @@
   .table-section h2 {
     background: orange;
     color: white;
-    width: 1347px; 
+    width: 1518px; 
     padding: 12px 25px;
     border-radius: 10px 10px 0 0;
     margin-bottom: 0;
