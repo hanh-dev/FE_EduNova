@@ -1,5 +1,6 @@
 import React from 'react';
 import Buttons from '../Buttons/Buttons';
+import Date from '../DateSchedule/Date'
 import './ClassPlan.css';
 
 function ClassPlan() {
@@ -22,7 +23,7 @@ function ClassPlan() {
           </thead>
           <tbody>
             <tr>
-              <td>14 Apr</td>
+              <Date></Date>
               <td>TOEIC</td>
               <td>Preposition</td>
               <td>1</td>
@@ -32,7 +33,7 @@ function ClassPlan() {
               <Buttons/>
             </tr>
             <tr>
-              <td>14 Apr</td>
+              <Date></Date>
               <td>TOEIC</td>
               <td>Preposition</td>
               <td>3</td>
@@ -42,7 +43,7 @@ function ClassPlan() {
               <Buttons/>
             </tr>
             <tr>
-              <td>14 Apr</td>
+              <Date></Date>
               <td>TOEIC</td>
               <td>Preposition</td>
               <td>3</td>

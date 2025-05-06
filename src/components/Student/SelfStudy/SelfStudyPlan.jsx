@@ -1,5 +1,6 @@
 import React from 'react';
 import './SelfStudyPlan.css';
+import Date from '../DateSchedule/Date'
 import Buttons from '../Buttons/Buttons';
 
 function SelfStudy() {
@@ -7,7 +8,6 @@ function SelfStudy() {
     <div className="study-table-container">
       <h2 className="table-title">Self-study</h2>
       
-      {/* WRAP TABLE WITH SCROLLABLE DIV */}
       <div className="study-table-wrapper">
         <table className="study-table">
           <thead>
@@ -29,7 +29,7 @@ function SelfStudy() {
           </thead>
           <tbody>
             <tr>
-              <td>14 Apr</td>
+            <Date></Date>
               <td>TOEIC</td>
               <td>Preposition</td>
               <td>10m</td>
@@ -43,7 +43,7 @@ function SelfStudy() {
               <Buttons/>
             </tr>
             <tr>
-              <td>14 Apr</td>
+              <Date></Date>
               <td>TOEIC</td>
               <td>Preposition</td>
               <td>30m</td>
@@ -57,7 +57,7 @@ function SelfStudy() {
               <Buttons/>
             </tr>
             <tr>
-              <td>14 Apr</td>
+            <Date></Date>
               <td>TOEIC</td>
               <td>Preposition</td>
               <td>30m</td>
