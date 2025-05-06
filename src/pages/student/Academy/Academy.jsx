@@ -1,7 +1,11 @@
-export const Academy = () => {
+import React from 'react';
+
+function Academy() {
     return (
-        <>
-            <h2>This is academy achievements</h2>
-        </>
-    )
+        <div>
+            <h2>Hello</h2>
+        </div>
+    );
 }
+
+export default Academy;

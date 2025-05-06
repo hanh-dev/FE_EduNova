@@ -1,24 +1,33 @@
-.yourGoal{
-    box-shadow: 2px 5px 4px rgba(0,0 , 0, 0.1);
-    border: none;
+.yourGoal {
+   
     text-align: center;
     border-radius: 10px;
-    width: 1025px;
+    width: 1125px;
     height: auto;
-}
-.table-wrapper{
-    width: 919px;
-    display: flex;
-    justify-self:center;
-}
-
-.table thead tr th{
-    background-color: #FFF3E0 !important;
-}
-.table th{
+    margin-left: 205px;
     padding: 20px;
-}
-
+  }
+  
+  .table-wrapper {
+    justify-self: center;
+    border-radius: 10px;
+  }
+  
+  .table thead tr th {
+    background-color: rgba(255, 153, 51, 0.8)!important;
+    color: #ffffff;
+  }
+  table.table th,
+  table.table td {
+    padding: 20px !important;
+    text-align: center;
+   
+  }
+  
+  tbody tr td {
+    background-color: rgba(204, 204, 204, 0.8);
+  }
+  
   h2 {
     position: relative;
   }
@@ -31,9 +40,13 @@
     width: 42px;
     height: 42px;
   }
+  .due-column {
+    white-space: nowrap;
+  }
   
-/*  */
-.goal-modal-overlay {
+  
+  /*  */
+  .goal-modal-overlay {
     position: fixed;
     top: 0;
     left: 0;
@@ -62,6 +75,7 @@
       opacity: 0;
       transform: translateY(-10%);
     }
+  
     to {
       opacity: 1;
       transform: translateY(0);
@@ -87,8 +101,8 @@
     font-size: 20px;
     margin-bottom: 15px;
   }
-
-  h2{
+  
+  h2 {
     display: flex;
     justify-content: center;
     text-align: center;
@@ -124,13 +138,15 @@
   .modal-save-btn:hover {
     background: #e67e00;
   }
+  
   .goal-overlay {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.5); /* mờ nền */
+    background-color: rgba(0, 0, 0, 0.5);
+    /* mờ nền */
     display: flex;
     justify-content: center;
     align-items: center;
@@ -160,6 +176,7 @@
   .goal-form .title {
     font-weight: bold;
     margin-top: 10px;
+    float: left;
   }
   
   .icon_add {
@@ -168,4 +185,10 @@
     height: 24px;
     vertical-align: middle;
   }
+  
+  .goal-form .title {
+    margin-bottom: 15px;
+  }
+  
+  /*  */
   

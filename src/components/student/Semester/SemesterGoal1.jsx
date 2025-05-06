@@ -1,10 +1,25 @@
-import React, { useState } from "react";
-import "./YourGoal.css";
+import React, { useEffect, useState } from "react";
+import "./SemesterGoal.css";
+import { getUser } from "../../../services/api/StudentAPI";
 
-export function YourGoal() {
+export function SemesterGoal() {
   const [completeStatus, setCompleteStatus] = useState("doing");
-  const [dueDate, setDueDate] = useState("");
   const [showForm, setShowForm] = useState(false);
+  const[user, setUser] = useState('');
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const response = await getUser();
+        console.log("Test", response)
+        setUser(response.data.name);
+      } catch (error) {
+        console.error('Lỗi khi gọi API:', error);
+      }
+    };
+
+    fetchUser();
+  }, []);
 
   const handleShowForm = () => {
     setShowForm(true);
@@ -27,8 +42,7 @@ export function YourGoal() {
             color: "white",
             cursor: "pointer",
           }}
-        >
-        </span>
+        ></span>
       );
     } else {
       return (
@@ -65,6 +79,7 @@ export function YourGoal() {
             />
           </span>
         </h2>
+        <div> Name is: {user}</div>
 
         {showForm && (
           <div className="goal-overlay">
@@ -72,7 +87,7 @@ export function YourGoal() {
               <span className="close-btn" onClick={() => setShowForm(false)}>
                 ×
               </span>
-              <h3>Set a Goal</h3>
+              <h3>Set a Goal </h3>
               <div className="mb-3">
                 <label className="title">Course</label>
                 <select className="form-control">
@@ -91,8 +106,12 @@ export function YourGoal() {
                 <label className="title">Due date</label>
                 <input type="date" className="form-control due-date" />
               </div>
-              <button className="btn w-100" style={{ backgroundColor: 'orange', borderColor: 'orange' }}>Save</button>
-
+              <button
+                className="btn w-100"
+                style={{ backgroundColor: "orange", borderColor: "orange" }}
+              >
+                Save
+              </button>
             </div>
           </div>
         )}
@@ -106,7 +125,7 @@ export function YourGoal() {
                 <th>Complete</th>
                 <th>Status</th>
                 <th>Due to</th>
-                <th>History</th>
+                <th>Action</th>
               </tr>
             </thead>
             <tbody>
@@ -116,22 +135,60 @@ export function YourGoal() {
                 <td>{renderCompleteIcon()}</td>
                 <td>{getStatus()}</td>
                 <td>
-                  <input
-                    type="date"
-                    className="form-control"
-                    value={dueDate}
-                    onChange={(e) => setDueDate(e.target.value)}
-                  />
+                 May 10
                 </td>
                 <td>
-                  <select
-                    className="form-select"
-                    value={completeStatus}
-                    onChange={(e) => setCompleteStatus(e.target.value)}
-                  >
-                    <option value="doing">Đang làm</option>
-                    <option value="done">Hoàn thành</option>
-                  </select>
+                  <i
+                    className="fa-regular fa-clock"
+                    style={{ marginRight: "10px", cursor: "pointer" }}
+                    title="View time"
+                    onClick={() => alert("View time clicked")}
+                  ></i>
+
+                  <i
+                    className="fa-regular fa-pen-to-square"
+                    style={{ marginRight: "10px", cursor: "pointer" }}
+                    title="Edit"
+                    onClick={() => alert("Edit clicked")}
+                  ></i>
+
+                  <i
+                    className="fa-solid fa-trash"
+                    style={{ color: "red", cursor: "pointer" }}
+                    title="Delete"
+                    onClick={() => alert("Delete clicked")}
+                  ></i>
+                </td>
+              </tr>
+              <tr>
+                <td>ReactJS</td>
+                <td>Build a To-do App</td>
+                <td>{renderCompleteIcon()}</td>
+                <td>{getStatus()}</td>
+                <td>
+                 May 10
+                </td>
+                <td>
+                  <i
+                    className="fa-regular fa-clock"
+                    style={{ marginRight: "10px", cursor: "pointer" }}
+                    title="View time"
+                    onClick={() => alert("View time clicked")}
+                  ></i>
+
+                  <i
+                    className="fa-regular fa-pen-to-square"
+                    style={{ marginRight: "10px", cursor: "pointer" }}
+                    title="Edit"
+                    onClick={() => alert("Edit clicked")}
+                  ></i>
+
+                  <i
+                    className="fa-solid fa-trash"
+                    style={{ color: "red", cursor: "pointer" }}
+                    title="Delete"
+                    onClick={() => alert("Delete clicked")}
+                  ></i>
                 </td>
               </tr>
             </tbody>
@@ -142,4 +199,4 @@ export function YourGoal() {
   );
 }
 
-export default YourGoal;
+export default SemesterGoal;

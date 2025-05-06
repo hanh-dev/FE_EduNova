@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { sidebarItems } from '../../assets/icons/sidebar';
+import './SideBar.css';
 
 const Sidebar = () => (
   <aside className="sidebar">
     <div className="sidebar-logo">
-      <span role="img" aria-label="logo">🎓</span>
+      <span role="img" aria-label="logo"><img src="/src/assets/image/graduation.png" alt="" /></span>
     </div>
     <nav className="sidebar-nav">
       {sidebarItems.map((item) => (

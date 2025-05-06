@@ -1,0 +1,200 @@
+/* Overlay bao quanh modal */
+.goal-modal-overlay {
+position: fixed;
+top: 0;
+left: 0;
+height: 100vh;
+width: 100vw;
+background: rgba(0, 0, 0, 0.4);
+display: flex;
+justify-content: center; 
+align-items: center;
+z-index: 999;
+}
+/* Modal hiển thị nội dung */
+.goal-modal {
+background: white;
+width: 350px;
+max-height: 70vh;
+padding: 25px 20px;
+border-radius: 12px;
+position: relative;
+text-align: center;
+box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+animation: slideDown 0.3s ease;
+overflow-y: auto;
+
+/* Margin cho khoảng cách trên và dưới */
+margin-top: 100px;
+margin-bottom: 100px;
+}
+
+/* Hiệu ứng slide-down khi modal xuất hiện */
+@keyframes slideDown {
+from {
+    opacity: 0;
+    transform: translateY(-10%);
+}
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+}
+
+/* Nút đóng modal */
+.modal-close-btn {
+position: absolute;
+top: 12px;
+right: 15px;
+border: none;
+background: transparent;
+font-size: 22px;
+cursor: pointer;
+}
+
+/* Biểu tượng mục tiêu */
+.goal-icon {
+width: 40px;
+margin-bottom: 5px;
+}
+
+/* Tiêu đề modal */
+.modal-header h3 {
+font-size: 20px;
+margin-bottom: 15px;
+}
+
+/* Tiêu đề chính */
+h2 {
+display: flex;
+justify-content: center;
+text-align: center;
+}
+
+/* Phần thân modal */
+.modal-body {
+display: flex;
+flex-direction: column;
+gap: 10px;
+text-align: left;
+}
+
+/* Input trong modal */
+.modal-input {
+padding: 10px;
+border-radius: 8px;
+border: 1px solid #ccc;
+width: 100%;
+}
+
+/* Nút lưu trong modal */
+.modal-save-btn {
+margin-top: 20px;
+width: 100%;
+padding: 10px;
+background: #f7931e;
+color: white;
+font-weight: bold;
+border: none;
+border-radius: 8px;
+cursor: pointer;
+transition: background 0.2s;
+}
+
+/* Nút lưu khi hover */
+.modal-save-btn:hover {
+background: #e67e00;
+}
+
+/* Goal overlay cho form */
+.goal-overlay {
+position: fixed;
+top: 0;
+left: 0;
+width: 100%;
+height: 100%;
+background-color: rgba(0, 0, 0, 0.5);
+display: flex;
+justify-content: center;
+align-items: center;
+z-index: 1000;
+}
+
+/* Form trong modal */
+.goal-form {
+background-color: #fff;
+padding: 30px;
+border-radius: 10px;
+width: 400px;
+max-width: 90%;
+box-shadow: 0 10px 20px rgba(0, 0, 0, 0.25); 
+position: relative;
+height: auto;
+}
+
+/* Nút đóng form */
+.goal-form .close-btn {
+position: absolute;
+top: 10px;
+right: 15px;
+font-size: 20px;
+font-weight: bold;
+color: #888;
+cursor: pointer;
+}
+
+/* Tiêu đề của form */
+.goal-form .title {
+font-weight: bold;
+margin-top: 10px;
+float: left;
+margin-bottom: 15px;
+}
+
+/* Biểu tượng thêm mục tiêu */
+.icon_add {
+margin-left: 10px;
+width: 24px;
+height: 24px;
+vertical-align: middle;
+}
+
+.mb-3 .title {
+margin-bottom: 0rem !important;
+}
+/* Đảm bảo margin-top được áp dụng cho tất cả các phần tử form-control */
+.form-control {
+    margin-top: 20px !important;
+  }
+  
+  /* Áp dụng margin-top cho từng phần tử cụ thể như input, select, textarea */
+  .form-control input,
+  .form-control select,
+  .form-control textarea {
+    margin-top: 20px !important;
+  }
+/* Cấu trúc wrapper cho select */
+.mb-3 {
+    position: relative; 
+  }
+  
+  /* Biểu tượng button */
+  .close-down {
+    position: absolute;
+    top: 70%; 
+    right: 10px;
+    transform: translateY(-50%); 
+    border: none;
+    background: transparent;
+    font-size: 12px;
+    cursor: pointer;
+    color: #ccc;
+    align-items: center;
+  }
+  
+  /* Đảm bảo select có đủ không gian */
+  .select-wrapper {
+    display: flex;
+    align-items: center;
+  }
+  
