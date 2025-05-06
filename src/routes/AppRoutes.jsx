@@ -2,17 +2,17 @@ import { Routes, Route } from 'react-router-dom';
 import { useAuth } from '../services/providers/AuthContext';
 import StudentRoutes from './StudentRoutes';
 import TeacherRoutes from './TeacherRoutes';
-// import TeacherRoutes from './TeacherRoutes';
-// import AdminRoutes from './AdminRoutes';
-// import Unauthorized from '../pages/common/Unauthorized';
-
+import Login from '../components/shared/Login/Login';
+import { Navigate } from 'react-router-dom';
 const AppRoutes = () => {
   const { user } = useAuth();
 
   return (
     <Routes>
-        {user.role === 'student' && StudentRoutes({ userRole: user.role })}
-        {user.role === 'teacher' && TeacherRoutes({ userRole: user.role })}
+        <Route path="/login" element={<Login />} />
+        {!user && <Route path="*" element={<Navigate to="/login" replace />} />}
+        {user?.role === 'student' && StudentRoutes({ userRole: user.role })}
+        {user?.role === 'teacher' && TeacherRoutes({ userRole: user.role })}
     </Routes>
   );
 };
