@@ -3,6 +3,7 @@ import './Login.css';
 import { useAuth } from '../../../services/providers/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { loginImage } from '../../../assets';
+import { login } from '../../../services/api/StudentAPI';
 function Login() {
   const { setUser } = useAuth();
   const navigate = useNavigate();
@@ -10,11 +11,25 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
 
-    setUser({ username: email, role: 'student' }); 
-    navigate('/');
+    try {
+      const response = await login({email, password});
+      const data = response.data;
+      console.log("Data: ", data);
+      if(data) {
+        setUser({
+          username: data.username,
+          role: data.role,
+          token: data.access_token,
+        });
+        navigate('/');
+      }
+    } catch (error) {
+      console.error("Login Error: ", error);
+      alert("Login Failed");
+    }
   };
 
   return (

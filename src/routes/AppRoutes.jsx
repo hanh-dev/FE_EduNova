@@ -6,7 +6,6 @@ import Login from '../components/shared/Login/Login';
 import { Navigate } from 'react-router-dom';
 const AppRoutes = () => {
   const { user } = useAuth();
-
   return (
     <Routes>
         <Route path="/login" element={<Login />} />
