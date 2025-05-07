@@ -2,7 +2,6 @@ import './App.css'
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import { AuthProvider } from './services/providers/AuthContext';
 import AppRoutes from './routes/AppRoutes';
-
 function App() {
   return (
         <AuthProvider>
@@ -10,7 +9,7 @@ function App() {
             <AppRoutes />
           </BrowserRouter>
         </AuthProvider>
-  )
+  );
 }
 
 export default App
