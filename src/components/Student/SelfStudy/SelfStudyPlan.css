@@ -1,7 +1,7 @@
 /* Container now scrolls horizontally if table is too wide */
 .study-table-wrapper {
   overflow-x: auto;
-  width: 100%;
+  width: 99%;
 
 }
 
@@ -20,8 +20,8 @@
   border-radius: 10px 10px 0 0;
   font-size: 20px;
   margin: 0;
-  /* width: 100%; */
-  width: 1568px; 
+  width: 99%;
+  /* width: 1568px;  */
   box-sizing: border-box;  
 }
 

@@ -71,7 +71,7 @@
   .table-section h2 {
     background: orange;
     color: white;
-    width: 1518px; 
+    width: 1350x; 
     padding: 12px 25px;
     border-radius: 10px 10px 0 0;
     margin-bottom: 0;
@@ -79,7 +79,7 @@
   }
   
   table {
-    width: 98%;
+    width: 100%;
     min-width: 1100px; 
     border-collapse: collapse;
     background: white;
