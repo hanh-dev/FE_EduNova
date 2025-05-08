@@ -27,7 +27,7 @@
 
 /* Table */
 .study-table {
-  width: 1568px; 
+  /* width: 1568px;  */
   border-collapse: collapse;
   background-color: white;
   display: table;    
