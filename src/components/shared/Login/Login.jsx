@@ -4,6 +4,7 @@ import { useAuth } from '../../../services/providers/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { loginImage } from '../../../assets';
 import { login } from '../../../services/api/StudentAPI';
+import { toast } from 'react-toastify';
 function Login() {
   const { setUser } = useAuth();
   const navigate = useNavigate();
@@ -24,11 +25,20 @@ function Login() {
           role: data.role,
           token: data.access_token,
         });
+
+        toast.success("Login successful!", {
+          position: "top-right",
+          autoClose: 2000,
+        });
+
         navigate('/');
       }
     } catch (error) {
       console.error("Login Error: ", error);
-      alert("Login Failed");
+      toast.error("Invalid credentials.", {
+        position: "top-right",
+        autoClose: 2000
+      })
     }
   };
 
