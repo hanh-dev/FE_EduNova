@@ -33,7 +33,7 @@ body {
     transform: translateX(-50%);
     width: 150px;
     height: 4px; 
-    background-color: #ffa94d;
+    /* background-color: #ffa94d; */
     border-radius: 2px;
   }
   

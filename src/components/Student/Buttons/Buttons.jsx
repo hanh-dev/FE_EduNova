@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import './Buttons.css'; 
 import UpdateClassPlanForm from '../AddForm/ClassPlanForm'; 
+import UpdateSelfStudyPlanForm from '../AddForm/SelfStudyPlanForm'; 
+
 
 function Buttons() {
   const [showForm, setShowForm] = useState(false);
@@ -25,7 +27,9 @@ function Buttons() {
 
       {showForm && (
         <div className="modal-overlay">
-          <UpdateClassPlanForm onSave={handleSave} onCancel={handleCancelClick} />
+          {/* <UpdateClassPlanForm onSave={handleSave} onCancel={handleCancelClick} /> */}
+          <UpdateSelfStudyPlanForm onSave={handleSave} onCancel={handleCancelClick} />
+
         </div>
       )}
     </td>

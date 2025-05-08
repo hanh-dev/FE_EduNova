@@ -1,6 +1,5 @@
 import React, { useState } from 'react'
 import ClassPlan  from "../../../components/Student/StudyPlan/ClassPlan";
-import AddForm from '../../../components/Student/AddForm/AddForm';
 import SelfStudy from '../../../components/Student/SelfStudy/SelfStudyPlan';
 
 function ClassPlan1() {
