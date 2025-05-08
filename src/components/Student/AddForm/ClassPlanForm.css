@@ -113,6 +113,7 @@ body {
   }
   
   .form-buttons button:hover {
+    opacity: 0.9;
     background-color: #ff922b;
   }
   

@@ -8,7 +8,9 @@
     margin-right: 6px;
     transition: background-color 0.2s ease;
   }
-  
+  .test .btn {
+  justify-content: 8px;
+}
   .btn:first-of-type {
     background-color: #007bff;
     color: white;
@@ -40,12 +42,3 @@
 }
 
 
-/* .modal-content {
-  background-color: white;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.1);
-  width: 50%;
-  max-width: 600px;
-  z-index: 10000; 
-} */

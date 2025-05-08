@@ -27,7 +27,7 @@ function Buttons() {
 
       {showForm && (
         <div className="modal-overlay">
-          {/* <UpdateClassPlanForm onSave={handleSave} onCancel={handleCancelClick} /> */}
+          <UpdateClassPlanForm onSave={handleSave} onCancel={handleCancelClick} />
           <UpdateSelfStudyPlanForm onSave={handleSave} onCancel={handleCancelClick} />
 
         </div>
