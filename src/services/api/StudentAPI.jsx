@@ -1,6 +1,7 @@
 import { API_BASE_URL } from "../../utils/constants";
 import { api } from "../../utils/constants";
 
-export const getCourses = () => API_BASE_URL.get("/student/courses");
-export const getFeedbacks = () => API_BASE_URL.get("/student/feedbacks");
-export const getUser = () => api.get('/test');
+export const getCourses = () => api.get("/student/courses");
+export const getFeedbacks = () => api.get("/student/feedbacks");
+export const login = (credentials) => api.post("/login", credentials);
+export const profile = () => api.get('/profile');
