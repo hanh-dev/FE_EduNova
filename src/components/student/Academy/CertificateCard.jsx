@@ -15,20 +15,22 @@ const CertificateCard = ({ data, onDelete, onEdit }) => {
       </div>
 
       {/* Hiển thị ảnh hoặc video tùy loại */}
-      {data.mediaType === "image" ? (
-        <img
-          src={data.mediaUrl}
-          alt="Certificate"
-          className="certificate-img"
-        />
-      ) : data.mediaType === "video" ? (
-        <video
-          src={data.mediaUrl}
-          controls
-          className="certificate-img"
-          style={{ objectFit: "cover" }}
-        />
-      ) : null}
+      <div className="certificate-image-wrapper">
+        {data.mediaType === "image" ? (
+          <img
+            src={data.mediaUrl}
+            alt="Certificate"
+            className="certificate-img"
+          />
+        ) : data.mediaType === "video" ? (
+          <video
+            src={data.mediaUrl}
+            controls
+            className="certificate-img"
+            style={{ objectFit: "cover" }}
+          />
+        ) : null}
+      </div>
 
       <h3 className="certificate-title">{data.title}</h3>
       <p className="certificate-desc">{data.description}</p>
