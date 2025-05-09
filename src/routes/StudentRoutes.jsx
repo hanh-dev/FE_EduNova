@@ -1,7 +1,7 @@
-import { Routes, Route } from 'react-router-dom';
+import { Route } from 'react-router-dom';
 import StudentLayout from '../layouts/StudentLayout';
-import { Dashboard } from '../pages/student/Dashboard/Dashboard';
-import { Semester } from '../pages/student/Semester/Semester';
+import Dashboard from '../pages/student/Dashboard/Dashboard';
+import Semester from '../pages/student/Semester/Semester';
 import StudyPlan from '../pages/student/StudyPlan/StudyPlan';
 import Logout from '../pages/Logout/Logout';
 import Profile from '../components/student/Profile/Profile';
@@ -21,4 +21,3 @@ const StudentRoutes = () => [
 ];
 
 export default StudentRoutes;
-

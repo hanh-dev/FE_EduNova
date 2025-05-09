@@ -1,7 +1,10 @@
-export const Dashboard = () => {
+
+function Dashboard() {
     return (
-        <>
-            <h2>This is Dashboard</h2>
-        </>
-    )
+        <div>
+            <h2>Hello, Goals</h2>
+        </div>
+    );
 }
+
+export default Dashboard;
