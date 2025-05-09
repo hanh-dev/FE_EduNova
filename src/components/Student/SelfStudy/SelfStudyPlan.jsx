@@ -40,7 +40,7 @@ function SelfStudy() {
               <td>Not so bad</td>
               <td>Review regularly</td>
               <td>Nothing</td>
-              <Buttons/>
+              <Buttons type="self"/>
             </tr>
             <tr>
               <Date></Date>
@@ -54,7 +54,7 @@ function SelfStudy() {
               <td>Not so bad</td>
               <td>Review regularly</td>
               <td>Nothing</td>
-              <Buttons/>
+              <Buttons type="self"/>
             </tr>
             <tr>
             <Date></Date>
@@ -68,7 +68,7 @@ function SelfStudy() {
               <td>Not so bad</td>
               <td>Review regularly</td>
               <td>Nothing</td>
-              <Buttons/>
+              <Buttons type="self"/>
             </tr>
             
           </tbody>

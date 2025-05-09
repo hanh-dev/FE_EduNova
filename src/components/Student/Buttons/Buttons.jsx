@@ -3,8 +3,8 @@ import './Buttons.css';
 import UpdateClassPlanForm from '../AddForm/ClassPlanForm'; 
 import UpdateSelfStudyPlanForm from '../AddForm/SelfStudyPlanForm'; 
 
-
-function Buttons() {
+function Buttons(props) {
+  const { type } = props;
   const [showForm, setShowForm] = useState(false);
 
   const handleUpdateClick = () => {
@@ -27,9 +27,11 @@ function Buttons() {
 
       {showForm && (
         <div className="modal-overlay">
-          <UpdateClassPlanForm onSave={handleSave} onCancel={handleCancelClick} />
-          <UpdateSelfStudyPlanForm onSave={handleSave} onCancel={handleCancelClick} />
-
+          {type === "class" ? (
+            <UpdateClassPlanForm onSave={handleSave} onCancel={handleCancelClick} />
+          ) : (
+            <UpdateSelfStudyPlanForm onSave={handleSave} onCancel={handleCancelClick} />
+          )}
         </div>
       )}
     </td>

@@ -30,9 +30,9 @@ function ClassPlan() {
               <td>I struggle with a, an, the.</td>
               <td></td>
               <td><span className="status red"></span></td>
-              <Buttons/>
+              <Buttons type="class"/>
             </tr>
-            <tr>
+          <tr>
               <Date></Date>
               <td>TOEIC</td>
               <td>Preposition</td>
@@ -40,17 +40,17 @@ function ClassPlan() {
               <td>I have no difficult</td>
               <td></td>
               <td><span className="status green"></span></td>
-              <Buttons/>
-            </tr>
+              <Buttons type="class"/>
+            </tr>  
             <tr>
               <Date></Date>
               <td>TOEIC</td>
               <td>Preposition</td>
               <td>3</td>
-              <td>I have no difficult</td>
+              <td>I have no difficult</td>  
               <td></td>
               <td><span className="status green"></span></td>
-              <Buttons/>
+              <Buttons type="class"/>
             </tr>
           </tbody>
         </table>
