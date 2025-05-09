@@ -42,7 +42,7 @@ const Header = () => {
           </div>
           <div className="welcome-illustration">
             <img
-              src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png"
+              src="../../../src/assets/image/anhstudent.png"
               alt="User Illustration"
               className="illustration-img"
             />
