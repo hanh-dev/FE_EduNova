@@ -6,7 +6,7 @@ const CourseCards = () => {
   return (
     <div className="p-4">
       <div className="course-header">
-        <h2 className="font-semibold text-lg">Courses</h2>
+        <h1 className="font-semibold text-lg">Courses</h1>
       </div>
       <div className="course">
         {courses.map((c, i) => (
