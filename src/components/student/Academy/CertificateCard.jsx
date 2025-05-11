@@ -14,7 +14,7 @@ const CertificateCard = ({ data, onDelete, onEdit }) => {
         </button>
       </div>
 
-      {/* Hiển thị ảnh hoặc video tùy loại */}
+      {/* Hiển thị ảnh/vd tùy loại */}
       {data.mediaType === "image" ? (
         <img
           src={data.mediaUrl}
