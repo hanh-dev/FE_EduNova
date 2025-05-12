@@ -1,13 +1,19 @@
-import { API_BASE_URL } from "../../utils/constants";
-import { api } from "../../utils/constants";
-// import { saveUser, setRefreshToken, setToken } from "../auth/authService";
+import { api, createGoal, editGoal } from "../../utils/constants";
 
-export const getCourses = () => api.get("/student/courses");
-export const getFeedbacks = () => api.get("/student/feedbacks");
+// Auth
 export const login = (credentials) => api.post("/login", credentials);
 export const logout = () => api.post("/logout");
-export const profile = () => api.get('/profile');
 
+// User
+export const profile = () => api.get("/profile");
+
+// Courses & Feedbacks
+export const getCourses = () => api.get("/student/courses");
+export const getFeedbacks = () => api.get("/student/feedbacks");
+
+// Goals
+export { createGoal, editGoal }; // Gọi lại từ constants
+export const getGoals = () => api.get("/goal");
 
 // const login = async (credentials) => {
 //     try {

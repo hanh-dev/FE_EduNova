@@ -1,76 +1,75 @@
 import React, { useState, useEffect } from "react";
-import GoalForm from "../GoalForm/GoalForm";
+import GoalForm from '../../student/GoalForm/GoalForm';
+
 import DeleteGoal from "../GoalForm/DeleteGoal";
-import EditGoal from "../GoalForm/EditGoal"; // Import EditGoal
+import EditGoal from "../GoalForm/EditGoal";
 import "./SemesterGoal.css";
 
 export default function SemesterGoal() {
   const [goals, setGoals] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
-  const [deleteIndex, setDeleteIndex] = useState(null);
-  const [editingGoal, setEditingGoal] = useState(null); // Thêm state cho goal đang chỉnh sửa
+  const [goalToDeleteIndex, setGoalToDeleteIndex] = useState(null);
+  const [goalToEdit, setGoalToEdit] = useState(null);
 
-  // Hàm lấy dữ liệu goals từ localStorage hoặc API
+  // Load goals from localStorage or fallback to /goals.json
   useEffect(() => {
-    const fetchGoals = async () => {
+    const loadGoals = async () => {
       try {
-        const localGoals = JSON.parse(localStorage.getItem("goals")) || [];
+        const storedGoals = JSON.parse(localStorage.getItem("goals")) || [];
 
-        if (localGoals.length === 0) {
+        if (storedGoals.length === 0) {
           const response = await fetch("/goals.json");
-          const jsonGoals = await response.json();
-          localStorage.setItem("goals", JSON.stringify(jsonGoals));
-          setGoals(jsonGoals);
+          const fetchedGoals = await response.json();
+          localStorage.setItem("goals", JSON.stringify(fetchedGoals));
+          setGoals(fetchedGoals);
         } else {
-          setGoals(localGoals);
+          setGoals(storedGoals);
         }
       } catch (error) {
-        console.error("Error loading goals:", error);
+        console.error("Failed to load goals:", error);
       }
     };
 
-    fetchGoals();
+    loadGoals();
   }, []);
 
-  // Hàm lưu goal mới
+  // Save goals to localStorage
+  const updateGoals = (newGoals) => {
+    setGoals(newGoals);
+    localStorage.setItem("goals", JSON.stringify(newGoals));
+  };
+
+  // Add new goal
   const handleSaveGoal = (newGoal) => {
-    const updatedGoals = [...goals, { ...newGoal, completeStatus: "doing" }];
-    setGoals(updatedGoals);
-    localStorage.setItem("goals", JSON.stringify(updatedGoals));
+    const newGoals = [...goals, { ...newGoal, completeStatus: "doing" }];
+    updateGoals(newGoals);
+    setShowForm(false);
   };
 
-  // Hàm cập nhật trạng thái hoàn thành
+  // Toggle status
   const toggleCompleteStatus = (index) => {
-    const updatedGoals = [...goals];
-    updatedGoals[index].completeStatus =
-      updatedGoals[index].completeStatus === "done" ? "doing" : "done";
-    setGoals(updatedGoals);
-    localStorage.setItem("goals", JSON.stringify(updatedGoals));
+    const updated = [...goals];
+    updated[index].completeStatus =
+      updated[index].completeStatus === "done" ? "doing" : "done";
+    updateGoals(updated);
   };
 
-  // Hàm xóa goal
+  // Delete goal
   const handleDeleteGoal = () => {
-    const updatedGoals = goals.filter((_, i) => i !== deleteIndex);
-    setGoals(updatedGoals);
-    localStorage.setItem("goals", JSON.stringify(updatedGoals));
+    const updated = goals.filter((_, i) => i !== goalToDeleteIndex);
+    updateGoals(updated);
     setShowDeletePopup(false);
-    setDeleteIndex(null);
+    setGoalToDeleteIndex(null);
   };
 
-  // Hàm cập nhật goal đã chỉnh sửa
+  // Edit and update goal
   const handleUpdateGoal = (updatedGoal) => {
-    const updatedGoals = goals.map((goal, index) =>
-      index === editingGoal.index ? updatedGoal : goal
+    const updated = goals.map((goal, index) =>
+      index === goalToEdit.index ? updatedGoal : goal
     );
-    setGoals(updatedGoals);
-    localStorage.setItem("goals", JSON.stringify(updatedGoals));
-    setEditingGoal(null); // Đóng form sau khi lưu
-  };
-
-  // Đóng popup xóa
-  const handleCloseDeletePopup = () => {
-    setShowDeletePopup(false);
+    updateGoals(updated);
+    setGoalToEdit(null);
   };
 
   return (
@@ -79,7 +78,11 @@ export default function SemesterGoal() {
         <div className="goal-header">
           <h2>Your Study Goal</h2>
           <span className="add-goal-btn" onClick={() => setShowForm(true)}>
-            <img src="/src/assets/image/plus.png" className="icon_add" alt="Add Goal" />
+            <img
+              src="/src/assets/image/plus.png"
+              className="icon_add"
+              alt="Add Goal"
+            />
           </span>
         </div>
 
@@ -87,8 +90,12 @@ export default function SemesterGoal() {
           <GoalForm onClose={() => setShowForm(false)} onSave={handleSaveGoal} />
         )}
 
-        {editingGoal && (
-          <EditGoal goal={editingGoal} onClose={() => setEditingGoal(null)} onSave={handleUpdateGoal} />
+        {goalToEdit && (
+          <EditGoal
+            goal={goalToEdit}
+            onClose={() => setGoalToEdit(null)}
+            onSave={handleUpdateGoal}
+          />
         )}
 
         <div className="table-wrapper">
@@ -96,6 +103,7 @@ export default function SemesterGoal() {
             <thead>
               <tr>
                 <th>Course</th>
+                <th>Goal</th>
                 <th>Course Expectations</th>
                 <th>Teacher Expectations</th>
                 <th>Self Expectations</th>
@@ -110,6 +118,7 @@ export default function SemesterGoal() {
                 goals.map((goal, index) => (
                   <tr key={index}>
                     <td>{goal.course}</td>
+                    <td>{goal.goals}</td>
                     <td>{goal.courseExpectations}</td>
                     <td>{goal.teacherExpectations}</td>
                     <td>{goal.selfExpectations}</td>
@@ -118,8 +127,10 @@ export default function SemesterGoal() {
                         onClick={() => toggleCompleteStatus(index)}
                         style={{
                           display: "inline-block",
-                          backgroundColor: goal.completeStatus === "done" ? "#28a745" : "#ffc107",
-                          color: goal.completeStatus === "done" ? "white" : "inherit",
+                          backgroundColor:
+                            goal.completeStatus === "done" ? "#28a745" : "#ffc107",
+                          color:
+                            goal.completeStatus === "done" ? "white" : "inherit",
                           width: "20px",
                           height: "20px",
                           borderRadius: "4px",
@@ -127,7 +138,11 @@ export default function SemesterGoal() {
                         }}
                       />
                     </td>
-                    <td>{goal.completeStatus === "done" ? "Completed" : "In Progress"}</td>
+                    <td>
+                      {goal.completeStatus === "done"
+                        ? "Completed"
+                        : "In Progress"}
+                    </td>
                     <td>{goal.dueDate}</td>
                     <td>
                       <i
@@ -140,15 +155,16 @@ export default function SemesterGoal() {
                         className="fa-regular fa-pen-to-square"
                         style={{ marginRight: "10px", cursor: "pointer" }}
                         title="Edit"
-                        onClick={() => setEditingGoal({ ...goal, index })} // Chuyển sang EditGoal
+                        onClick={() =>
+                          setGoalToEdit({ ...goal, index })
+                        }
                       ></i>
-
                       <i
                         className="fa-solid fa-trash"
                         style={{ color: "red", cursor: "pointer" }}
                         title="Delete"
                         onClick={() => {
-                          setDeleteIndex(index);
+                          setGoalToDeleteIndex(index);
                           setShowDeletePopup(true);
                         }}
                       ></i>
@@ -165,7 +181,9 @@ export default function SemesterGoal() {
         </div>
       </div>
 
-      {showDeletePopup && <DeleteGoal onDelete={handleDeleteGoal} onClose={handleCloseDeletePopup} />}
+      {showDeletePopup && (
+        <DeleteGoal onDelete={handleDeleteGoal} onClose={() => setShowDeletePopup(false)} />
+      )}
     </div>
   );
 }

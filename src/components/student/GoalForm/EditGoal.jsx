@@ -1,46 +1,51 @@
 import React, { useState, useEffect } from "react";
 import "./EditGoal.css";
+import { editGoal } from "../../../services/api/StudentAPI";
 
 export default function EditGoal({ goal, onClose, onSave }) {
   const [editedGoal, setEditedGoal] = useState({
+    user_id: "",
     course: "",
+    goal: "",
     courseExpectations: "",
     teacherExpectations: "",
     selfExpectations: "",
-    dueDate: ""
+    dueDate: "",
   });
 
-  // Load dữ liệu từ goal vào state khi mở form
   useEffect(() => {
     if (goal) {
       setEditedGoal(goal);
     }
   }, [goal]);
 
-  // Cập nhật state khi người dùng thay đổi input
   const handleChange = (e) => {
     const { name, value } = e.target;
     setEditedGoal((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Xử lý khi nhấn nút Save
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(editedGoal); // Gửi goal đã sửa lên SemesterGoal
-    onClose(); // Đóng form
+    try {
+      const updatedGoal = await editGoal(editedGoal);
+      onSave(updatedGoal);
+      onClose();
+    } catch (error) {
+      console.error("Error updating goal:", error);
+      alert("Failed to update goal.");
+    }
   };
 
   return (
     <div className="goal-overlay">
       <div className="goal-form">
-        <span className="close-btn" onClick={onClose}>×</span>
-        <h3>Edit a Goal</h3>
+        <span className="close-btn" onClick={onClose}>
+          ×
+        </span>
+        <h1>Edit a Goal</h1>
         <form onSubmit={handleSubmit}>
           <div className="mb-3">
             <label className="title">Course</label>
-            <span className="close-down">
-              <i className="fa-solid fa-caret-down"></i>
-            </span>
             <select
               className="form-control"
               name="course"
@@ -51,6 +56,19 @@ export default function EditGoal({ goal, onClose, onSave }) {
               <option value="IT-English">IT-English</option>
               <option value="Communicative">Communicative</option>
             </select>
+          </div>
+
+          {/* 🟠 CỘT GOAL được thêm tại đây */}
+          <div className="mb-3">
+            <label className="title">Goal</label>
+            <input
+              type="text"
+              className="form-control"
+              name="goal"
+              value={editedGoal.goals}
+              onChange={handleChange}
+              required
+            />
           </div>
 
           <div className="mb-3">
@@ -64,7 +82,6 @@ export default function EditGoal({ goal, onClose, onSave }) {
               required
             />
           </div>
-
           <div className="mb-3">
             <label className="title">Teacher Expectations</label>
             <input
@@ -76,7 +93,6 @@ export default function EditGoal({ goal, onClose, onSave }) {
               required
             />
           </div>
-
           <div className="mb-3">
             <label className="title">Self Expectations</label>
             <input
@@ -88,7 +104,6 @@ export default function EditGoal({ goal, onClose, onSave }) {
               required
             />
           </div>
-
           <div className="mb-3">
             <label className="title">Due date</label>
             <input
@@ -100,10 +115,9 @@ export default function EditGoal({ goal, onClose, onSave }) {
               required
             />
           </div>
-
           <button
             type="submit"
-            className="btn w-100"
+            className="btn w-100 button-save"
             style={{ backgroundColor: "orange", borderColor: "orange" }}
           >
             Save
