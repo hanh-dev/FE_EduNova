@@ -76,6 +76,4 @@ function SelfStudy() {
       </div>
     </div>
   );
-}
-
-export default SelfStudy;
+}export default SelfStudy;
