@@ -1,10 +1,11 @@
 import { NavLink } from 'react-router-dom';
 import { sidebarItems } from '../../assets/icons/sidebar';
 import { handleLogout } from '../../utils/swal';
-const Sidebar = () => (
+const Sidebar = () => {
+  return (
   <aside className="sidebar">
     <div className="sidebar-logo">
-      <span role="img" aria-label="logo"><img src="/src/assets/image/graduation.png" alt="" /></span>
+      <span role="img" aria-label="logo">🎓</span>
     </div>
     <nav className="sidebar-nav">
     {sidebarItems.map((item) =>
@@ -42,6 +43,7 @@ const Sidebar = () => (
     )}
     </nav>
   </aside>
-  );
+  )
+};
 
 export default Sidebar;
