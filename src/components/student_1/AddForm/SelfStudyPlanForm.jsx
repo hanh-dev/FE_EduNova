@@ -169,8 +169,8 @@ const UpdateSelfStudyPlanForm = ({ onCancel, onSave }) => {
       </div>
 
       <div className="form-actions">
-        <button type="button" onClick={onCancel}>Cancel</button>
-        <button type="button" onClick={handleSave}>Save</button>
+        <button className='btn-1' type="button" onClick={onCancel}>Cancel</button>
+        <button className='btn-1' type="button" onClick={handleSave}>Save</button>
       </div>
     </form>
   );
