@@ -1,9 +1,11 @@
-
+.main-content{
+  background-color: white;
+}
 .a-main-content-check {
-    margin-left: 230px;
+    margin-left: 220px;
     padding: 20px;
     box-sizing: border-box;
-    background-color: white;
+    /* background-color: white; */
     font-family: Arial, sans-serif;
   }
   

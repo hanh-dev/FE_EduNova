@@ -1,6 +1,6 @@
 import React from 'react';
 import Buttons from '../Buttons/Buttons';
-import Date from '../DateSchedule/Date'
+import Date from '../DateSchedule/Date';
 import './ClassPlan.css';
 
 function ClassPlan() {
