@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import GoalForm from '../../student/GoalForm/GoalForm';
-
+import {getGoal } from "../../../services/api/StudentAPI";
 import DeleteGoal from "../GoalForm/DeleteGoal";
 import EditGoal from "../GoalForm/EditGoal";
 import "./SemesterGoal.css";
@@ -11,6 +11,7 @@ export default function SemesterGoal() {
   const [showDeletePopup, setShowDeletePopup] = useState(false);
   const [goalToDeleteIndex, setGoalToDeleteIndex] = useState(null);
   const [goalToEdit, setGoalToEdit] = useState(null);
+  const [showEditForm, setShowEditForm] = useState(false); // ✅ Thêm state để hiển thị form edit
 
   // Load goals from localStorage or fallback to /goals.json
   useEffect(() => {
@@ -63,13 +64,14 @@ export default function SemesterGoal() {
     setGoalToDeleteIndex(null);
   };
 
-  // Edit and update goal
+  // Update edited goal
   const handleUpdateGoal = (updatedGoal) => {
     const updated = goals.map((goal, index) =>
       index === goalToEdit.index ? updatedGoal : goal
     );
     updateGoals(updated);
     setGoalToEdit(null);
+    setShowEditForm(false);
   };
 
   return (
@@ -86,18 +88,24 @@ export default function SemesterGoal() {
           </span>
         </div>
 
+        {/* Add Form */}
         {showForm && (
           <GoalForm onClose={() => setShowForm(false)} onSave={handleSaveGoal} />
         )}
 
-        {goalToEdit && (
+        {/* Edit Form */}
+        {showEditForm && goalToEdit && (
           <EditGoal
             goal={goalToEdit}
-            onClose={() => setGoalToEdit(null)}
+            onClose={() => {
+              setGoalToEdit(null);
+              setShowEditForm(false);
+            }}
             onSave={handleUpdateGoal}
           />
         )}
 
+        {/* Table */}
         <div className="table-wrapper">
           <table className="table table-bordered text-center align-middle">
             <thead>
@@ -151,14 +159,24 @@ export default function SemesterGoal() {
                         title="View time"
                         onClick={() => alert("View time clicked")}
                       ></i>
+
+                      {/* ✅ Chỉnh sửa: Gọi getGoal và mở form edit */}
                       <i
                         className="fa-regular fa-pen-to-square"
                         style={{ marginRight: "10px", cursor: "pointer" }}
                         title="Edit"
-                        onClick={() =>
-                          setGoalToEdit({ ...goal, index })
-                        }
-                      ></i>
+                        onClick={async () => {
+                          try {
+                            const goalData = await getGoal(goal.id);
+                            setGoalToEdit({ ...goalData, index }); 
+                            setShowEditForm(true); 
+                          } catch (error) {
+                            console.error("Failed to fetch goal:", error);
+                          }
+                        }}
+                      />
+
+                      {/* Xóa */}
                       <i
                         className="fa-solid fa-trash"
                         style={{ color: "red", cursor: "pointer" }}
@@ -173,7 +191,7 @@ export default function SemesterGoal() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="8">No goals found</td>
+                  <td colSpan="9">No goals found</td>
                 </tr>
               )}
             </tbody>
@@ -181,8 +199,12 @@ export default function SemesterGoal() {
         </div>
       </div>
 
+      {/* Delete Confirmation */}
       {showDeletePopup && (
-        <DeleteGoal onDelete={handleDeleteGoal} onClose={() => setShowDeletePopup(false)} />
+        <DeleteGoal
+          onDelete={handleDeleteGoal}
+          onClose={() => setShowDeletePopup(false)}
+        />
       )}
     </div>
   );

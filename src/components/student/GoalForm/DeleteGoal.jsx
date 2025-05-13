@@ -1,17 +1,44 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./DeleteGoal.css";
+import { deleteGoal, getGoal } from "../../../services/api/StudentAPI";
 
-function DeleteGoal({ onDelete, onClose }) {
-  
-  // Hàm xử lý khi nhấn vào nút Delete
-  const handleDelete = () => {
-    // Gọi onDelete khi người dùng nhấn Yes (OK)
-    onDelete();
-    onClose();
+function DeleteGoal({ id, onDeleteSuccess, onClose }) {
+  const [goal, setGoal] = useState(null);
+
+  useEffect(() => {
+    const fetchGoalData = async () => {
+      try {
+        const response = await getGoal(id);  // Lấy dữ liệu của goal theo id
+        console.log("Goal Data:", response);
+        if (response) {
+          setGoal(response);
+        }
+      } catch (error) {
+        console.error("Error fetching goal data:", error);
+      }
+    };
+
+    if (id) {
+      fetchGoalData();  // Gọi fetch khi id thay đổi
+    }
+  }, [id]);  // Chỉ gọi lại khi id thay đổi
+
+  const handleDelete = async () => {
+    try {
+      await deleteGoal(id);  // Xóa mục tiêu bằng id
+      alert("Goal deleted successfully!");
+      if (onDeleteSuccess) {
+        onDeleteSuccess(id);  // Gọi callback khi xóa thành công
+      }
+      onClose();  // Đóng popup
+    } catch (error) {
+      alert("Failed to delete goal.");
+      console.error("Delete error:", error);
+    }
   };
 
   const handleCancel = () => {
-    onClose(); 
+    onClose();  // Đóng popup khi hủy
   };
 
   return (
