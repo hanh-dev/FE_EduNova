@@ -23,7 +23,7 @@ function SelfStudy() {
               <th>Evaluation of My Work</th>
               <th>Reinforcing Learning</th>
               <th>Notes</th>
-              <th>Actiohgjhns</th>
+              <th>Actions</th>
 
             </tr>
           </thead>

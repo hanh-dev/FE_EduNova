@@ -30,7 +30,7 @@ const UpdateSelfStudyPlanForm = ({ onCancel, onSave }) => {
   };
 
   return (
-    <form className="form-container">
+    <form className="form-container6">
       <h2>Update your process</h2>
 
       <div className="form-grid">
@@ -55,7 +55,7 @@ const UpdateSelfStudyPlanForm = ({ onCancel, onSave }) => {
           >
             <option value="TOEIC">TOEIC</option>
             <option value="IELTS">IELTS</option>
-            <option value="IT">IT vvv</option>
+            <option value="IT">IT </option>
           </select>
         </div>
 

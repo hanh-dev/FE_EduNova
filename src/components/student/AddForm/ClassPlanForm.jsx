@@ -27,7 +27,7 @@ function UpdateClassPlanForm({ onCancel, onSave }) {
   };
 
   return (
-    <div className="form-container">
+    <div className="form-container5">
       <h2>Update your process</h2>
 
       <div className="form-row">
