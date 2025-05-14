@@ -45,3 +45,24 @@
     font-size: 15px;
     border: 1px solid #ccc; 
 }
+
+.pagination {
+  margin-top: 15px;
+  display: flex;
+  width: 50px;
+  justify-content: flex-start; 
+}
+
+
+.pagination button {
+  padding: 5px 15px;
+  cursor: pointer;
+  border: 1px solid #ff9900;
+}
+
+ .pagination button.active {
+  background-color: #ff9900;
+  color: white;
+
+}
+

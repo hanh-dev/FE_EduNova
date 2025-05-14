@@ -22,7 +22,6 @@ export default function GoalForm({ onClose, onSave }) {
     }
   }, []);
 
-  // ✅ Load lại dữ liệu từ localStorage nếu có
   useEffect(() => {
     const savedGoal = localStorage.getItem("goal");
     if (savedGoal) {
@@ -40,7 +39,6 @@ export default function GoalForm({ onClose, onSave }) {
     }
   }, []);
 
-  // ✅ Lưu dữ liệu vào localStorage mỗi lần thay đổi
   useEffect(() => {
 
     const goalData = {

@@ -49,17 +49,45 @@ export const editGoal = async (id, updatedGoal) => {
 
 
 export const deleteGoal = async (id) => {
+    try {
+        console.log("ID to delete:", id);
+        const response = await api.delete(`/goal/${id}`);
+        console.log("Goal deleted:", response.data);
+        return response.data;
+    } catch (error) {
+        handleApiError(error);
+        throw error;
+    }
+};
+
+export const getAllGoal = async (id) => {
+    try {
+        console.log("ID to delete:", id);
+        const response = await api.get(`/goal`);
+        console.log("Goal deleted:", response.data);
+        return response.data;
+    } catch (error) {
+        handleApiError(error);
+        throw error;
+    }
+};
+// Xủ lí trạng thái 
+export const updateGoalStatus = async (id, status) => {
   try {
-    const response = await api.delete(`/goal/${id}`);
-    console.log("Goal deleted:", response.data);
+    console.log("Updating goal status for ID:", id, "New Status:", status);
+    // Cập nhật URL endpoint phù hợp với route mới
+    const response = await api.put(`/goal/${id}/completeStatus`, { completeStatus: status });
+
+    if (response.status !== 200) {
+      throw new Error(`Error: ${response.status}`);
+    }
+
     return response.data;
   } catch (error) {
-    handleApiError(error);
+    console.error("Failed to update goal status:", error);
     throw error;
   }
 };
-
-
 
 // Xử lý lỗi API
 const handleApiError = (error) => {
