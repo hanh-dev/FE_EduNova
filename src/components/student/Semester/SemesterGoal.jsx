@@ -106,7 +106,6 @@ export default function SemesterGoal() {
                 <th>Teacher Expectations</th>
                 <th>Self Expectations</th>
                 <th>Complete</th>
-                <th>Status</th>
                 <th>Due to</th>
                 <th>Action</th>
               </tr>
@@ -160,7 +159,6 @@ export default function SemesterGoal() {
                         }}
                       />
                     </td>
-                    <td>{goal.completeStatus}</td>
                     <td>{goal.dueDate}</td>
                     <td>
                       <i

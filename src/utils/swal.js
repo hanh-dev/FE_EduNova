@@ -3,14 +3,14 @@ import { logout } from '../services/api/StudentAPI';
 import { clearUser } from '../services/auth/authService';
 const handleLogout = () => {
   Swal.fire({
-    title: 'Bạn có chắc chắn?',
-    text: 'Bạn sẽ bị đăng xuất khỏi hệ thống!',
+    title: 'Are you sure?',
+    text: 'You will be logged out of the system!',
     icon: 'warning',
     showCancelButton: true,
     confirmButtonColor: '#3085d6',
     cancelButtonColor: '#d33',
-    confirmButtonText: 'Đăng xuất',
-    cancelButtonText: 'Hủy',
+    confirmButtonText: 'Log out',
+    cancelButtonText: 'Cancel',
   }).then((result) => {
     if (result.isConfirmed) {
       logout();

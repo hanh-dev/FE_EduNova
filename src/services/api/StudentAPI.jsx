@@ -88,17 +88,24 @@ export const updateGoalStatus = async (id, status) => {
     throw error;
   }
 };
+export const getGoalsByStatus = async (status) => {
+  try {
+    console.log("Fetching goals with status:", status);
+    const response = await api.get(`/goal/status/${status}`);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch goals by status:", error);
+    throw error;
+  }
+};
 
 // Xử lý lỗi API
 const handleApiError = (error) => {
   if (error.response) {
-    // Có phản hồi từ server
     console.error("API error:", error.response.data);
   } else if (error.request) {
-    // Không có phản hồi từ server
     console.error("No response from server:", error.request);
   } else {
-    // Lỗi không xác định
     console.error("Unexpected error:", error.message);
   }
 };
