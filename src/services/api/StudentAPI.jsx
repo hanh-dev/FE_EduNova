@@ -34,3 +34,47 @@ export const profile = () => api.get('/profile');
 // }
 
 // export {login, logout}
+
+
+
+// Lấy tất cả dữ liệu inClass
+export const getAllInClass = async () => {
+  try {
+    const response = await api.get(`/inclass`);
+    console.log("All inClass data:", response.data);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
+// Lấy inClass theo ID
+export const getInClassByID = async (id) => {
+    try {
+      console.log("Fetching inClass ID:", id);
+      const response = await api.get(`/inclass/${id}`);
+      return response.data;
+    } catch (error) {
+      console.error("Failed to get inClass by ID:", error);
+      throw error;
+    }
+  };
+  
+
+// Sửa inClass theo ID (Update)
+export const editInClass = async (id, updatedGoal) => {
+  try {
+    console.log("Updating inClass ID:", id, updatedGoal);
+    const response = await api.put(`/inclass/${id}`, updatedGoal);
+    
+    if (response.status !== 200) {
+      throw new Error(`Update failed: ${response.status}`);
+    }
+
+    return response.data;
+  } catch (error) {
+    console.error("Failed to edit inClass:", error);
+    throw error;
+  }
+};

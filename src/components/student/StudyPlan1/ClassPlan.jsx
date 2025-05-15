@@ -1,12 +1,29 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Buttons from '../Buttons/Buttons';
 import Date from '../DateSchedule/Date';
+import AddNewClassPlan from '../Buttons/AddNewClassPlan';
+import { getAllInClass } from '../../../services/api/StudentAPI';
 import './ClassPlan.css';
 
 function ClassPlan() {
+  const [inClassData, setInClassData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const data = await getAllInClass();
+        setInClassData(data);
+      } catch (error) {
+        console.error("Failed to fetch in-class data", error);
+      }
+    };
+    fetchData();
+  }, []);
+
   return (
     <div className="a-main-content-check">
       <div className="a-table-section">
+        <AddNewClassPlan />
         <h2>In class</h2>
         <table>
           <thead>
@@ -22,36 +39,23 @@ function ClassPlan() {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <Date></Date>
-              <td>TOEIC</td>
-              <td>Preposition</td>
-              <td>1</td>
-              <td>I struggle with a, an, the.</td>
-              <td></td>
-              <td><span className="a-status red"></span></td>
-              <Buttons type="class"/>
-            </tr>
-          <tr>
-              <Date></Date>
-              <td>TOEIC</td>
-              <td>Preposition</td>
-              <td>3</td>
-              <td>I have no difficult</td>
-              <td></td>
-              <td><span className="a-status green"></span></td>
-              <Buttons type="class"/>
-            </tr>  
-            <tr>
-              <Date></Date>
-              <td>TOEIC</td>
-              <td>Preposition</td>
-              <td>3</td>
-              <td>I have no difficult</td>  
-              <td></td>
-              <td><span className="a-status green"></span></td>
-              <Buttons type="class"/>
-            </tr>
+            {inClassData.map((item, index) => (
+              <tr key={index}>
+                <td>{item.date}</td>
+                <td>{item.skill_module}</td>
+                <td>{item.MyLesson}</td>
+                <td>{item.SelfAssessment}</td>
+                <td>{item.MyDifficulties}</td>
+                <td>{item.Myplan}</td>
+                <td>{item.ProblemSolved}</td>
+                <td>
+                  <span className={`a-status ${item.problemSolved ? 'green' : 'red'}`}></span>
+                </td>
+                <td>
+                <Buttons type="class" inclass={item} />
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
