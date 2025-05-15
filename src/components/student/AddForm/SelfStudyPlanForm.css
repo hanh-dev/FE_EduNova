@@ -1,4 +1,6 @@
-
+body {
+    font-family:Arial, sans-serif;
+  }
     
   .form-container {
     background-color: #22BBEA;
@@ -60,7 +62,7 @@
     margin-top: 40px; 
   }
   
-  .btn-1 {
+  button {
     width: 120px;
     height: 50px;
     padding: 10px 28px;
@@ -74,7 +76,7 @@
     transition: background-color 0.2s;
   }
   
-  .btn-1:hover {
+  button:hover {
     opacity: 0.9;
     background-color: #22BBEA;
   }
