@@ -4,8 +4,8 @@ import { api } from "../../utils/constants";
 
 export const getCourses = () => api.get("/student/courses");
 export const getFeedbacks = () => api.get("/student/feedbacks");
-export const login = (credentials) => api.post("/login", credentials);
-export const logout = () => api.post("/logout");
+export const login = (credentials) => api.post("/v1/login", credentials);
+export const logout = () => api.post("/v1/logout");
 export const profile = () => api.get('/profile');
 
 
@@ -34,3 +34,25 @@ export const profile = () => api.get('/profile');
 // }
 
 // export {login, logout}
+
+const getClasses = async() => {
+    try {
+        const reponse = await api.get('/v1/classes');
+        return reponse.data;
+    } catch (error) {
+        console.error("Error at fetching class data: ", error);
+        return [];
+    }
+}
+
+const getNameOfTeachers = async () => {
+    try {
+        const response = await api.get('/v1/teachers');
+        return response.data;
+    } catch (error) {
+        console.error("Error at fetching teacher data", error);
+        return [];
+    }
+}
+
+export {getClasses, getNameOfTeachers}
