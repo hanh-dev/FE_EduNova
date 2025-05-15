@@ -14,6 +14,19 @@
   gap: 8px;
   align-items: center;
 }
+.add-goal-form input[type="text"] {
+  flex: 1;
+  padding: 12px 16px;       
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 15px;          
+  height: 30px;        
+}
+
+.add-goal-form input[type="text"]::placeholder {
+  font-size: 18px;         
+  color: #999;
+}
 
 .goal-item {
   display: flex;
@@ -22,11 +35,10 @@
   border: 1px solid #ccc;
   border-radius: 6px;
   padding: 8px 12px;
-  width: 280px; /* Fixed width like add-goal-form */
+  width: 280px;
   background-color: #f9f9f9;
 }
 
-/* Handle long text with ellipsis */
 .goal-item span {
   color: #d32f2f;
   font-weight: 600;
@@ -38,7 +50,6 @@
   position: relative;
 }
 
-/* Tooltip effect */
 .goal-item span::after {
   content: attr(data-fulltext);
   position: absolute;
