@@ -99,6 +99,18 @@ export const getGoalsByStatus = async (status) => {
   }
 };
 
+// Week's Goal
+export const getAllWeekGoal = async () => {
+  try {
+    const response = await api.get(`/week-goals`);
+    console.log("getAllWeekGoal response:", response.data);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
 // Xử lý lỗi API
 const handleApiError = (error) => {
   if (error.response) {
