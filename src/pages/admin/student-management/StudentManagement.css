@@ -1,0 +1,105 @@
+.student-management {
+  padding: 20px;
+  background-color: #f9f9f9;
+  margin-top: 35px;
+}
+
+.student-management h2 {
+  margin-bottom: 20px;
+  text-align: center;
+  font-size: 24px;
+  color: #333;
+}
+
+.add-student-btn {
+  display: flex;
+  justify-content: flex-start;
+    margin-bottom: 10px;
+  margin-top: 10px;
+}
+
+.add-student-btn button {
+  background-color: #28a745;
+  color: white;
+  padding: 8px 14px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+  transition: background-color 0.3s;
+}
+
+.add-student-btn button:hover {
+  background-color: #218838;
+}
+
+.student-table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  background-color: white;
+}
+
+.student-table th,
+.student-table td {
+  border: 1px solid #e0e0e0;
+  padding: 12px 10px;
+  text-align: center;
+  font-size: 15px;
+}
+
+.student-table th {
+  background-color: #f1f1f1;
+  color: #444;
+  font-weight: 600;
+}
+
+.student-table tr:hover {
+  background-color: #fdfdfd;
+}
+
+.student-image {
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: auto;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+}
+
+.action-buttons button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 6px;
+  border-radius: 6px;
+  transition: background-color 0.3s ease;
+}
+
+.action-buttons button:hover {
+  background-color: #eaeaea;
+}
+
+.action-buttons .edit {
+  color: #007bff;
+}
+
+.action-buttons .delete {
+  color: #dc3545;
+}
+
+h2 {
+    margin: none;
+}

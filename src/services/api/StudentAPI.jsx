@@ -73,135 +73,27 @@ const updateClass = async (id, data) => {
   }
 };
 
-
-export {getClasses, getNameOfTeachers, createClass, getCourses, getFeedbacks, login, logout, profile, deleteClass, updateClass, getAllWeekGoal, getAllTasks}
-export const getGoals = () => api.get("/goal");
-
-// goal
-export const createGoal = async (goalData) => {
+const getStudents = async () => {
   try {
-    const response = await api.post("/goal", goalData);
-    console.log("Goal created:", response.data);
-    return response.data;
+    const response = await api.get('/v1/students');
+    console.log('API response:', response.data);
+    return response.data.data;
   } catch (error) {
-    handleApiError(error);
+    console.log("Failed to update class", error);
     throw error;
   }
-};
+}
 
-export const getGoal = async (id) => {
+const getTeachers = async () => {
   try {
-    console.log("Fetching goal ID:", id);
-    const response = await api.get(`/goal/${id}`);
-    return response.data;
+    const response = await api.get('/v1/teachers');
+    console.log('API response:', response.data);
+    return response.data.data;
   } catch (error) {
-    console.error("Failed to get goal:", error);
+    console.log("Failed to update class", error);
     throw error;
   }
-};
-
-// Cập nhật mục tiêu theo ID
-export const editGoal = async (id, updatedGoal) => {
-  try {
-    console.log("Updating goal ID:", id, updatedGoal);
-    const response = await api.put(`/goal/${id}`, updatedGoal);
-    
-    if (response.status !== 200) {
-      throw new Error(`Error: ${response.status}`);
-    }
-
-    return response.data;
-  } catch (error) {
-    console.error("Failed to edit goal:", error);
-    throw error;
-  }
-};
+}
 
 
-export const deleteGoal = async (id) => {
-    try {
-        console.log("ID to delete:", id);
-        const response = await api.delete(`/goal/${id}`);
-        console.log("Goal deleted:", response.data);
-        return response.data;
-    } catch (error) {
-        handleApiError(error);
-        throw error;
-    }
-};
-
-export const getAllGoal = async (id) => {
-    try {
-        console.log("ID to delete:", id);
-        const response = await api.get(`/goal`);
-        console.log("Goal deleted:", response.data);
-        return response.data;
-    } catch (error) {
-        handleApiError(error);
-        throw error;
-    }
-};
-// Xủ lí trạng thái 
-export const updateGoalStatus = async (id, status) => {
-  try {
-    console.log("Updating goal status for ID:", id, "New Status:", status);
-    // Cập nhật URL endpoint phù hợp với route mới
-    const response = await api.put(`/goal/${id}/completeStatus`, { completeStatus: status });
-
-    if (response.status !== 200) {
-      throw new Error(`Error: ${response.status}`);
-    }
-
-    return response.data;
-  } catch (error) {
-    console.error("Failed to update goal status:", error);
-    throw error;
-  }
-};
-export const getGoalsByStatus = async (status) => {
-  try {
-    console.log("Fetching goals with status:", status);
-    const response = await api.get(`/goal/status/${status}`);
-    return response.data;
-  } catch (error) {
-    console.error("Failed to fetch goals by status:", error);
-    throw error;
-  }
-};
-
-// Week's Goal
-const getAllWeekGoal = async () => {
-  try {
-    const response = await api.get(`/week-goals`);
-    console.log("getAllWeekGoal response:", response.data);
-    return response.data;
-  } catch (error) {
-    handleApiError(error);
-    throw error;
-  }
-};
-
-//Task
-const getAllTasks = async () => {
-  try {
-    const response = await api.get(`/task`);
-    console.log("getAllTasks response:", response.data);
-    return response.data;
-  } catch (error) {
-    handleApiError(error);
-    throw error;
-  }
-};
-
-// Xử lý lỗi API
-const handleApiError = (error) => {
-  if (error.response) {
-    console.error("API error:", error.response.data);
-  }
-  else if (error.request){
-    console.error("No response from server:", error.request);
-  }
-  else{
-    console.error("Unexpexted error:",error.message);
-  }
-};
+export {getClasses, getNameOfTeachers, createClass, getCourses, getFeedbacks, login, logout, profile, deleteClass, updateClass, getStudents, getTeachers}
