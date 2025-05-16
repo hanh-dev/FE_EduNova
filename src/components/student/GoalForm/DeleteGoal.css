@@ -35,6 +35,9 @@
   display: flex;
   gap:30px;
 }
+.btn-delete:first-child{
+  background-color: #FF9933;
+}
 .btn-delete{
   max-width: 100px;
   max-height: 100px;
@@ -42,9 +45,7 @@
 
 
 
-.btn-delete:first-child{
-  background-color: #FF9933;
-}
+
 .btn-delete:last-child{
   background-color: rgb(251, 12, 12);
 }
