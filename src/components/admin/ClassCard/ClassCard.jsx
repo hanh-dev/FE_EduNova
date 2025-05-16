@@ -1,13 +1,21 @@
 import React from 'react';
 import './ClassCard.css';
+import { deleteClass } from '../../../services/api/StudentAPI';
+import { toast } from 'react-toastify';
 
 const ClassCard = ({ classItem }) => {
-    const handleUpdate = () => {
-
+    const handleUpdate = async() => {
     }
 
-    const handleDelete = () => {
-
+    const handleDelete = async(id) => {
+        const confirmed = window.confirm("Are you sure that you want to delete this class?");
+        if (!confirmed) return;
+        const result = await deleteClass(id);
+        if(result.status){
+            toast.success("Deleted class successfully!")
+        }else {
+            toast.error("Failed to delete class!")
+        }
     }
     return (
         <div className="class-card">

@@ -1,40 +1,11 @@
-import { API_BASE_URL } from "../../utils/constants";
 import { api } from "../../utils/constants";
-// import { saveUser, setRefreshToken, setToken } from "../auth/authService";
-
-export const getCourses = () => api.get("/student/courses");
-export const getFeedbacks = () => api.get("/student/feedbacks");
-export const login = (credentials) => api.post("/v1/login", credentials);
-export const logout = () => api.post("/v1/logout");
-export const profile = () => api.get('/profile');
-
-
-// const login = async (credentials) => {
-//     try {
-//         const response = await api.post("/login", credentials);
-//         const {access_token, refresh_token, user} = response.data;
-//         saveUser(user, access_token, refresh_token);
-//         setToken(access_token);
-//         setRefreshToken(refresh_token);
-//         return {user.username, role, access_token}
-        
-//     } catch (error) {
-//         console.error("Erorr login!", error);
-//     }
-// }
-
-// const logout = async() => {
-//     try {
-//         localStorage.removeItem('access_token');
-//         localStorage.removeItem('refresh_token');
-//         localStorage.removeItem('user');
-//     } catch (error) {
-//         console.error("Erorr at logout!", error);
-//     }
-// }
-
-// export {login, logout}
-
+// User Authentication
+const getCourses = () => api.get("/student/courses");
+const getFeedbacks = () => api.get("/student/feedbacks");
+const login = (credentials) => api.post("/v1/login", credentials);
+const logout = () => api.post("/v1/logout");
+const profile = () => api.get('/profile');
+// Admin class management
 const getClasses = async() => {
     try {
         const reponse = await api.get('/v1/classes');
@@ -81,5 +52,15 @@ const createClass = async (data) => {
     }
 }
 
+const deleteClass = async (id) => {
+  try {
+    const response = await api.delete(`/v1/classes/${id}`);
+    return response.data;
+  } catch (error) {
+    console.log("Failed to delete class", error);
+    throw error;
+  }
+}
 
-export {getClasses, getNameOfTeachers, createClass}
+
+export {getClasses, getNameOfTeachers, createClass, getCourses, getFeedbacks, login, logout, profile, deleteClass}

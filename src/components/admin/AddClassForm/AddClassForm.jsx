@@ -162,7 +162,7 @@ const AddClassForm = ({ onClose, teacherData, setClassData }) => {
             />
           </label>
 
-          <button type="submit" className="submit-button">Save Class</button>
+          <button type="submit" className="submit-button1">Save Class</button>
         </form>
       </div>
     </div>
