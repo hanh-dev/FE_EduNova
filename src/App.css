@@ -75,19 +75,6 @@ html, body, #root {
   margin-left: 200px;
 }
 
-/* .main-content {
-  padding: 32px;
-  flex: 1;
-} */
-
-/* Existing styles below (if any) */
-#root {
-  padding: 0;
-  text-align: center;
-  height: 100%;
-  width: 100%;
-}
-
 .logo {
   height: 6em;
   padding: 1.5em;
