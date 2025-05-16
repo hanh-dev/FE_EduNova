@@ -62,5 +62,16 @@ const deleteClass = async (id) => {
   }
 }
 
+const updateClass = async (id, data) => {
+  try {
+    const response = await api.patch(`/v1/classes/${id}`, data);
+    console.log("Test response update:", response.data);
+    return response.data;
+  } catch (error) {
+    console.log("Failed to update class", error);
+    throw error;
+  }
+};
 
-export {getClasses, getNameOfTeachers, createClass, getCourses, getFeedbacks, login, logout, profile, deleteClass}
+
+export {getClasses, getNameOfTeachers, createClass, getCourses, getFeedbacks, login, logout, profile, deleteClass, updateClass}
