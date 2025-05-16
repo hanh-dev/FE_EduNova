@@ -1,9 +1,9 @@
 import { Routes, Route } from 'react-router-dom';
 import { useAuth } from '../services/providers/AuthContext';
-import StudentRoutes from './StudentRoutes';
 import TeacherRoutes from './TeacherRoutes';
 import Login from '../components/shared/Login/Login';
 import { Navigate } from 'react-router-dom';
+import StudentRoutes from './StudentRoutes';
 const AppRoutes = () => {
   const { user } = useAuth();
   return (

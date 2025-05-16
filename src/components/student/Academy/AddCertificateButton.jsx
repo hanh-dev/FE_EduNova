@@ -1,5 +1,5 @@
 import React from "react";
-import "../Academy/AchievementSection.css"; // Đã có CSS cho .add-btn
+import "../Academy/AchievementSection.css"; 
 
 const AddCertificateButton = ({ onClick }) => {
   return (
