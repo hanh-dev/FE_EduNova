@@ -73,5 +73,27 @@ const updateClass = async (id, data) => {
   }
 };
 
+const getStudents = async () => {
+  try {
+    const response = await api.get('/v1/students');
+    console.log('API response:', response.data);
+    return response.data.data;
+  } catch (error) {
+    console.log("Failed to update class", error);
+    throw error;
+  }
+}
 
-export {getClasses, getNameOfTeachers, createClass, getCourses, getFeedbacks, login, logout, profile, deleteClass, updateClass}
+const getTeachers = async () => {
+  try {
+    const response = await api.get('/v1/teachers');
+    console.log('API response:', response.data);
+    return response.data.data;
+  } catch (error) {
+    console.log("Failed to update class", error);
+    throw error;
+  }
+}
+
+
+export {getClasses, getNameOfTeachers, createClass, getCourses, getFeedbacks, login, logout, profile, deleteClass, updateClass, getStudents, getTeachers}
