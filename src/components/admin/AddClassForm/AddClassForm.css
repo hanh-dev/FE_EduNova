@@ -73,6 +73,7 @@ input, select {
 }
 
 textarea {
+  resize: vertical;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 6px;

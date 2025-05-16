@@ -61,7 +61,7 @@ function ClassManagement() {
             <h1>Class Management</h1>
           </div>
 
-          {showAddClassForm && <AddClassForm onClose={() => setAddClassForm(false)} teacherData={teacher}/>}
+          {showAddClassForm && <AddClassForm onClose={() => setAddClassForm(false)} teacherData={teacher} setClassData={setClassData}/>}
 
           <div className="card-grid">
             {classData.map((classItem, index) => (

@@ -55,4 +55,31 @@ const getNameOfTeachers = async () => {
     }
 }
 
-export {getClasses, getNameOfTeachers}
+const createClass = async (data) => {
+    try {
+      const formData = new FormData();
+      formData.append("name", data.className);
+      formData.append("teacherName", data.teacherName);
+      formData.append("description", data.description);
+      if (data.image) {
+        formData.append("image", data.image);
+      }
+
+      formData.append("students", JSON.stringify(data.students));
+
+      const response = await api.post('/v1/classes', formData, {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      });
+
+      console.log("Test data: ", response.data);
+      return response.data;
+    } catch (error) {
+      console.error("Failed to create class", error);
+      throw error;
+    }
+}
+
+
+export {getClasses, getNameOfTeachers, createClass}
