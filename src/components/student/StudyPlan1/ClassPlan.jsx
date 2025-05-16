@@ -43,17 +43,15 @@ function ClassPlan() {
               <tr key={index}>
                 <td>{item.date}</td>
                 <td>{item.skill_module}</td>
-                <td>{item.MyLesson}</td>
-                <td>{item.SelfAssessment}</td>
-                <td>{item.MyDifficulties}</td>
-                <td>{item.Myplan}</td>
-                <td>{item.ProblemSolved}</td>
+                <td>{item.lesson_summary}</td>
+                <td>{item.self_assessment}</td>
+                <td>{item.difficulties}</td>
+                <td>{item.improvement_plan}</td>
+                <td>{item.problem_solved}</td>
                 <td>
                   <span className={`a-status ${item.problemSolved ? 'green' : 'red'}`}></span>
                 </td>
-                <td>
                 <Buttons type="class" inclass={item} />
-                </td>
               </tr>
             ))}
           </tbody>

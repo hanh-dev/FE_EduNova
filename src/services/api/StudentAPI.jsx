@@ -78,3 +78,16 @@ export const editInClass = async (id, updatedGoal) => {
     throw error;
   }
 };
+
+
+
+export const getAllSelfStudy= async () => {
+  try {
+    const response = await api.get(`/selfstudy`);
+    console.log("All selfstudy data:", response.data);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+  import React, { useState } from "react";
 import "./AddClassPlan.css";
 
 const AddNewClassPlan = ({ onAddNewPlan }) => {
@@ -38,10 +38,7 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
 
   return (
     <>
-      <button
-        onClick={() => setShowForm(true)}
-        className="add-button"
-      >
+      <button onClick={() => setShowForm(true)} className="add-button">
         Add Class Plan
       </button>
 
@@ -52,86 +49,137 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
               &times;
             </button>
             <form onSubmit={handleSubmit} className="class-plan-form">
-              <div className="form-group">
-                <label>Date:</label>
-                <input
-                  type="date"
-                  name="date"
-                  value={formData.date}
-                  onChange={handleChange}
-                  required
-                />
+              <div className="form-columns">
+                <div className="left-column">
+                  <div className="form-group">
+                    <label>Date</label>
+                    <input
+                      type="date"
+                      name="date"
+                      value={formData.date}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Skill/Module</label>
+                    <input
+                      type="text"
+                      name="skillModule"
+                      value={formData.skillModule}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  <div className="form-group">
+                    <label>My lesson - What did I learn today?</label>
+                    <input
+                      name="lessonLearned"
+                      value={formData.lessonLearned}
+                      onChange={handleChange}
+                      required
+                    />
+                  </div>
+                  
+                  <div className="form-group">
+                    <label>Self-assessment</label>
+                    <div className="radio-group">
+                      <label>
+                        <input
+                          type="radio"
+                          name="selfAssessment"
+                          value="1"
+                          checked={formData.selfAssessment === "1"}
+                          onChange={handleChange}
+                        />{" "}
+                        1
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name="selfAssessment"
+                          value="2"
+                          checked={formData.selfAssessment === "2"}
+                          onChange={handleChange}
+                        />{" "}
+                        2
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name="selfAssessment"
+                          value="3"
+                          checked={formData.selfAssessment === "3"}
+                          onChange={handleChange}
+                        />{" "}
+                        3
+                      </label>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="right-column">
+                  <div className="form-group">
+                    <label>Difficulties</label>
+                    <input
+                      type="text"
+                      name="difficulties"
+                      value={formData.difficulties}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>My plan</label>
+                    <input
+                      type="text"
+                      name="plan"
+                      value={formData.plan}
+                      onChange={handleChange}
+                    />
+                  </div>
+
+                  <div className="form-group">
+                    <label>Solved?</label>
+                    <div className="radio-group">
+                      <label>
+                        <input
+                          type="radio"
+                          name="problemSolved"
+                          value="Yes"
+                          checked={formData.problemSolved === "Yes"}
+                          onChange={handleChange}
+                        />{" "}
+                        Yes
+                      </label>
+                      <label>
+                        <input
+                          type="radio"
+                          name="problemSolved"
+                          value="Not yet"
+                          checked={formData.problemSolved === "Not yet"}
+                          onChange={handleChange}
+                        />{" "}
+                        Not yet
+                      </label>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <div className="form-group">
-                <label>Skill/Module:</label>
-                <input
-                  type="text"
-                  name="skillModule"
-                  value={formData.skillModule}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>My lesson - What did I learn today?</label>
-                <textarea
-                  name="lessonLearned"
-                  value={formData.lessonLearned}
-                  onChange={handleChange}
-                  required
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Self-assessment:</label>
-                <select
-                  name="selfAssessment"
-                  value={formData.selfAssessment}
-                  onChange={handleChange}
-                  required
+              <div className="form-actions">
+                <button
+                  type="button"
+                  className="cancel-button"
+                  onClick={() => setShowForm(false)}
                 >
-                  <option value="1">1 </option>
-                  <option value="2">2 </option>
-                  <option value="3">3 </option>
-                </select>
+                  Cancel
+                </button>
+                <button type="submit" className="save-button">
+                  Save
+                </button>
               </div>
-
-              <div className="form-group">
-                <label>My difficulties:</label>
-                <textarea
-                  name="difficulties"
-                  value={formData.difficulties}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>My plan:</label>
-                <textarea
-                  name="plan"
-                  value={formData.plan}
-                  onChange={handleChange}
-                />
-              </div>
-
-              <div className="form-group">
-                <label>Problem Solved:</label>
-                <select
-                  name="problemSolved"
-                  value={formData.problemSolved}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="Yes">Yes</option>
-                  <option value="Not yet">Not yet</option>
-                </select>
-              </div>
-
-              <button type="submit" className="save-button">
-                Save Plan
-              </button>
             </form>
           </div>
         </div>
