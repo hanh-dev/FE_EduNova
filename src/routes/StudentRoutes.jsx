@@ -6,9 +6,6 @@ import Profile from '../components/student/Profile/Profile';
 import RequireAuth from '../components/shared/RequireAuth/RequireAuth';
 import { Academy1 } from '../pages/student/Academy/Academy1';
 import { Dashboard } from '../pages/student/Dashboard/Dashboard';
-// import { Semester } from '../pages/student/Semester/Semester';
-// import ClassPlan1 from '../pages/student/StudyPlan/ClassPlan1';
-
 
 const StudentRoutes = () => [
   <Route path="/" element={<StudentLayout />} key="layout-student">
