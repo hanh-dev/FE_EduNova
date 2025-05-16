@@ -158,6 +158,18 @@ const getAllWeekGoal = async () => {
   }
 };
 
+//Task
+const getAllTasks = async () => {
+  try {
+    const response = await api.get(`/task`);
+    console.log("getAllTasks response:", response.data);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
 // Xử lý lỗi API
 const handleApiError = (error) => {
   if (error.response) {
@@ -171,4 +183,4 @@ const handleApiError = (error) => {
   }
 };
 
-export {getClasses, getNameOfTeachers, createClass, getAllWeekGoal}
+export {getClasses, getNameOfTeachers, createClass, getAllWeekGoal, getAllTasks}
