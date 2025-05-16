@@ -66,7 +66,7 @@ export default function SemesterGoal() {
 
   return (
     <div className="container">
-      <div className="yourGoal">
+      <div className="yourGoall">
         <div className="goal-header">
           <h2>Your Study Goal</h2>
           <span className="add-goal-btn" onClick={() => setShowForm(true)}>
@@ -97,7 +97,7 @@ export default function SemesterGoal() {
         )}
 
         <div className="table-wrapper">
-          <table className="table table-bordered text-center align-middle">
+          <table className="table table-your-goal">
             <thead>
               <tr>
                 <th>Course</th>

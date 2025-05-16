@@ -101,7 +101,7 @@ export default function GoalForm({ onClose, onSave }) {
         <h1>Set Goals</h1>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
+          <div className="your-goal-input">
             <label className="title">Course</label>
             <span className="close-down"><i className="fa-solid fa-caret-down"></i></span>
             <select className="form-control" value={course} onChange={(e) => setCourse(e.target.value)}>
@@ -111,32 +111,32 @@ export default function GoalForm({ onClose, onSave }) {
             </select>
           </div>
 
-          <div className="mb-3">
+          <div className="your-goal-input">
             <label className="title">Goal</label>
             <input type="text" className="form-control" value={goals} onChange={(e) => setGoals(e.target.value)} required />
           </div>
 
-          <div className="mb-3">
+          <div className="your-goal-input">
             <label className="title">Course Expectations</label>
             <input type="text" className="form-control" value={courseExpectations} onChange={(e) => setCourseExpectations(e.target.value)} required />
           </div>
 
-          <div className="mb-3">
+          <div className="your-goal-input">
             <label className="title">Teacher Expectations</label>
             <input type="text" className="form-control" value={teacherExpectations} onChange={(e) => setTeacherExpectations(e.target.value)} required />
           </div>
 
-          <div className="mb-3">
+          <div className="your-goal-input">
             <label className="title">Self Expectations</label>
             <input type="text" className="form-control" value={selfExpectations} onChange={(e) => setSelfExpectations(e.target.value)} required />
           </div>
 
-          <div className="mb-3">
+          <div className="your-goal-input">
             <label className="title">Due Date</label>
             <input type="date" className="form-control" value={dueDate} onChange={(e) => setDueDate(e.target.value)} required />
           </div>
 
-          <button className="btn w-100 button-save" style={{ backgroundColor: "orange", borderColor: "orange" }}>
+          <button className="btn-save">
             Save
           </button>
         </form>

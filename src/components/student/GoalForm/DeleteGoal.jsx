@@ -17,10 +17,10 @@ export default function DeleteGoal({ id, onDeleteSuccess, onClose }) {
       <div className="popup">
         <h3>Are you sure you want to delete this goal?</h3>
         <div className="popup-buttons">
-          <button className="btn btn-danger" onClick={handleDelete}>
+          <button className="btn-delete" onClick={handleDelete}>
             Yes
           </button>
-          <button className="btn btn-secondary" onClick={onClose}>
+          <button className="btn-delete" onClick={onClose}>
             No
           </button>
         </div>

@@ -100,7 +100,7 @@ useEffect(() => {
         {errorMessage && <p className="error-message">{errorMessage}</p>}
 
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
+          <div className="edit-your-goal">
             <label className="title">Course</label>
             <span className="close-down">
               <i className="fa-solid fa-caret-down"></i>
@@ -117,7 +117,7 @@ useEffect(() => {
             </select>
           </div>
 
-          <div className="mb-3">
+          <div className="edit-your-goal">
             <label className="title">Goal</label>
             <input
               type="text"
@@ -129,7 +129,7 @@ useEffect(() => {
             />
           </div>
 
-          <div className="mb-3">
+          <div className="edit-your-goal">
             <label className="title">Course Expectations</label>
             <input
               type="text"
@@ -141,7 +141,7 @@ useEffect(() => {
             />
           </div>
 
-          <div className="mb-3">
+          <div className="edit-your-goal">
             <label className="title">Teacher Expectations</label>
             <input
               type="text"
@@ -153,7 +153,7 @@ useEffect(() => {
             />
           </div>
 
-          <div className="mb-3">
+          <div className="edit-your-goal">
             <label className="title">Self Expectations</label>
             <input
               type="text"
@@ -165,7 +165,7 @@ useEffect(() => {
             />
           </div>
 
-          <div className="mb-3">
+          <div className="edit-your-goal">
             <label className="title">Due Date</label>
             <input
               type="date"
@@ -179,8 +179,7 @@ useEffect(() => {
 
           <button
             type="submit"
-            className="btn w-100 button-save"
-            style={{ backgroundColor: "orange", borderColor: "orange" }}
+            className="button-save"
           >
             Update
           </button>

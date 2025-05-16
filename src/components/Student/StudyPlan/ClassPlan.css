@@ -96,7 +96,6 @@
     background-color: white;
   }
   
-  /* Status indicator */
   .status {
     display: inline-block;
     width: 18px;
@@ -112,7 +111,6 @@
     background-color: green;
   }
   
-  /* Responsive fallback */
   @media (max-width: 768px) {
     .main-content {
       margin-left: 0;
