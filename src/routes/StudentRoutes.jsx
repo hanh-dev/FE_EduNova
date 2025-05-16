@@ -1,6 +1,6 @@
 import { Route } from 'react-router-dom';
 import StudentLayout from '../layouts/StudentLayout';
-import Semester from '../pages/student/Semester/Semester';
+import SemesterGoal from '../components/student/Semester/SemesterGoal1';
 import ClassPlan1 from '../pages/student/ClassPlan/ClassPlan1';
 import Profile from '../components/student/Profile/Profile';
 import RequireAuth from '../components/shared/RequireAuth/RequireAuth';
@@ -11,7 +11,7 @@ const StudentRoutes = () => [
   <Route path="/" element={<StudentLayout />} key="layout-student">
     <Route index element={<Dashboard />} />
     <Route path="dashboard" element={<Dashboard />} />
-    <Route path="semester-goals" element={<Semester />} />
+    <Route path="semester-goals" element={<SemesterGoal />} />
     <Route path="achievement" element={<Academy1 />} />
     <Route path="study-plans" element={<ClassPlan1 />} />
     <Route path="profile" element={<RequireAuth><Profile /></RequireAuth>} />
