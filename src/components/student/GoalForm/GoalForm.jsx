@@ -14,6 +14,7 @@ export default function GoalForm({ onClose, onSave }) {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user")); 
+    console.log(user)
     if (user && user.user_id) {
       setUserID(user.user_id);
 
