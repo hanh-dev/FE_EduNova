@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import './AddClassForm.css';
-import { createClass, getClasses } from '../../../services/api/StudentAPI';
+import { createClass, updateClass, getClasses } from '../../../services/api/StudentAPI';
 import { toast } from 'react-toastify';
 
-const AddClassForm = ({ onClose, teacherData, setClassData }) => {
+const AddClassForm = ({ onClose, teacherData, setClassData, classToEdit }) => {
   const [formData, setFormData] = useState({
     className: '',
     teacherName: '',
@@ -12,20 +12,24 @@ const AddClassForm = ({ onClose, teacherData, setClassData }) => {
     students: []
   });
 
+  useEffect(() => {
+    if (classToEdit) {
+      setFormData({
+        className: classToEdit.name || '',
+        teacherName: classToEdit.teacher_name || '',
+        description: classToEdit.description || '',
+        image: null,
+        students: []
+      });
+    }
+  }, [classToEdit]);
+
   const handleChange = (e) => {
     const { name, value, files } = e.target;
-
-    if (name === "image") {
-      setFormData(prev => ({
-        ...prev,
-        image: files[0]
-      }));
-    } else {
-      setFormData(prev => ({
-        ...prev,
-        [name]: value
-      }));
-    }
+    setFormData(prev => ({
+      ...prev,
+      [name]: name === 'image' ? files[0] : value
+    }));
   };
 
   const handleCSVUpload = (e) => {
@@ -33,15 +37,13 @@ const AddClassForm = ({ onClose, teacherData, setClassData }) => {
     if (!file) return;
 
     const reader = new FileReader();
-    reader.onload = function (event) {
+    reader.onload = (event) => {
       const text = event.target.result.trim();
       const rows = text.split('\n');
-
       const headers = rows[0].split(',').map(h => h.trim().toLowerCase());
 
       const students = rows.slice(1).map(row => {
         const values = row.split(',').map(v => v.trim());
-
         const student = {};
         headers.forEach((header, index) => {
           student[header] = values[index];
@@ -51,7 +53,7 @@ const AddClassForm = ({ onClose, teacherData, setClassData }) => {
 
       setFormData(prev => ({
         ...prev,
-        students: students
+        students
       }));
     };
 
@@ -61,47 +63,34 @@ const AddClassForm = ({ onClose, teacherData, setClassData }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const result = await createClass(formData);
+      let result;
+      if (classToEdit) {
+        // UPDATE
+        result = await updateClass(classToEdit.id, formData);
+      } else {
+        // CREATE
+        result = await createClass(formData);
+      }
 
       if (result.status) {
-        setFormData({
-          className: '',
-          teacherName: '',
-          description: '',
-          image: null,
-          students: []
-        });
-
         const newData = await getClasses();
         setClassData(newData);
-        toast.success("Class created successfully!");
+        onClose();
+        toast.success(`${classToEdit ? 'Class updated' : 'Class created'} successfully!`, { autoClose: 1500 });
       } else {
-        toast.error(result.error || "Failed to create class.");
+        toast.error(result.error || "Operation failed.");
       }
     } catch (error) {
-      if (error.response) {
-        const { status, data } = error.response;
-        console.log("Test error: ", error.response);
-
-        if (status === 422 || status === 400) {
-          toast.error(data.error || "Invalid data. Please check again.");
-        } else if (status === 404) {
-          toast.error(data.error || "Teacher not found.");
-        } else {
-          toast.error(data.error || "An unexpected error occurred.");
-        }
-      } else {
-        toast.error("Unable to connect to the server.");
-      }
+      const message = error.response?.data?.error || "Unexpected error occurred.";
+      toast.error(message);
     }
   };
-
 
   return (
     <div className="modal-overlay">
       <div className="modal">
         <button className="close-button" onClick={onClose}>×</button>
-        <h2>Add New Class</h2>
+        <h2>{classToEdit ? 'Update Class' : 'Add New Class'}</h2>
         <form onSubmit={handleSubmit}>
           <label className='modal-label'>
             Name of Class
@@ -125,9 +114,7 @@ const AddClassForm = ({ onClose, teacherData, setClassData }) => {
             >
               <option value="">Select teacher</option>
               {teacherData.map(teacher => (
-                <option key={teacher.id} value={teacher.name}>
-                  {teacher.name}
-                </option>
+                <option key={teacher.id} value={teacher.name}>{teacher.name}</option>
               ))}
             </select>
           </label>
@@ -144,16 +131,6 @@ const AddClassForm = ({ onClose, teacherData, setClassData }) => {
           </label>
 
           <label className='modal-label'>
-            Image of Class
-            <input
-              type="file"
-              name="image"
-              accept="image/*"
-              onChange={handleChange}
-            />
-          </label>
-
-          <label className='modal-label'>
             Upload Students (CSV)
             <input
               type="file"
@@ -162,7 +139,9 @@ const AddClassForm = ({ onClose, teacherData, setClassData }) => {
             />
           </label>
 
-          <button type="submit" className="submit-button">Save Class</button>
+          <button type="submit" className="submit-button1">
+            {classToEdit ? 'Update Class' : 'Save Class'}
+          </button>
         </form>
       </div>
     </div>
