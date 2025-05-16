@@ -14,6 +14,7 @@ const UpdateSelfStudyPlanForm = ({ onCancel, onSave }) => {
     evaluation: '',
     reinforce: '',
     evaluation2: '',
+    status: '',
   });
 
   const handleChange = (e) => {

@@ -91,3 +91,13 @@ export const getAllSelfStudy= async () => {
     throw error;
   }
 }
+export const creatSelfStudy = async (data) => {
+  try {
+    console.log("Creating self study with data:", data);
+    const response = await api.post('/selfstudy', data);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to create self study:", error);
+    throw error;
+  }
+};
