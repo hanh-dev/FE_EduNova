@@ -2,22 +2,35 @@ import React, { useState } from 'react';
 import './Buttons.css'; 
 import UpdateClassPlanForm from '../AddForm/ClassPlanForm'; 
 import UpdateSelfStudyPlanForm from '../AddForm/SelfStudyPlanForm'; 
+import { getInClassByID } from '../../../services/api/StudentAPI';
 
-function Buttons(props) {
-  const { type } = props;
+function Buttons({ type, inclass }) {
   const [showForm, setShowForm] = useState(false);
+  const [goalToEdit, setGoalToEdit] = useState(null);
 
-  const handleUpdateClick = () => {
-    setShowForm(true);
+  const handleUpdateClick = async () => {
+    if (!inclass || !inclass.id) {
+      console.error("inclass or inclass.id is undefined");
+      return;
+    }
+    try {
+      const data = await getInClassByID(inclass.id);
+      setGoalToEdit(data);
+      setShowForm(true);
+    } catch (error) {
+      console.error("Failed to fetch inclass data:", error);
+    }
   };
 
   const handleCancelClick = () => {
     setShowForm(false);
+    setGoalToEdit(null);
   };
 
   const handleSave = () => {
     console.log('Form data saved!');
-    setShowForm(false); 
+    setShowForm(false);
+    setGoalToEdit(null);
   };
 
   return (
@@ -28,9 +41,17 @@ function Buttons(props) {
       {showForm && (
         <div className="modal-overlay">
           {type === "class" ? (
-            <UpdateClassPlanForm onSave={handleSave} onCancel={handleCancelClick} />
+            <UpdateClassPlanForm
+              goal={goalToEdit}
+              onSave={handleSave}
+              onCancel={handleCancelClick}
+            />
           ) : (
-            <UpdateSelfStudyPlanForm onSave={handleSave} onCancel={handleCancelClick} />
+            <UpdateSelfStudyPlanForm
+              goal={goalToEdit}
+              onSave={handleSave}
+              onCancel={handleCancelClick}
+            />
           )}
         </div>
       )}

@@ -1,15 +1,15 @@
-/* Container now scrolls horizontally if table is too wide */
+.study-table-container{
+  font-family:  Arial, sans-serif; 
+}
 .study-table-wrapper {
   overflow-x: auto;
   width: 99%;
 
 }
 
-/* Self-study Table Section */
 .study-table-container {
-
-  padding-top: 50px;
-  margin-left: 140px;
+  padding-top: 29px;
+  margin-left: 240px;
   padding-bottom: 15px;
 }
 
