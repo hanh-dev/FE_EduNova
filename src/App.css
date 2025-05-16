@@ -83,7 +83,6 @@ html, body, #root {
 /* Existing styles below (if any) */
 #root {
   padding: 0;
-  text-align: center;
   height: 100%;
   width: 100%;
 }
