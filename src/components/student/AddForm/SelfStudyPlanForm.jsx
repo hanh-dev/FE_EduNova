@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState,useEffect } from 'react';
 import './SelfStudyPlanForm.css'; 
+  
 
 const UpdateSelfStudyPlanForm = ({ onCancel, onSave }) => {
   const [formData, setFormData] = useState({
@@ -29,7 +30,12 @@ const UpdateSelfStudyPlanForm = ({ onCancel, onSave }) => {
     console.log('Form data saved:', formData);
     onSave();  
   };
-
+  useEffect(() => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.user_id) {
+      setFormData(prev => ({ ...prev, user_id: user.user_id }));
+    }
+  }, []);
   return (
     <form className="form-container6">
       <h2>Update your process</h2>
@@ -101,8 +107,8 @@ const UpdateSelfStudyPlanForm = ({ onCancel, onSave }) => {
           <input 
             type="text" 
             id="activities" 
-            name="activities" 
-            placeholder="Study time or exercises"
+            name="activities"
+placeholder="Study time or exercises"
             value={formData.activities} 
             onChange={handleChange} 
           />
@@ -133,18 +139,6 @@ const UpdateSelfStudyPlanForm = ({ onCancel, onSave }) => {
         </div>
 
         <div className="form-group">
-          <label htmlFor="evaluation">Evaluation of My Work</label>
-          <input 
-            type="text" 
-            id="evaluation" 
-            name="evaluation" 
-            placeholder="Self-assessment"
-            value={formData.evaluation} 
-            onChange={handleChange} 
-          />
-        </div>
-
-        <div className="form-group">
           <label htmlFor="reinforce">Reinforcing Learning</label>
           <input 
             type="text" 
@@ -167,7 +161,7 @@ const UpdateSelfStudyPlanForm = ({ onCancel, onSave }) => {
             onChange={handleChange} 
           />
         </div>
-      </div>
+      </div>  
 
       <div className="form-actions">
         <button className='btn-1' type="button" onClick={onCancel}>Cancel</button>

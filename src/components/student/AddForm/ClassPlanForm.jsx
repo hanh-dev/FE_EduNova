@@ -103,7 +103,7 @@ function UpdateClassPlanForm({ inclass, onCancel, onSave }) {
           />
           <datalist id="difficulties-suggestions">
             {uniqueDifficulties.map((item, index) => (
-              <option key={index} value={item} />
+<option key={index} value={item} />
             ))}
           </datalist>
         </div>

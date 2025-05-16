@@ -7,6 +7,15 @@ const sidebarItems = [
   { label: 'Logout', icon: '🚪', isLogout : true, href: '/login'},               
 ];
 
+const sidebarItemsAdmin = [
+  { label: 'Dashboard', icon: '📈', href: '/' },
+  { label: 'Class Management', icon: '🏫', href: '/class-management' },
+  { label: 'Teacher Management', icon: '🧑‍🏫', href: '/teacher-management' },
+  { label: 'Student Management', icon: '🧑‍🎓', href: '/student-management' },
+];
+
+
+
 const courses = [
 {
   title: "TOEIC",
@@ -44,4 +53,4 @@ const initialTasks = [
     { task: "Practice listening", course: "TOEIC", status: "In progress" },
   ];
 
-export { sidebarItems, courses, initialTasks }
+export { sidebarItems, courses, initialTasks, sidebarItemsAdmin }
