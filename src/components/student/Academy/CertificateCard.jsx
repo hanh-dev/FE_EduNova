@@ -13,23 +13,22 @@ const CertificateCard = ({ data, onDelete, onEdit }) => {
           <FaTrashAlt />
         </button>
       </div>
-
-      {/* Hiển thị ảnh hoặc video tùy loại */}
       <div className="certificate-image-wrapper">
-        {data.mediaType === "image" ? (
+        {data.media_type === "image" ? (
           <img
-            src={data.mediaUrl}
-            alt="Certificate"
+            src={data.media_path_url}  
+            alt={data.title}
             className="certificate-img"
           />
-        ) : data.mediaType === "video" ? (
+        ) : data.media_type === "video" ? (
           <video
-            src={data.mediaUrl}
+            src={data.media_path_url}  
             controls
             className="certificate-img"
             style={{ objectFit: "cover" }}
           />
         ) : null}
+
       </div>
 
       <h3 className="certificate-title">{data.title}</h3>

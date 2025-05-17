@@ -7,6 +7,7 @@ import { PulseLoader } from 'react-spinners';
 function StudentManagement() {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [formAddNewUser, setFormAddNewUser] = useState(false);
 
   useEffect(() => {
     const fetchStudents = async () => {
