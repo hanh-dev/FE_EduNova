@@ -193,6 +193,33 @@ export const getGoalsByStatus = async (status) => {
   }
 };
 
+// Semester
+
+// Lấy tất cả các học kỳ
+export const getSemester = async () => {
+    try {
+        const response = await api.get(`/semester`);
+        console.log("Semesters fetched:", response.data);
+        return response.data;
+    } catch (error) {
+        handleApiError(error);
+        throw error;
+    }
+};
+
+// Lấy học kỳ theo ID
+export const getSemesterByID = async (id) => {
+  try {
+    console.log("Getting semester by ID:", id);
+    const response = await api.get(`/semester/${id}`);
+    console.log("Semester fetched:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching semester:", error);
+    throw error;
+  }
+};
+
 // Xử lý lỗi API
 const handleApiError = (error) => {
   if (error.response) {

@@ -9,7 +9,7 @@ import DeleteGoal from "../GoalForm/DeleteGoal";
 import EditGoal from "../GoalForm/EditGoal";
 import "./SemesterGoal.css";
 
-export default function SemesterGoal() {
+export default function SemesterGoal({ semester }) {
   const [goals, setGoals] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
@@ -18,6 +18,14 @@ export default function SemesterGoal() {
   const [showEditForm, setShowEditForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const goalsPerPage = 10;
+
+  const [selectedSemester, setSelectedSemester] = useState({ id: 1 }); // ✅ Mặc định là học kỳ 1
+
+  useEffect(() => {
+    if (semester) {
+      setSelectedSemester(semester); // ✅ Nếu có props truyền vào thì thay thế
+    }
+  }, [semester]);
 
   useEffect(() => {
     const fetchGoals = async () => {
@@ -59,10 +67,15 @@ export default function SemesterGoal() {
     setShowEditForm(false);
   };
 
-  const totalPages = Math.ceil(goals.length / goalsPerPage);
+  // ✅ Lọc theo học kỳ đã chọn
+  const filteredGoals = goals.filter(
+    (goal) => goal.semester_id === selectedSemester?.id
+  );
+
+  const totalPages = Math.ceil(filteredGoals.length / goalsPerPage);
   const indexOfLastGoal = currentPage * goalsPerPage;
   const indexOfFirstGoal = indexOfLastGoal - goalsPerPage;
-  const currentGoals = goals.slice(indexOfFirstGoal, indexOfLastGoal);
+  const currentGoals = filteredGoals.slice(indexOfFirstGoal, indexOfLastGoal);
 
   return (
     <div className="container">
@@ -79,10 +92,7 @@ export default function SemesterGoal() {
         </div>
 
         {showForm && (
-          <GoalForm
-            onClose={() => setShowForm(false)}
-            onSave={handleSaveGoal}
-          />
+          <GoalForm onClose={() => setShowForm(false)} onSave={handleSaveGoal} />
         )}
 
         {showEditForm && goalToEdit && (
@@ -128,36 +138,33 @@ export default function SemesterGoal() {
                               goal.completeStatus === "done" ? "doing" : "done"
                             );
 
-                            const realIndex = goals.findIndex(
-                              (g) => g.id === goal.id
-                            );
+                            const realIndex = goals.findIndex((g) => g.id === goal.id);
                             const updatedGoals = [...goals];
                             updatedGoals[realIndex].completeStatus =
                               updatedGoal.completeStatus;
                             updateGoals(updatedGoals);
                           } catch (error) {
-                            console.error(
-                              "Error toggling complete status:",
-                              error
-                            );
+                            console.error("Error toggling complete status:", error);
                           }
                         }}
                         style={{
-                          display: "inline-block",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
                           backgroundColor:
-                            goal.completeStatus === "done"
-                              ? "#28a745"
-                              : "#ffc107",
-                          color:
-                            goal.completeStatus === "done"
-                              ? "white"
-                              : "inherit",
-                          width: "20px",
-                          height: "20px",
+                            goal.completeStatus === "done" ? "#28a745" : "#ffc107",
+                          color: "white",
+                          width: "24px",
+                          height: "24px",
                           borderRadius: "4px",
                           cursor: "pointer",
+                          fontSize: "16px",
                         }}
-                      />
+                      >
+                        {goal.completeStatus === "done" ? (
+                          <i className="fa-solid fa-check"></i>
+                        ) : null}
+                      </span>
                     </td>
                     <td>{goal.dueDate}</td>
                     <td>
@@ -174,9 +181,7 @@ export default function SemesterGoal() {
                         onClick={async () => {
                           try {
                             const goalData = await getGoal(goal.id);
-                            const realIndex = goals.findIndex(
-                              (g) => g.id === goal.id
-                            );
+                            const realIndex = goals.findIndex((g) => g.id === goal.id);
                             setGoalToEdit({ ...goalData, index: realIndex });
                             setShowEditForm(true);
                           } catch (error) {
@@ -203,7 +208,7 @@ export default function SemesterGoal() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="9">No goals found</td>
+                  <td colSpan="8">No goals found</td>
                 </tr>
               )}
             </tbody>
