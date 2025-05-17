@@ -4,17 +4,21 @@ import "./AddSelfStudy.css";
 const AddNewSelfStudy = ({ onAddNewStudy }) => {
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
-    date: "10 Apr",
-    lesson: "",
-    resource: "",
-    concentration: "",
+    user_id:"",
+    week_id:"",
+    date: "",
+    skill_module: "",
+    lesson_summary: "",
+    time_allocation: "",
+    learning_resources: "",
+    learning_activities: "",
+    concentration	: "",
+    follow_plan	: "",
     evaluation: "",
+    reinforcement	: "",
     notes: "",
-    skillModule: "",
-    timeAllocation: "",
-    learningActivities: "",
-    planFollow: "",
-    reinforcingLearning: ""
+    status:"",
+
   });
 
   const handleChange = (e) => {

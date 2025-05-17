@@ -36,6 +36,7 @@ function ClassPlan() {
               <th>My plan</th>
               <th>Problem Solved</th>
               <th>Actions</th>
+              <th>Status</th>
             </tr>
           </thead>
           <tbody>
@@ -48,6 +49,7 @@ function ClassPlan() {
                 <td>{item.difficulties}</td>
                 <td>{item.improvement_plan}</td>
                 <td>{item.problem_solved}</td>
+                <td>{item.status}</td>
                 <td>
                   <span className={`a-status ${item.problemSolved ? 'green' : 'red'}`}></span>
                 </td>

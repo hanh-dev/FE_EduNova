@@ -91,7 +91,7 @@ export const getAllSelfStudy= async () => {
     throw error;
   }
 }
-export const creatSelfStudy = async (data) => {
+export const createSelfStudy = async (data) => {
   try {
     console.log("Creating self study with data:", data);
     const response = await api.post('/selfstudy', data);
@@ -101,3 +101,54 @@ export const creatSelfStudy = async (data) => {
     throw error;
   }
 };
+
+
+export const getSelfStudyPlanByID= async (id) => {
+  try {
+    const response = await api.get(`/selfstudy/${id}`);
+    console.log("All selfstudy data:", response.data);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+}
+
+
+// Xử lí bên SeflClass
+export const getSelfClass= async (id) => {
+  try {
+    console.log("Fetch selfClass ID: ",id)
+    const response = await api.get(`/selfstudy/${id}`);
+    console.log("All selfstudy data:", response.data);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+}
+
+
+// Cập nhật mục tiêu theo ID
+export const updateSelfClass = async (id, data) => {
+  try {
+    const response = await api.put(`/selfstudy/${id}`, data);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
+
+export const createSelfClass  = async (inClassData) => {
+  try {
+    const response = await api.post("/selfstudy", inClassData);
+    console.log("InClassData created:", response.data);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
