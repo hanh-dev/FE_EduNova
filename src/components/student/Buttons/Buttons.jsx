@@ -1,62 +1,66 @@
-import React, { useState } from 'react';
-import './Buttons.css'; 
-import UpdateClassPlanForm from '../AddForm/ClassPlanForm'; 
-import UpdateSelfStudyPlanForm from '../AddForm/SelfStudyPlanForm'; 
-import { getInClassByID } from '../../../services/api/StudentAPI';
+import React, { useState } from "react";
+import "./Buttons.css";
+import ClassPlanForm from "../AddForm/ClassPlanForm";
+import { deleteInClass, getInClassByID } from "../../../services/api/StudentAPI";
 
-function Buttons({ type, inclass }) {
+export default function Buttons({ type, inclass, onUpdate, onDelete }) {
   const [showForm, setShowForm] = useState(false);
-  const [goalToEdit, setGoalToEdit] = useState(null);
+  const [record, setRecord] = useState(null);
 
   const handleUpdateClick = async () => {
-    if (!inclass || !inclass.id) {
-      console.error("inclass or inclass.id is undefined");
-      return;
-    }
+    if (!inclass?.id) return console.error("Missing inclass.id");
     try {
       const data = await getInClassByID(inclass.id);
-      setGoalToEdit(data);
+      setRecord(data);
       setShowForm(true);
-    } catch (error) {
-      console.error("Failed to fetch inclass data:", error);
+    } catch (e) {
+      console.error("Fetch error:", e);
     }
   };
 
-  const handleCancelClick = () => {
-    setShowForm(false);
-    setGoalToEdit(null);
+  const handleDelete = async () => {
+    if (!inclass?.id) return console.error("Missing inclass.id");
+    try {
+      await deleteInClass(inclass.id);
+      alert("Delete successful");
+
+      if (onDelete) onDelete(inclass.id); // Gọi callback xóa đúng prop
+    } catch (e) {
+      console.error("Delete error:", e);
+    }
   };
 
-  const handleSave = () => {
-    console.log('Form data saved!');
+  const handleSave = (updatedItem) => {
+    if (onUpdate) onUpdate(updatedItem); // Cập nhật lên danh sách chính
     setShowForm(false);
-    setGoalToEdit(null);
+    setRecord(null);
+  };
+
+  const handleCancelForm = () => {
+    setShowForm(false);
+    setRecord(null);
   };
 
   return (
-    <td className="test">
-      <button className="btn" onClick={handleUpdateClick}>Update</button>
-      <button className="btn" onClick={handleCancelClick}>Cancel</button>
+    <>
+      <div className="button-group">
+        <button className="btn update btn-inclass" onClick={handleUpdateClick}>
+          Update
+        </button>
+        <button className="btn delete btn-inclass" onClick={handleDelete}>
+          Delete
+        </button>
+      </div>
 
-      {showForm && (
+      {showForm && record && (
         <div className="modal-overlay">
-          {type === "class" ? (
-            <UpdateClassPlanForm
-              goal={goalToEdit}
-              onSave={handleSave}
-              onCancel={handleCancelClick}
-            />
-          ) : (
-            <UpdateSelfStudyPlanForm
-              goal={goalToEdit}
-              onSave={handleSave}
-              onCancel={handleCancelClick}
-            />
-          )}
+          <ClassPlanForm
+            inclass={record}
+            onCancel={handleCancelForm}
+            onSave={handleSave}
+          />
         </div>
       )}
-    </td>
+    </>
   );
 }
-
-export default Buttons;

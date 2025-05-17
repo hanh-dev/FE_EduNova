@@ -32,7 +32,8 @@ function ClassManagement() {
   const fetchTeachers = async () => {
     try {
       const response = await getNameOfTeachers();
-      setTeachers(response);
+      console.log("Test teacher name: ", response);
+      setTeachers(response.data);
     } catch (error) {
       console.error('Failed to fetch teachers:', error);
     }

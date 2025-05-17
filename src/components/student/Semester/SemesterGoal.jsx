@@ -1,125 +1,157 @@
 import React, { useState, useEffect } from "react";
-import GoalForm from "../GoalForm/GoalForm";
+import GoalForm from "../../student/GoalForm/GoalForm";
+import {
+  updateGoalStatus,
+  getGoal,
+  getAllGoal,
+} from "../../../services/api/StudentAPI";
 import DeleteGoal from "../GoalForm/DeleteGoal";
-import EditGoal from "../GoalForm/EditGoal"; // Import EditGoal
+import EditGoal from "../GoalForm/EditGoal";
 import "./SemesterGoal.css";
 
 export default function SemesterGoal() {
   const [goals, setGoals] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
-  const [deleteIndex, setDeleteIndex] = useState(null);
-  const [editingGoal, setEditingGoal] = useState(null); // Thêm state cho goal đang chỉnh sửa
+  const [goalToDeleteId, setGoalToDeleteId] = useState(null);
+  const [goalToEdit, setGoalToEdit] = useState(null);
+  const [showEditForm, setShowEditForm] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const goalsPerPage = 10;
 
-  // Hàm lấy dữ liệu goals từ localStorage hoặc API
   useEffect(() => {
     const fetchGoals = async () => {
       try {
-        const localGoals = JSON.parse(localStorage.getItem("goals")) || [];
-
-        if (localGoals.length === 0) {
-          const response = await fetch("/goals.json");
-          const jsonGoals = await response.json();
-          localStorage.setItem("goals", JSON.stringify(jsonGoals));
-          setGoals(jsonGoals);
-        } else {
-          setGoals(localGoals);
-        }
+        const fetchedGoals = await getAllGoal();
+        setGoals(fetchedGoals);
       } catch (error) {
-        console.error("Error loading goals:", error);
+        console.error("Error fetching goals:", error);
       }
     };
 
     fetchGoals();
   }, []);
 
-  // Hàm lưu goal mới
+  const updateGoals = (newGoals) => {
+    setGoals(newGoals);
+    localStorage.setItem("goals", JSON.stringify(newGoals));
+  };
+
   const handleSaveGoal = (newGoal) => {
-    const updatedGoals = [...goals, { ...newGoal, completeStatus: "doing" }];
-    setGoals(updatedGoals);
-    localStorage.setItem("goals", JSON.stringify(updatedGoals));
+    const newGoals = [...goals, { ...newGoal, completeStatus: "doing" }];
+    updateGoals(newGoals);
+    setShowForm(false);
   };
 
-  // Hàm cập nhật trạng thái hoàn thành
-  const toggleCompleteStatus = (index) => {
-    const updatedGoals = [...goals];
-    updatedGoals[index].completeStatus =
-      updatedGoals[index].completeStatus === "done" ? "doing" : "done";
-    setGoals(updatedGoals);
-    localStorage.setItem("goals", JSON.stringify(updatedGoals));
-  };
-
-  // Hàm xóa goal
-  const handleDeleteGoal = () => {
-    const updatedGoals = goals.filter((_, i) => i !== deleteIndex);
-    setGoals(updatedGoals);
-    localStorage.setItem("goals", JSON.stringify(updatedGoals));
+  const handleDeleteSuccess = (deletedId) => {
+    const updated = goals.filter((goal) => goal.id !== deletedId);
+    updateGoals(updated);
     setShowDeletePopup(false);
-    setDeleteIndex(null);
+    setGoalToDeleteId(null);
   };
 
-  // Hàm cập nhật goal đã chỉnh sửa
   const handleUpdateGoal = (updatedGoal) => {
-    const updatedGoals = goals.map((goal, index) =>
-      index === editingGoal.index ? updatedGoal : goal
+    const updated = goals.map((goal, index) =>
+      index === goalToEdit.index ? updatedGoal : goal
     );
-    setGoals(updatedGoals);
-    localStorage.setItem("goals", JSON.stringify(updatedGoals));
-    setEditingGoal(null); // Đóng form sau khi lưu
+    updateGoals(updated);
+    setGoalToEdit(null);
+    setShowEditForm(false);
   };
 
-  // Đóng popup xóa
-  const handleCloseDeletePopup = () => {
-    setShowDeletePopup(false);
-  };
+  const totalPages = Math.ceil(goals.length / goalsPerPage);
+  const indexOfLastGoal = currentPage * goalsPerPage;
+  const indexOfFirstGoal = indexOfLastGoal - goalsPerPage;
+  const currentGoals = goals.slice(indexOfFirstGoal, indexOfLastGoal);
 
   return (
     <div className="container">
-      <div className="yourGoal">
+      <div className="yourGoall">
         <div className="goal-header">
           <h2>Your Study Goal</h2>
           <span className="add-goal-btn" onClick={() => setShowForm(true)}>
-            <img src="/src/assets/image/plus.png" className="icon_add" alt="Add Goal" />
+            <img
+              src="/src/assets/image/plus.png"
+              className="icon_add"
+              alt="Add Goal"
+            />
           </span>
         </div>
 
         {showForm && (
-          <GoalForm onClose={() => setShowForm(false)} onSave={handleSaveGoal} />
+          <GoalForm
+            onClose={() => setShowForm(false)}
+            onSave={handleSaveGoal}
+          />
         )}
 
-        {editingGoal && (
-          <EditGoal goal={editingGoal} onClose={() => setEditingGoal(null)} onSave={handleUpdateGoal} />
+        {showEditForm && goalToEdit && (
+          <EditGoal
+            goal={goalToEdit}
+            onClose={() => {
+              setGoalToEdit(null);
+              setShowEditForm(false);
+            }}
+            onSave={handleUpdateGoal}
+          />
         )}
 
         <div className="table-wrapper">
-          <table className="table table-bordered text-center align-middle">
+          <table className="table table-your-goal">
             <thead>
-              <tr>
+<tr>
                 <th>Course</th>
+                <th>Goal</th>
                 <th>Course Expectations</th>
                 <th>Teacher Expectations</th>
                 <th>Self Expectations</th>
                 <th>Complete</th>
-                <th>Status</th>
                 <th>Due to</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {goals.length > 0 ? (
-                goals.map((goal, index) => (
+              {currentGoals.length > 0 ? (
+                currentGoals.map((goal, index) => (
                   <tr key={index}>
                     <td>{goal.course}</td>
+                    <td>{goal.goals}</td>
                     <td>{goal.courseExpectations}</td>
                     <td>{goal.teacherExpectations}</td>
                     <td>{goal.selfExpectations}</td>
                     <td>
                       <span
-                        onClick={() => toggleCompleteStatus(index)}
+                        onClick={async () => {
+                          try {
+                            const updatedGoal = await updateGoalStatus(
+                              goal.id,
+                              goal.completeStatus === "done" ? "doing" : "done"
+                            );
+
+                            const realIndex = goals.findIndex(
+                              (g) => g.id === goal.id
+                            );
+                            const updatedGoals = [...goals];
+                            updatedGoals[realIndex].completeStatus =
+                              updatedGoal.completeStatus;
+                            updateGoals(updatedGoals);
+                          } catch (error) {
+                            console.error(
+                              "Error toggling complete status:",
+                              error
+                            );
+                          }
+                        }}
                         style={{
                           display: "inline-block",
-                          backgroundColor: goal.completeStatus === "done" ? "#28a745" : "#ffc107",
-                          color: goal.completeStatus === "done" ? "white" : "inherit",
+                          backgroundColor:
+                            goal.completeStatus === "done"
+                              ? "#28a745"
+                              : "#ffc107",
+                          color:
+                            goal.completeStatus === "done"
+                              ? "white"
+                              : "inherit",
                           width: "20px",
                           height: "20px",
                           borderRadius: "4px",
@@ -127,7 +159,6 @@ export default function SemesterGoal() {
                         }}
                       />
                     </td>
-                    <td>{goal.completeStatus === "done" ? "Completed" : "In Progress"}</td>
                     <td>{goal.dueDate}</td>
                     <td>
                       <i
@@ -139,33 +170,83 @@ export default function SemesterGoal() {
                       <i
                         className="fa-regular fa-pen-to-square"
                         style={{ marginRight: "10px", cursor: "pointer" }}
-                        title="Edit"
-                        onClick={() => setEditingGoal({ ...goal, index })} // Chuyển sang EditGoal
-                      ></i>
-
+title="Edit"
+                        onClick={async () => {
+                          try {
+                            const goalData = await getGoal(goal.id);
+                            const realIndex = goals.findIndex(
+                              (g) => g.id === goal.id
+                            );
+                            setGoalToEdit({ ...goalData, index: realIndex });
+                            setShowEditForm(true);
+                          } catch (error) {
+                            console.error("Failed to fetch goal:", error);
+                          }
+                        }}
+                      />
                       <i
                         className="fa-solid fa-trash"
                         style={{ color: "red", cursor: "pointer" }}
                         title="Delete"
-                        onClick={() => {
-                          setDeleteIndex(index);
-                          setShowDeletePopup(true);
+                        onClick={async () => {
+                          try {
+                            await getGoal(goal.id);
+                            setGoalToDeleteId(goal.id);
+                            setShowDeletePopup(true);
+                          } catch (error) {
+                            console.error("Failed to fetch goal:", error);
+                          }
                         }}
-                      ></i>
+                      />
                     </td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan="8">No goals found</td>
+                  <td colSpan="9">No goals found</td>
                 </tr>
               )}
             </tbody>
           </table>
         </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="pagination">
+            <button
+              disabled={currentPage === 1}
+              onClick={() => setCurrentPage(currentPage - 1)}
+            >
+              Previous
+            </button>
+
+            {[...Array(totalPages)].map((_, index) => (
+              <button
+                key={index}
+                onClick={() => setCurrentPage(index + 1)}
+                className={currentPage === index + 1 ? "active" : ""}
+              >
+                {index + 1}
+              </button>
+            ))}
+
+            <button
+              disabled={currentPage === totalPages}
+              onClick={() => setCurrentPage(currentPage + 1)}
+            >
+              Next
+            </button>
+          </div>
+        )}
       </div>
 
-      {showDeletePopup && <DeleteGoal onDelete={handleDeleteGoal} onClose={handleCloseDeletePopup} />}
+      {showDeletePopup && (
+        <DeleteGoal
+          id={goalToDeleteId}
+          onDeleteSuccess={handleDeleteSuccess}
+          onClose={() => setShowDeletePopup(false)}
+        />
+      )}
     </div>
   );
 }

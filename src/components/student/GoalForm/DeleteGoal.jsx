@@ -1,30 +1,30 @@
 import React from "react";
+import { deleteGoal } from "../../../services/api/StudentAPI";
 import "./DeleteGoal.css";
 
-function DeleteGoal({ onDelete, onClose }) {
-  
-  // Hàm xử lý khi nhấn vào nút Delete
-  const handleDelete = () => {
-    // Gọi onDelete khi người dùng nhấn Yes (OK)
-    onDelete();
-    onClose();
-  };
-
-  const handleCancel = () => {
-    onClose(); 
+export default function DeleteGoal({ id, onDeleteSuccess, onClose }) {
+  const handleDelete = async () => {
+    try {
+      await deleteGoal(id); 
+      onDeleteSuccess(id); 
+    } catch (error) {
+      console.error("Failed to delete goal:", error);
+    }
   };
 
   return (
-    <div className="delete-popup">
-      <div className="delete-popup-content">
+    <div className="popup-overlay">
+      <div className="popup">
         <h3>Are you sure you want to delete this goal?</h3>
-        <div className="delete-buttons">
-          <button className="btn-confirm" onClick={handleDelete}>Delete</button>
-          <button className="btn-cancel" onClick={handleCancel}>Cancel</button>
+        <div className="popup-buttons">
+          <button className="btn-delete" onClick={handleDelete}>
+            Yes
+          </button>
+          <button className="btn-delete" onClick={onClose}>
+            No
+          </button>
         </div>
       </div>
     </div>
   );
 }
-
-export default DeleteGoal;
