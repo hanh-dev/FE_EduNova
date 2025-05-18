@@ -1,7 +1,8 @@
 import React from 'react'
 import { Routes, Route } from 'react-router-dom';
 import AdminLayout from '../layouts/AdminLayout';
-import Dashboard from '../pages/admin/dashboard/DashBoard';
+// import Dashboard from '../pages/admin/dashboard/DashBoard';
+import Dashboard from '../pages/admin/dashboard/Dashboard';
 import ClassManagement from '../pages/admin/class-management/ClassManagement';
 import TeacherManagement from '../pages/admin/teacher-management/TeacherManagement';
 import StudentManagement from '../pages/admin/student-management/StudentManagement';
