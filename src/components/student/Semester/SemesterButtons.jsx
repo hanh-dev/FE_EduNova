@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { getSemester, getSemesterByID } from "../../../services/api/StudentAPI";
+import { getSemester, getSemesterByID, createSemesterByID } from "../../../services/api/StudentAPI";
 import SemesterGoal from "./SemesterGoal";
+import './SemesterButtons.css';
+import './SemesterGoal.css';
 
 export default function SemesterButton() {
   const [semesters, setSemesters] = useState([]);
@@ -8,18 +10,26 @@ export default function SemesterButton() {
   const [semesterGoal, setSemesterGoal] = useState(null);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const semestersData = await getSemester();
-        setSemesters(semestersData);
-      } catch (error) {
-        console.error("Failed to fetch semesters:", error);
-      } finally {
-        setLoading(false);
-      }
-    }
-    fetchData();
+    fetchSemesters();
   }, []);
+
+  const fetchSemesters = async () => {
+    setLoading(true);
+    try {
+      const semestersData = await getSemester();
+      setSemesters(semestersData);
+
+      const defaultSemester = semestersData.find((s) => s.id === 1) || semestersData[0];
+      if (defaultSemester) {
+        const semesterDetail = await getSemesterByID(defaultSemester.id);
+        setSemesterGoal(semesterDetail);
+      }
+    } catch (error) {
+      console.error("Failed to fetch semesters:", error);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleClick = async (id) => {
     try {
@@ -30,40 +40,69 @@ export default function SemesterButton() {
     }
   };
 
-  if (loading) return <p>Loading...</p>;
+const handleAddSemester = async () => {
+  try {
+    const newSemesterNumber = semesters.length + 1;
+
+    const formatDate = (date) => {
+      const yyyy = date.getFullYear();
+      const mm = String(date.getMonth() + 1).padStart(2, '0');
+      const dd = String(date.getDate()).padStart(2, '0');
+      return `${yyyy}-${mm}-${dd}`;
+    };
+
+    const now = new Date();
+    const start_date = formatDate(now);
+
+    const endDateObj = new Date(now);
+    endDateObj.setMonth(endDateObj.getMonth() + 6); // cộng 6 tháng
+    const end_date = formatDate(endDateObj);
+
+    const newSemesterData = {
+      name: `Semester ${newSemesterNumber}`,
+      start_date,
+      end_date,
+    };
+
+    const createdSemester = await createSemesterByID(newSemesterData);
+
+    await fetchSemesters();
+
+    if (createdSemester && createdSemester.id) {
+      handleClick(createdSemester.id);
+    }
+  } catch (error) {
+    console.error("Failed to create semester:", error);
+  }
+};
+
+  if (loading) return <p className="loading">Loading...</p>;
 
   return (
     <div>
-      <h3>Semester List</h3>
-      <div>
+      {semesterGoal && (
+        <div style={{ marginTop: "20px" }}>
+          <SemesterGoal semester={semesterGoal} />
+        </div>
+      )}
+
+      <div className="fixed-buttons">
         {semesters.map((semester) => (
           <button
             key={semester.id}
-            style={{
-              margin: "4px",
-              padding: "8px 16px",
-              cursor: "pointer",
-              borderRadius: "4px",
-              border: "1px solid #007bff",
-              backgroundColor: "#007bff",
-              color: "white",
-              fontWeight: "bold",
-            }}
+            className="semesterbutton"
             onClick={() => handleClick(semester.id)}
           >
             {semester.name}
           </button>
         ))}
+        <button
+          className="semesterbutton add-button"
+          onClick={handleAddSemester}
+        >
+          <i class="fa-solid fa-plus"></i>
+        </button>
       </div>
-
-      {semesterGoal ? (
-        <div style={{ marginTop: "20px" }}>
-            
-          <SemesterGoal semester={semesterGoal} />
-        </div>
-      ) : (
-        <p style={{ marginTop: "20px" }}>Chưa chọn học kỳ</p>
-      )}
     </div>
   );
 }

@@ -16,16 +16,19 @@ export default function EditForm({ onClose, onSave, goal }) {
 
   const [semesters, setSemesters] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Get user_id from localStorage
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    if (user && user.user_id) {
+    if (user?.user_id) {
       setFormData((prev) => ({ ...prev, user_id: user.user_id }));
     } else {
       setErrorMessage("User not found. Please login again.");
     }
   }, []);
 
+  // Load semester list
   useEffect(() => {
     const fetchSemesters = async () => {
       try {
@@ -38,14 +41,15 @@ export default function EditForm({ onClose, onSave, goal }) {
     fetchSemesters();
   }, []);
 
+  // Load goal data
   useEffect(() => {
     if (goal) {
       const fetchGoalData = async () => {
         try {
           const response = await getGoal(goal.id);
           if (response) {
-            setFormData((prev) => ({
-              ...prev,
+            setFormData({
+              user_id: response.user_id || "",
               course: response.course || "English",
               goals: response.goals || "",
               courseExpectations: response.courseExpectations || "",
@@ -53,32 +57,40 @@ export default function EditForm({ onClose, onSave, goal }) {
               selfExpectations: response.selfExpectations || "",
               dueDate: response.dueDate || "",
               semester_id: response.semester_id || "",
-            }));
+            });
           }
         } catch (error) {
           console.error("Error fetching goal data:", error);
         }
       };
-
       fetchGoalData();
     }
   }, [goal]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setErrorMessage("");
 
-    const { user_id, course, goals, courseExpectations, teacherExpectations, selfExpectations, dueDate, semester_id } = formData;
+    const {
+      user_id,
+      course,
+      goals,
+      courseExpectations,
+      teacherExpectations,
+      selfExpectations,
+      dueDate,
+      semester_id,
+    } = formData;
 
     if (!user_id || !goals || !courseExpectations || !teacherExpectations || !selfExpectations || !dueDate || !semester_id) {
       setErrorMessage("Please fill out all fields.");
+      setIsSubmitting(false);
       return;
     }
 
@@ -96,12 +108,14 @@ export default function EditForm({ onClose, onSave, goal }) {
     try {
       const response = await editGoal(goal.id, updatedGoal);
       if (response) {
-        onSave(response);
-        onClose();
+        onSave(response); // Gửi dữ liệu đã cập nhật về component cha
+        onClose(); // Đóng form
       }
     } catch (error) {
       console.error("Error updating goal:", error);
       setErrorMessage("Failed to update goal. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -113,7 +127,6 @@ export default function EditForm({ onClose, onSave, goal }) {
         {errorMessage && <p className="error-message">{errorMessage}</p>}
 
         <form onSubmit={handleSubmit}>
-          {/* Course */}
           <div className="edit-your-goal">
             <label className="title">Course</label>
             <select
@@ -128,7 +141,6 @@ export default function EditForm({ onClose, onSave, goal }) {
             </select>
           </div>
 
-          {/* Goal */}
           <div className="edit-your-goal">
             <label className="title">Goal</label>
             <input
@@ -141,7 +153,6 @@ export default function EditForm({ onClose, onSave, goal }) {
             />
           </div>
 
-          {/* Course Expectations */}
           <div className="edit-your-goal">
             <label className="title">Course Expectations</label>
             <input
@@ -154,7 +165,6 @@ export default function EditForm({ onClose, onSave, goal }) {
             />
           </div>
 
-          {/* Teacher Expectations */}
           <div className="edit-your-goal">
             <label className="title">Teacher Expectations</label>
             <input
@@ -167,7 +177,6 @@ export default function EditForm({ onClose, onSave, goal }) {
             />
           </div>
 
-          {/* Self Expectations */}
           <div className="edit-your-goal">
             <label className="title">Self Expectations</label>
             <input
@@ -180,7 +189,6 @@ export default function EditForm({ onClose, onSave, goal }) {
             />
           </div>
 
-          {/* Due Date */}
           <div className="edit-your-goal">
             <label className="title">Due Date</label>
             <input
@@ -193,7 +201,6 @@ export default function EditForm({ onClose, onSave, goal }) {
             />
           </div>
 
-          {/* Semester */}
           <div className="edit-your-goal">
             <label className="title">Semester</label>
             <select
@@ -211,8 +218,12 @@ export default function EditForm({ onClose, onSave, goal }) {
               ))}
             </select>
           </div>
+          <div className="button-container">
 
-          <button type="submit" className="button-save">Update</button>
+          <button type="submit" className="button-update" disabled={isSubmitting}>
+            {isSubmitting ? "Updating..." : "Update"}
+          </button>
+          </div>
         </form>
       </div>
     </div>

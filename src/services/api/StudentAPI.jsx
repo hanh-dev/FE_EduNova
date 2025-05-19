@@ -220,6 +220,18 @@ export const getSemesterByID = async (id) => {
   }
 };
 
+// Thêm một học kì mới 
+export const createSemesterByID = async (SemesterData) => {
+  try {
+    const response = await api.post("/semester", SemesterData);
+    console.log("SemesterData created:", response.data);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
 // Xử lý lỗi API
 const handleApiError = (error) => {
   if (error.response) {

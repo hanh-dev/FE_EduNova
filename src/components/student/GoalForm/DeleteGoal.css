@@ -39,12 +39,11 @@
   background-color: #FF9933;
 }
 .btn-delete{
-  max-width: 100px;
-  max-height: 100px;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
 }
-
-
-
 
 .btn-delete:last-child{
   background-color: rgb(251, 12, 12);

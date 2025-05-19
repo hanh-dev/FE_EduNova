@@ -1,0 +1,30 @@
+.semesterbutton{
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #FF9933;
+    color: #fff;
+}
+
+
+.fixed-buttons {
+    position: fixed;
+    bottom: 0px;
+    margin-left: 5%;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.semesterbutton {
+    margin: 5px;
+    padding: 8px 12px;
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.loading{
+    margin-left: 5%;
+}

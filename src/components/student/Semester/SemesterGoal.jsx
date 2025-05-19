@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from "react";
 import GoalForm from "../../student/GoalForm/GoalForm";
+import DeleteGoal from "../GoalForm/DeleteGoal";
+import EditGoal from "../GoalForm/EditGoal";
 import {
   updateGoalStatus,
   getGoal,
   getAllGoal,
 } from "../../../services/api/StudentAPI";
-import DeleteGoal from "../GoalForm/DeleteGoal";
-import EditGoal from "../GoalForm/EditGoal";
 import "./SemesterGoal.css";
 
 export default function SemesterGoal({ semester }) {
@@ -17,14 +17,12 @@ export default function SemesterGoal({ semester }) {
   const [goalToEdit, setGoalToEdit] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedSemester, setSelectedSemester] = useState({ id: 1 });
+
   const goalsPerPage = 10;
 
-  const [selectedSemester, setSelectedSemester] = useState({ id: 1 }); // ✅ Mặc định là học kỳ 1
-
   useEffect(() => {
-    if (semester) {
-      setSelectedSemester(semester); // ✅ Nếu có props truyền vào thì thay thế
-    }
+    if (semester) setSelectedSemester(semester);
   }, [semester]);
 
   useEffect(() => {
@@ -36,7 +34,6 @@ export default function SemesterGoal({ semester }) {
         console.error("Error fetching goals:", error);
       }
     };
-
     fetchGoals();
   }, []);
 
@@ -67,7 +64,6 @@ export default function SemesterGoal({ semester }) {
     setShowEditForm(false);
   };
 
-  // ✅ Lọc theo học kỳ đã chọn
   const filteredGoals = goals.filter(
     (goal) => goal.semester_id === selectedSemester?.id
   );
@@ -106,7 +102,7 @@ export default function SemesterGoal({ semester }) {
           />
         )}
 
-        <div className="table-wrapper">
+        <div className="table-goal">
           <table className="table table-your-goal">
             <thead>
               <tr>
@@ -137,11 +133,9 @@ export default function SemesterGoal({ semester }) {
                               goal.id,
                               goal.completeStatus === "done" ? "doing" : "done"
                             );
-
                             const realIndex = goals.findIndex((g) => g.id === goal.id);
                             const updatedGoals = [...goals];
-                            updatedGoals[realIndex].completeStatus =
-                              updatedGoal.completeStatus;
+                            updatedGoals[realIndex].completeStatus = updatedGoal.completeStatus;
                             updateGoals(updatedGoals);
                           } catch (error) {
                             console.error("Error toggling complete status:", error);
@@ -151,8 +145,7 @@ export default function SemesterGoal({ semester }) {
                           display: "inline-flex",
                           alignItems: "center",
                           justifyContent: "center",
-                          backgroundColor:
-                            goal.completeStatus === "done" ? "#28a745" : "#ffc107",
+                          backgroundColor: goal.completeStatus === "done" ? "#28a745" : "#ffc107",
                           color: "white",
                           width: "24px",
                           height: "24px",
@@ -161,22 +154,21 @@ export default function SemesterGoal({ semester }) {
                           fontSize: "16px",
                         }}
                       >
-                        {goal.completeStatus === "done" ? (
+                        {goal.completeStatus === "done" && (
                           <i className="fa-solid fa-check"></i>
-                        ) : null}
+                        )}
                       </span>
                     </td>
                     <td>{goal.dueDate}</td>
                     <td>
                       <i
                         className="fa-regular fa-clock"
-                        style={{ marginRight: "10px", cursor: "pointer" }}
                         title="View time"
                         onClick={() => alert("View time clicked")}
+                        style={{ marginRight: "10px", cursor: "pointer" }}
                       ></i>
                       <i
                         className="fa-regular fa-pen-to-square"
-                        style={{ marginRight: "10px", cursor: "pointer" }}
                         title="Edit"
                         onClick={async () => {
                           try {
@@ -188,10 +180,10 @@ export default function SemesterGoal({ semester }) {
                             console.error("Failed to fetch goal:", error);
                           }
                         }}
-                      />
+                        style={{ marginRight: "10px", cursor: "pointer" }}
+                      ></i>
                       <i
                         className="fa-solid fa-trash"
-                        style={{ color: "red", cursor: "pointer" }}
                         title="Delete"
                         onClick={async () => {
                           try {
@@ -202,7 +194,8 @@ export default function SemesterGoal({ semester }) {
                             console.error("Failed to fetch goal:", error);
                           }
                         }}
-                      />
+                        style={{ color: "red", cursor: "pointer" }}
+                      ></i>
                     </td>
                   </tr>
                 ))
@@ -215,26 +208,20 @@ export default function SemesterGoal({ semester }) {
           </table>
         </div>
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="pagination">
-            <button
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage(currentPage - 1)}
-            >
+            <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>
               Previous
             </button>
-
             {[...Array(totalPages)].map((_, index) => (
               <button
                 key={index}
-                onClick={() => setCurrentPage(index + 1)}
                 className={currentPage === index + 1 ? "active" : ""}
+                onClick={() => setCurrentPage(index + 1)}
               >
                 {index + 1}
               </button>
             ))}
-
             <button
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage(currentPage + 1)}

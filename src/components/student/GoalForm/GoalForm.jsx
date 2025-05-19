@@ -1,48 +1,53 @@
 import React, { useState, useEffect } from "react";
-import { createGoal } from "../../../services/api/StudentAPI";
+import { createGoal, getSemester } from "../../../services/api/StudentAPI";
 import "./GoalForm.css";
 
 export default function GoalForm({ onClose, onSave }) {
-  const [user_id, setUserID] = useState();
-  const [course, setCourse] = useState("English");
-  const [goals, setGoals] = useState("");
-  const [courseExpectations, setCourseExpectations] = useState("");
-  const [teacherExpectations, setTeacherExpectations] = useState("");
-  const [selfExpectations, setSelfExpectations] = useState("");
-  const [dueDate, setDueDate] = useState("");
+  const [formData, setFormData] = useState({
+    user_id: "",
+    course: "English",
+    goals: "",
+    courseExpectations: "",
+    teacherExpectations: "",
+    selfExpectations: "",
+    dueDate: "",
+    semester_id: "",
+  });
+
+  const [semesters, setSemesters] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
 
   useEffect(() => {
-    const user = JSON.parse(localStorage.getItem("user")); 
-    console.log(user)
-    if (user && user.user_id) {
-      setUserID(user.user_id);
-
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user?.user_id) {
+      setFormData((prev) => ({ ...prev, user_id: user.user_id }));
     } else {
       setErrorMessage("User not found. Please login again.");
     }
+
+    fetchSemesters();
   }, []);
 
-  useEffect(() => {
-    const savedGoal = localStorage.getItem("goal");
-    if (savedGoal) {
-      try {
-        const parsedGoal = JSON.parse(savedGoal);
-        setCourse(parsedGoal.course || "English");
-        setGoals(parsedGoal.goals || "");
-        setCourseExpectations(parsedGoal.courseExpectations || "");
-        setTeacherExpectations(parsedGoal.teacherExpectations || "");
-        setSelfExpectations(parsedGoal.selfExpectations || "");
-        setDueDate(parsedGoal.dueDate || "");
-      } catch (error) {
-        console.error("Error parsing saved goal data:", error);
+  const fetchSemesters = async () => {
+    try {
+      const data = await getSemester();
+      setSemesters(data);
+      if (data.length > 0) {
+        setFormData((prev) => ({ ...prev, semester_id: data[0].id }));
       }
+    } catch (error) {
+      console.error("Failed to fetch semesters:", error);
     }
-  }, []);
+  };
 
-  useEffect(() => {
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
 
-    const goalData = {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const {
       user_id,
       course,
       goals,
@@ -50,16 +55,17 @@ export default function GoalForm({ onClose, onSave }) {
       teacherExpectations,
       selfExpectations,
       dueDate,
-    };
-    console.log("Sending to backend:", goalData);
+      semester_id,
+    } = formData;
 
-    localStorage.setItem("goal", JSON.stringify(goalData));
-  }, [user_id, course, goals, courseExpectations, teacherExpectations, selfExpectations, dueDate]);
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!goals || !courseExpectations || !teacherExpectations || !selfExpectations || !dueDate) {
+    if (
+      !goals ||
+      !courseExpectations ||
+      !teacherExpectations ||
+      !selfExpectations ||
+      !dueDate ||
+      !semester_id
+    ) {
       setErrorMessage("Please fill out all fields.");
       return;
     }
@@ -69,24 +75,10 @@ export default function GoalForm({ onClose, onSave }) {
       return;
     }
 
-    const newGoal = {
-      user_id,
-      course,
-      goals,
-      courseExpectations,
-      teacherExpectations,
-      selfExpectations,
-      dueDate,
-    };
-
-    console.log("Sending goal:", newGoal);
-
     try {
-      const response = await createGoal(newGoal);
+      const response = await createGoal(formData);
       if (response) {
-        console.log("Goal saved successfully!", response);
         onSave(response);
-        localStorage.removeItem("goal");
         onClose();
       }
     } catch (error) {
@@ -98,48 +90,71 @@ export default function GoalForm({ onClose, onSave }) {
   return (
     <div className="goal-overlay">
       <div className="goal-form">
-        <span className="close-btn" onClick={onClose}>×</span>
+        <span className="close-btn" onClick={onClose}>
+          ×
+        </span>
         <h1>Set Goals</h1>
         {errorMessage && <p className="error-message">{errorMessage}</p>}
         <form onSubmit={handleSubmit}>
-          <div className="your-goal-input">
-            <label className="title">Course</label>
-            <span className="close-down"><i className="fa-solid fa-caret-down"></i></span>
-            <select className="form-control" value={course} onChange={(e) => setCourse(e.target.value)}>
-              <option value="English">English</option>
-              <option value="IT-English">IT English</option>
-              <option value="Communicative">Communicative</option>
-            </select>
+          {[
+            {
+              label: "Course",
+              type: "select",
+              name: "course",
+              options: ["English", "IT-English", "Communicative"],
+            },
+            { label: "Goal", name: "goals" },
+            { label: "Course Expectations", name: "courseExpectations" },
+            { label: "Teacher Expectations", name: "teacherExpectations" },
+            { label: "Self Expectations", name: "selfExpectations" },
+            { label: "Due Date", type: "date", name: "dueDate" },
+            {
+              label: "Semester",
+              type: "select",
+              name: "semester_id",
+              options: semesters.map((s) => ({
+                label: s.name,
+                value: s.id,
+              })),
+            },
+          ].map((field, idx) => (
+            <div key={idx} className="your-goal-input">
+              <label className="title">{field.label}</label>
+              {field.type === "select" ? (
+                <select
+                  className="form-control"
+                  name={field.name}
+                  value={formData[field.name]}
+                  onChange={handleChange}
+                  required
+                >
+                  <option value="">-- Select --</option>
+                  {field.options.map((opt, i) =>
+                    typeof opt === "string" ? (
+                      <option key={i} value={opt}>
+                        {opt}
+                      </option>
+                    ) : (
+                      <option key={i} value={opt.value}>
+                        {opt.label}
+                      </option>
+                    )
+                  )}
+                </select>
+              ) : (
+                <input
+                  type={field.type || "text"}
+                  className="form-control"
+                  name={field.name}
+                  value={formData[field.name]}
+                  onChange={handleChange}
+                />
+              )}
+            </div>
+          ))}
+          <div className="button-container">
+            <button className="btn-save">Save</button>
           </div>
-
-          <div className="your-goal-input">
-            <label className="title">Goal</label>
-            <input type="text" className="form-control" value={goals} onChange={(e) => setGoals(e.target.value)} required />
-          </div>
-
-          <div className="your-goal-input">
-            <label className="title">Course Expectations</label>
-            <input type="text" className="form-control" value={courseExpectations} onChange={(e) => setCourseExpectations(e.target.value)} required />
-          </div>
-
-          <div className="your-goal-input">
-            <label className="title">Teacher Expectations</label>
-            <input type="text" className="form-control" value={teacherExpectations} onChange={(e) => setTeacherExpectations(e.target.value)} required />
-          </div>
-
-          <div className="your-goal-input">
-            <label className="title">Self Expectations</label>
-            <input type="text" className="form-control" value={selfExpectations} onChange={(e) => setSelfExpectations(e.target.value)} required />
-          </div>
-
-          <div className="your-goal-input">
-            <label className="title">Due Date</label>
-            <input type="date" className="form-control" value={dueDate} onChange={(e) => setDueDate(e.target.value)} required />
-          </div>
-
-          <button className="btn-save">
-            Save
-          </button>
         </form>
       </div>
     </div>

@@ -62,6 +62,7 @@
   position: relative;
   height: auto;
   box-sizing: border-box;
+  text-align: center;
 }
 
 .goal-form .close-btn {
@@ -121,4 +122,14 @@
   margin-top: 10px;
   max-height: 40px;
   background-color: #FF9933;
+}
+.btn-save {
+  width: 40%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #ff9933;
 }
