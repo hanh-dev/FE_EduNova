@@ -1,16 +1,17 @@
-/* Container now scrolls horizontally if table is too wide */
+
+.study-table-container{
+  font-family:  Arial, sans-serif; 
+}
 .study-table-wrapper {
   overflow-x: auto;
   width: 99%;
 
 }
 
-/* Self-study Table Section */
 .study-table-container {
+  margin-left: 280px;
+  width: calc(100% - 280px);
 
-  padding-top: 50px;
-  margin-left: 140px;
-  padding-bottom: 15px;
 }
 
 .study-table-container h2 {
@@ -20,14 +21,10 @@
   border-radius: 10px 10px 0 0;
   font-size: 20px;
   margin: 0;
-  width: 99%;
-  /* width: 1568px;  */
   box-sizing: border-box;  
 }
 
-/* Table */
 .study-table {
-  /* width: 1568px;  */
   border-collapse: collapse;
   background-color: white;
   display: table;    
@@ -46,7 +43,6 @@
   font-weight: bold;
 }
 
-/* Responsive tweak */
 @media (max-width: 768px) {
   .study-table-container h2 {
     font-size: 18px;

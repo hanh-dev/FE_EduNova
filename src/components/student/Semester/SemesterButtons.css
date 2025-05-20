@@ -10,7 +10,8 @@
 .fixed-buttons {
     position: fixed;
     bottom: 0px;
-    margin-left: 5%;
+    width: calc(100%-250px);
+   margin-left: 250px;
     padding: 10px;
     border-radius: 8px;
 }

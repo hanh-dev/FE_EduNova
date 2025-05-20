@@ -14,7 +14,8 @@
   max-height: 600px;
   position: relative;
   text-align: left;
-  margin-left: 20px;
+  width: calc(100%-250px);
+  margin-left: 250px;
 }
 
 .form-section {

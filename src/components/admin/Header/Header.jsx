@@ -1,6 +1,16 @@
 import React from 'react'
 import './Header.css'
+import { logout } from '../../../services/api/StudentAPI'
 function Header() {
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+      window.location.href = '/login';
+    })
+    .catch((err) => {
+      console.error('Logout failed:', err);
+    });
+  }
   return (
     <div>
         <div className='header-box'>
@@ -9,7 +19,7 @@ function Header() {
                 <button>Search</button>
             </div>
             <div className='logout-box'>
-                <button>Logout</button>
+                <button onClick={handleLogout}>Logout</button>
             </div>
         </div>
     </div>

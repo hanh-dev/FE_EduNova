@@ -74,8 +74,8 @@ export default function SemesterGoal({ semester }) {
   const currentGoals = filteredGoals.slice(indexOfFirstGoal, indexOfLastGoal);
 
   return (
-    <div className="container">
-      <div className="yourGoall">
+    <div className="container your-goal-big">
+      <div className="your-goal">
         <div className="goal-header">
           <h2>Your Study Goal</h2>
           <span className="add-goal-btn" onClick={() => setShowForm(true)}>
@@ -88,7 +88,10 @@ export default function SemesterGoal({ semester }) {
         </div>
 
         {showForm && (
-          <GoalForm onClose={() => setShowForm(false)} onSave={handleSaveGoal} />
+          <GoalForm
+            onClose={() => setShowForm(false)}
+            onSave={handleSaveGoal}
+          />
         )}
 
         {showEditForm && goalToEdit && (

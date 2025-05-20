@@ -5,14 +5,14 @@
     padding: 20px;
     gap: 50px;
     height: 100%;
-    margin-left: 20px;
+    
   }
   
   .progress-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    width: 300px;
+    width: 250px;
   }
   
   .progress-item h3 {
@@ -20,6 +20,7 @@
     margin-top: 10px;
     font-size: 30px;
   }
+
   .progress-container {
   display: flex;
   justify-content: center;
@@ -28,9 +29,9 @@
 }
 
 .progress-items-container {
-  display: flex;  /* Align items in a row */
-  justify-content: space-between; /* Distribute the items evenly */
-  width: 100%;  /* Ensure the items take up the full width */
+  display: flex;  
+  justify-content: space-between; 
+  width: 85%
 }
 
 .progress-item {
@@ -47,3 +48,13 @@
 h3 {
   margin-top: 10px;
 }
+
+
+.progress-items-container {
+  display: flex;
+  flex-direction: row; 
+  justify-content: center; 
+  align-items: center;
+  gap: 100px;
+}
+

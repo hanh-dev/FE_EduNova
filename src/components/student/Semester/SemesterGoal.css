@@ -1,44 +1,71 @@
-.yourGoall {
-    width: 90%;
-    margin-left: 5%;
+.your-goal-big{
+  width:calc(100%-260px);
+  margin-left: 260px;
+   display: flex;
+  flex-direction: column;
+  min-height: 100vh;  
 }
-
 .goal-header{
-  width: 100% !important;
   display: flex;
-  justify-content: space-between;
+  justify-content:center;
 }
-.goal-header {
-  width: 100% !important;
-  display: flex;
-  justify-content: space-between;
-  align-items: center; 
+.table-your-goal {
+  margin-right: 2%;
+  border-collapse: collapse; 
 }
-.table-goal,
-.table-your-goal{
-  width: 100%;
-}
-
 .table-goal thead th{
   background-color: #ff9933;
   color: #fff;
   padding: 10px;
   border: 1px solid #ccc;
+
 }
+
+/* .goal-wrapper {
+  max-width: 900px;
+  margin: 0 auto;
+  overflow-x: auto; 
+} */
+
 .table-your-goal {
-  border-collapse: collapse; 
+  width: 100%;
+  min-width: 800px; 
+  border-collapse: collapse;
 }
 
 .table-your-goal tbody td {
   border: 1px solid #ccc;
   padding: 8px;
   word-wrap: break-word;
-  max-width: 140px;
   text-align: center;
-}
-.container {
-  display: flex;
-  flex-direction: column;
-  min-height: 100vh; /* Chiều cao tối thiểu của toàn bộ vùng */
+    max-width: 200px;
+  white-space: normal;
 }
 
+.goal-header {
+  display: flex;
+  justify-content: center;        /* Cho h2 nằm giữa */
+  align-items: center;
+  position: relative;             /* Cho phép định vị icon */
+  padding: 10px 0;
+}
+
+.goal-header h2 {
+  margin: 0;
+  margin-bottom: 40px;
+}
+
+.add-goal-btn {
+  position: absolute;
+  right: 0;                       /* Đẩy về cuối bên phải */
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+.icon_add {
+  width: 24px;
+  height: 24px;
+  margin-right: 35px;
+  margin-bottom: 40px;
+}

@@ -18,7 +18,6 @@ export default function EditForm({ onClose, onSave, goal }) {
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  // Get user_id from localStorage
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user?.user_id) {
@@ -28,7 +27,6 @@ export default function EditForm({ onClose, onSave, goal }) {
     }
   }, []);
 
-  // Load semester list
   useEffect(() => {
     const fetchSemesters = async () => {
       try {
@@ -41,7 +39,6 @@ export default function EditForm({ onClose, onSave, goal }) {
     fetchSemesters();
   }, []);
 
-  // Load goal data
   useEffect(() => {
     if (goal) {
       const fetchGoalData = async () => {
@@ -108,8 +105,8 @@ export default function EditForm({ onClose, onSave, goal }) {
     try {
       const response = await editGoal(goal.id, updatedGoal);
       if (response) {
-        onSave(response); // Gửi dữ liệu đã cập nhật về component cha
-        onClose(); // Đóng form
+        onSave(response);
+        onClose();
       }
     } catch (error) {
       console.error("Error updating goal:", error);
@@ -218,11 +215,11 @@ export default function EditForm({ onClose, onSave, goal }) {
               ))}
             </select>
           </div>
-          <div className="button-container">
 
-          <button type="submit" className="button-update" disabled={isSubmitting}>
-            {isSubmitting ? "Updating..." : "Update"}
-          </button>
+          <div className="button-container">
+            <button type="submit" className="button-update" disabled={isSubmitting}>
+              {isSubmitting ? "Updating..." : "Update"}
+            </button>
           </div>
         </form>
       </div>

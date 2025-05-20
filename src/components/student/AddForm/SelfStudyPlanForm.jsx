@@ -1,181 +1,191 @@
-import React, { useState } from 'react';
-// import './SelfStudyPlanForm.css'; 
+import React, { useState, useEffect } from "react";
+import './SelfStudyPlanForm.css';
+import DeleteSelfStudyButton from "./DeleteSelfStudyButton";
+import { getSelfStudyByID, editSelfStudy } from "../../../services/api/StudentAPI";
 
-const UpdateSelfStudyPlanForm = ({ onCancel, onSave }) => {
+export default function UpdateSelfStudyPlanForm({ selfStudyId, onCancel, onSave }) {
   const [formData, setFormData] = useState({
-    date: '',
-    skill: '',
-    lesson: '',
-    timeAllocation: '',
-    resource: '',
-    activities: '',
-    concentration: '',
-    plan: '',
-    evaluation: '',
-    reinforce: '',
-    evaluation2: '',
+    week_id:       "",
+    date:          "",
+    skill:         "",
+    lesson:        "",
+    timeAllocation:"",
+    resource:      "",
+    activities:    "",
+    concentration: "",
+    plan:          "",
+    reinforce:     "",
+    evaluation2:   "",
+    notes:         "",
+    status:        "inprogress",
+    user_id:       "",
   });
+  const [loading, setLoading] = useState(false);
+  const [error, setError]     = useState(null);
 
-  const handleChange = (e) => {
+  // 1) On mount or when selfStudyId changes, load record
+  useEffect(() => {
+    // preload user_id
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user?.user_id) {
+      setFormData(f => ({ ...f, user_id: String(user.user_id) }));
+    }
+
+    if (!selfStudyId) return;
+
+    setLoading(true);
+    getSelfStudyByID(selfStudyId)
+      .then(record => {
+        setFormData({
+          week_id:        String(record.week_id       ?? ""),
+          date:           record.date                 ?? "",
+          skill:          record.skill_module         ?? "",
+          lesson:         record.lesson_summary       ?? "",
+          timeAllocation: String(record.time_allocation ?? ""),
+          resource:       record.learning_resources   ?? "",
+          activities:     record.learning_activities  ?? "",
+          concentration:  String(record.concentration   ?? ""),
+          plan:           record.follow_plan          ?? "",
+          reinforce:      record.reinforcement        ?? "",
+          evaluation2:    record.evaluation           ?? "",
+          notes:          record.notes                ?? "",
+          status:         record.status               ?? "inprogress",
+          user_id:        String(record.user_id       ?? user?.user_id ?? ""),
+        });
+      })
+      .catch(() => {
+        setError("Failed to load data");
+      })
+      .finally(() => setLoading(false));
+  }, [selfStudyId]);
+
+  // 2) Handle field changes
+  const handleChange = e => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
-    }));
+    setFormData(f => ({ ...f, [name]: value }));
   };
 
-  const handleSave = () => {
-    console.log('Form data saved:', formData);
-    onSave();  
+  // 3) Submit update
+  const handleSave = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      await editSelfStudy(selfStudyId, {
+        week_id:       formData.week_id,
+        date:          formData.date,
+        skill_module: formData.skill,
+        lesson_summary: formData.lesson,
+        time_allocation: formData.timeAllocation,
+        learning_resources: formData.resource,
+        learning_activities: formData.activities,
+        concentration: parseInt(formData.concentration, 10),
+        follow_plan:   formData.plan,
+        evaluation:    formData.evaluation2,
+        reinforcement: formData.reinforce,
+        notes:         formData.notes,
+        status:        formData.status,
+        user_id:       formData.user_id,
+      });
+      if (onSave) onSave();
+    } catch {
+      setError("Failed to update self-study");
+    } finally {
+      setLoading(false);
+    }
   };
+
+  if (loading) return <div>Loading…</div>;
+  if (error)   return <div style={{ color: 'red' }}>{error}</div>;
 
   return (
-    <form className="form-container">
-      <h2>Update your process</h2>
-
-      <div className="form-grid">
-        <div className="form-group">
-          <label htmlFor="date">Date</label>
-          <input 
-            type="date" 
-            id="date" 
-            name="date" 
-            value={formData.date} 
-            onChange={handleChange} 
-          />
+    <div className="overlay">
+      <form className="form-container6" onSubmit={e => e.preventDefault()}>
+        <h2>Update Your Self‑Study Plan</h2>
+        <div className="form-grid">
+          {/* Week ID */}
+          <div className="form-group">
+            <label>Week ID</label>
+            <input type="number" name="week_id"       value={formData.week_id}       onChange={handleChange}/>
+          </div>
+          {/* Date */}
+          <div className="form-group">
+            <label>Date</label>
+            <input type="date"   name="date"          value={formData.date}          onChange={handleChange}/>
+          </div>
+          {/* Skill/Module */}
+          <div className="form-group">
+            <label>Skill/Module</label>
+            <select name="skill" value={formData.skill} onChange={handleChange}>
+              <option value="">— Select —</option>
+              <option value="TOEIC">TOEIC</option>
+              <option value="IELTS">IELTS</option>
+              <option value="IT">IT</option>
+            </select>
+          </div>
+          {/* Lesson Summary */}
+          <div className="form-group full-width">
+            <label>Lesson Summary</label>
+            <textarea name="lesson" value={formData.lesson} onChange={handleChange}/>
+          </div>
+          {/* Time Allocation */}
+          <div className="form-group">
+            <label>Time Allocation (min)</label>
+            <input type="number" name="timeAllocation" value={formData.timeAllocation} onChange={handleChange}/>
+          </div>
+          {/* Learning Resources */}
+          <div className="form-group full-width">
+            <label>Learning Resources</label>
+            <textarea name="resource" value={formData.resource} onChange={handleChange}/>
+          </div>
+          {/* Learning Activities */}
+          <div className="form-group full-width">
+            <label>Learning Activities</label>
+            <textarea name="activities" value={formData.activities} onChange={handleChange}/>
+          </div>
+          {/* Concentration */}
+          <div className="form-group">
+            <label>Concentration (1–5)</label>
+            <input type="number" min="1" max="5" name="concentration" value={formData.concentration} onChange={handleChange}/>
+          </div>
+          {/* Follow Plan */}
+          <div className="form-group full-width">
+            <label>Follow Plan</label>
+            <textarea name="plan" value={formData.plan} onChange={handleChange}/>
+          </div>
+          {/* Evaluation */}
+          <div className="form-group full-width">
+            <label>Evaluation</label>
+            <textarea name="evaluation2" value={formData.evaluation2} onChange={handleChange}/>
+          </div>
+          {/* Reinforcement */}
+          <div className="form-group full-width">
+            <label>Reinforcement</label>
+            <textarea name="reinforce" value={formData.reinforce} onChange={handleChange}/>
+          </div>
+          {/* Notes */}
+          <div className="form-group full-width">
+            <label>Notes (optional)</label>
+            <textarea name="notes" value={formData.notes} onChange={handleChange}/>
+          </div>
+          {/* Status */}
+          <div className="form-group">
+            <label>Status</label>
+            <select name="status" value={formData.status} onChange={handleChange}>
+              <option value="inprogress">In Progress</option>
+              <option value="done">Done</option>
+              <option value="cancel">Cancel</option>
+            </select>
+          </div>
         </div>
 
-        <div className="form-group">
-          <label htmlFor="skill">Skill/Module</label>
-          <select 
-            id="skill" 
-            name="skill" 
-            value={formData.skill} 
-            onChange={handleChange}
-          >
-            <option value="TOEIC">TOEIC</option>
-            <option value="IELTS">IELTS</option>
-            <option value="IT">IT</option>
-          </select>
+        <div className="form-actions">
+          <button type="button" onClick={handleSave}>Save</button>
+          <button type="button" onClick={onCancel} style={{ marginLeft: 10 }}>Cancel</button>
+          {selfStudyId && (
+            <DeleteSelfStudyButton id={selfStudyId} onDeleted={onCancel} label="Delete"/>
+          )}
         </div>
-
-        <div className="form-group">
-          <label htmlFor="lesson">My lesson - What did I learn today?</label>
-          <input 
-            type="text" 
-            id="lesson" 
-            name="lesson" 
-            placeholder="I learned abcxyz"
-            value={formData.lesson} 
-            onChange={handleChange} 
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="timeAllocation">Time allocation</label>
-          <input 
-            type="text" 
-            id="timeAllocation" 
-            name="timeAllocation" 
-            placeholder="30 minutes"
-            value={formData['timeAllocation']} 
-            onChange={handleChange} 
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="resource">Learning resource</label>
-          <input 
-            type="text" 
-            id="resource" 
-            name="resource" 
-            placeholder="I used this resource"
-            value={formData.resource} 
-            onChange={handleChange} 
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="activities">Learning activities</label>
-          <input 
-            type="text" 
-            id="activities" 
-            name="activities" 
-            placeholder="Study time or exercises"
-            value={formData.activities} 
-            onChange={handleChange} 
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="concentration">Concentration</label>
-          <input 
-            type="text" 
-            id="concentration" 
-            name="concentration" 
-            placeholder="Focus level"
-            value={formData.concentration} 
-            onChange={handleChange} 
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="plan">Plan & Follow plan</label>
-          <input 
-            type="text" 
-            id="plan" 
-            name="plan" 
-            placeholder="Planned tasks"
-            value={formData.plan} 
-            onChange={handleChange} 
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="evaluation">Evaluation of My Work</label>
-          <input 
-            type="text" 
-            id="evaluation" 
-            name="evaluation" 
-            placeholder="Self-assessment"
-            value={formData.evaluation} 
-            onChange={handleChange} 
-          />
-        </div>
-
-        <div className="form-group">
-          <label htmlFor="reinforce">Reinforcing Learning</label>
-          <input 
-            type="text" 
-            id="reinforce" 
-            name="reinforce" 
-            placeholder="Review or repeat"
-            value={formData.reinforce} 
-            onChange={handleChange} 
-          />
-        </div>
-
-        <div className="form-group full-width">
-          <label htmlFor="evaluation2">Evaluation of My Work</label>
-          <input 
-            type="text" 
-            id="evaluation2" 
-            name="evaluation2" 
-            placeholder="Final self-evaluation"
-            value={formData.evaluation2} 
-            onChange={handleChange} 
-          />
-        </div>
-      </div>
-
-      <div className="form-actions">
-        <button type="button" onClick={onCancel}>Cancel</button>
-        <button type="button" onClick={handleSave}>Save</button>
-        <button type="button" onClick={onCancel}>Cancel</button>
-        <button type="button" onClick={handleSave}>Save</button>
-      </div>
-    </form>
+      </form>
+    </div>
   );
-};
-
-export default UpdateSelfStudyPlanForm;
+}

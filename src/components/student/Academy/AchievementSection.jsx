@@ -2,37 +2,89 @@ import React, { useState, useEffect } from "react";
 import CertificateCard from "./CertificateCard";
 import AddCertificateButton from "./AddCertificateButton";
 import AcademyForm from "./AcademyForm";
-import certificateData from "../../../data/certificates.json";
 import "./AchievementSection.css";
+import { academyAPI } from "../../../services/api/StudentAPI";
+import { toast } from "react-toastify";
 
 const AchievementSection = () => {
   const [certificates, setCertificates] = useState([]);
   const [showForm, setShowForm] = useState(false);
-  const [editingCert, setEditingCert] = useState(null); // <-- Thêm trạng thái chỉnh sửa
+  const [editingCert, setEditingCert] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setCertificates(certificateData);
+    fetchAcademies();
   }, []);
 
-  const handleAddCertificate = (newCert) => {
-    if (editingCert) {
-      // Cập nhật chứng chỉ đang chỉnh sửa
-      const updated = certificates.map((cert) =>
-        cert.id === editingCert.id ? { ...cert, ...newCert } : cert
-      );
-      setCertificates(updated);
-      setEditingCert(null);
-    } else {
-      // Thêm mới
-      setCertificates([...certificates, newCert]);
+  const fetchAcademies = async () => {
+    try {
+      setLoading(true);
+      const data = await academyAPI.getAllAcademies();
+      const formattedData = data.map((item) => ({
+        id: item.id,
+        title: item.title,
+        description: item.description,
+        media_type: item.media_type,
+        media_path_url: item.media_path_url,
+      }));
+      setCertificates(formattedData);
+    } catch (error) {
+      toast.error("Không thể tải dữ liệu. Vui lòng thử lại sau.");
+      console.error("Error fetching academies:", error);
+    } finally {
+      setLoading(false);
     }
-    setShowForm(false);
   };
 
-  const handleDelete = (id) => {
-    const confirmed = window.confirm("Bạn có chắc muốn xoá?");
-    if (confirmed) {
-      setCertificates(certificates.filter((cert) => cert.id !== id));
+  const handleAddCertificate = async (formData) => {
+    const isEdit = !!editingCert;
+
+    for (let pair of formData.entries()) {
+      console.log("🧾 FormData:", pair[0], pair[1]);
+    }
+
+    try {
+      let result;
+      if (isEdit) {
+        result = await academyAPI.updateAcademy(editingCert.id, formData);
+      } else {
+        result = await academyAPI.addAcademy(formData);
+      }
+
+      const newCert = {
+        id: result.id,
+        title: result.title,
+        description: result.description,
+        media_type: result.media_type,
+        media_path_url: result.media_path_url,
+      };
+
+      setCertificates((prev) =>
+        isEdit
+          ? prev.map((cert) => (cert.id === newCert.id ? newCert : cert))
+          : [...prev, newCert]
+      );
+
+      toast.success(isEdit ? "Cập nhật thành công!" : "Thêm mới thành công!");
+      setShowForm(false);
+      setEditingCert(null);
+    } catch (error) {
+      toast.error("Đã xảy ra lỗi. Vui lòng thử lại.");
+      console.error("Error saving academy:", error);
+    }
+  };
+
+  const handleDelete = async (id) => {
+    const confirmed = window.confirm("Bạn có chắc muốn xóa?");
+    if (!confirmed) return;
+
+    try {
+      await academyAPI.deleteAcademy(id);
+      setCertificates((prev) => prev.filter((cert) => cert.id !== id));
+      toast.success("Xóa thành công!");
+    } catch (error) {
+      toast.error("Không thể xóa. Vui lòng thử lại.");
+      console.error("Error deleting academy:", error);
     }
   };
 
@@ -45,22 +97,32 @@ const AchievementSection = () => {
     <div className="achievement-section">
       <div className="header">
         <h2>Academy achievements</h2>
-        <AddCertificateButton onClick={() => {
-          setEditingCert(null); // reset chỉnh sửa
-          setShowForm(true);
-        }} />
+        <AddCertificateButton
+          onClick={() => {
+            setEditingCert(null);
+            setShowForm(true);
+          }}
+        />
       </div>
 
-      <div className="card-grid">
-        {certificates.map((cert) => (
-          <CertificateCard
-            key={cert.id}
-            data={cert}
-            onDelete={handleDelete}
-            onEdit={handleEdit}
-          />
-        ))}
-      </div>
+      {loading ? (
+        <div className="loading">Loading...</div>
+      ) : (
+        <div className="card-grid-1">
+          {certificates.length > 0 ? (
+            certificates.map((cert) => (
+              <CertificateCard
+                key={cert.id}
+                data={cert}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+              />
+            ))
+          ) : (
+            <p className="no-data">Chưa có thành tựu nào được thêm vào.</p>
+          )}
+        </div>
+      )}
 
       {showForm && (
         <AcademyForm
@@ -69,7 +131,7 @@ const AchievementSection = () => {
             setEditingCert(null);
           }}
           onSave={handleAddCertificate}
-          initialData={editingCert} // <-- truyền dữ liệu cũ nếu có
+          initialData={editingCert}
         />
       )}
     </div>
