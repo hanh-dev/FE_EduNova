@@ -1,14 +1,17 @@
 import { NavLink } from 'react-router-dom';
-import { sidebarItems } from '../../assets/icons/sidebar';
+import { sidebarItems, sidebarItemsAdmin } from '../../assets/icons/sidebar';
 import { handleLogout } from '../../utils/swal';
+import { useAuth } from '../../services/providers/AuthContext';
 const Sidebar = () => {
+  const {user} = useAuth();
+  const itemsToRender = user?.role === 'admin' ? sidebarItemsAdmin : sidebarItems;
   return (
   <aside className="sidebar">
     <div className="sidebar-logo">
       <span role="img" aria-label="logo">🎓</span>
     </div>
     <nav className="sidebar-nav">
-    {sidebarItems.map((item) =>
+    {itemsToRender.map((item) =>
       item.isLogout ? (
         <NavLink
           key={item.label}

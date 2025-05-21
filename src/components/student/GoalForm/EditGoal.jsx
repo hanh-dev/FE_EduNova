@@ -1,42 +1,106 @@
 import React, { useState, useEffect } from "react";
+import { getGoal, editGoal } from "../../../services/api/StudentAPI";
 import "./EditGoal.css";
 
-export default function EditGoal({ goal, onClose, onSave }) {
-  const [editedGoal, setEditedGoal] = useState({
-    course: "",
+export default function EditForm({ onClose, onSave, goal }) {
+  const [formData, setFormData] = useState({
+    user_id: "",
+    course: "English",
+    goals: "",
     courseExpectations: "",
     teacherExpectations: "",
     selfExpectations: "",
-    dueDate: ""
+    dueDate: "",
   });
+console.log(formData);
+  const [errorMessage, setErrorMessage] = useState("");
 
-  // Load dữ liệu từ goal vào state khi mở form
   useEffect(() => {
-    if (goal) {
-      setEditedGoal(goal);
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user && user.user_id) {
+      setFormData((prev) => ({ ...prev, user_id: user.user_id }));
+    } else {
+      setErrorMessage("User not found. Please login again.");
     }
-  }, [goal]);
+  }, []);
 
-  // Cập nhật state khi người dùng thay đổi input
+
+useEffect(() => {
+  if (goal) {
+    const fetchGoalData = async () => {
+      try {
+        const response = await getGoal(goal.id);
+        console.log("Goal Data:", response);  
+        if (response) {
+          setFormData((prev) => ({
+            ...prev,
+            course: response.course || "English",
+            goals: response.goals || "",
+            courseExpectations: response.courseExpectations || "",
+            teacherExpectations: response.teacherExpectations || "",
+            selfExpectations: response.selfExpectations || "",
+            dueDate: response.dueDate || "",
+          }));
+        }
+      } catch (error) {
+        console.error("Error fetching goal data:", error);
+      }
+    };
+
+    fetchGoalData();
+  }
+}, [goal]);
+
+
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setEditedGoal((prev) => ({ ...prev, [name]: value }));
+    setFormData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
   };
 
-  // Xử lý khi nhấn nút Save
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    onSave(editedGoal); // Gửi goal đã sửa lên SemesterGoal
-    onClose(); // Đóng form
+
+    const { user_id, course, goals, courseExpectations, teacherExpectations, selfExpectations, dueDate } = formData;
+
+    if (!user_id || !goals || !courseExpectations || !teacherExpectations || !selfExpectations || !dueDate) {
+      setErrorMessage("Please fill out all fields.");
+      return;
+    }
+
+    const updatedGoal = {
+      user_id,
+      course,
+      goals,
+      courseExpectations,
+      teacherExpectations,
+      selfExpectations,
+      dueDate,
+    };
+
+    try {
+      const response = await editGoal(goal.id, updatedGoal);
+      if (response) {
+        onSave(response);
+        onClose();
+      }
+    } catch (error) {
+      console.error("Error updating goal:", error);
+      setErrorMessage("Failed to update goal. Please try again.");
+    }
   };
 
   return (
     <div className="goal-overlay">
       <div className="goal-form">
         <span className="close-btn" onClick={onClose}>×</span>
-        <h3>Edit a Goal</h3>
+        <h1>Edit Goal</h1>
+        {errorMessage && <p className="error-message">{errorMessage}</p>}
+
         <form onSubmit={handleSubmit}>
-          <div className="mb-3">
+          <div className="edit-your-goal">
             <label className="title">Course</label>
             <span className="close-down">
               <i className="fa-solid fa-caret-down"></i>
@@ -44,58 +108,70 @@ export default function EditGoal({ goal, onClose, onSave }) {
             <select
               className="form-control"
               name="course"
-              value={editedGoal.course}
+              value={formData.course}
               onChange={handleChange}
             >
               <option value="English">English</option>
-              <option value="IT-English">IT-English</option>
+              <option value="IT-English">IT English</option>
               <option value="Communicative">Communicative</option>
             </select>
           </div>
 
-          <div className="mb-3">
+          <div className="edit-your-goal">
+            <label className="title">Goal</label>
+            <input
+              type="text"
+              className="form-control"
+              name="goals"
+              value={formData.goals}
+              onChange={handleChange}
+              required
+            />
+          </div>
+
+          <div className="edit-your-goal">
             <label className="title">Course Expectations</label>
             <input
               type="text"
               className="form-control"
               name="courseExpectations"
-              value={editedGoal.courseExpectations}
+              value={formData.courseExpectations}
               onChange={handleChange}
               required
             />
           </div>
 
-          <div className="mb-3">
+          <div className="edit-your-goal">
             <label className="title">Teacher Expectations</label>
             <input
               type="text"
               className="form-control"
               name="teacherExpectations"
-              value={editedGoal.teacherExpectations}
+              value={formData.teacherExpectations}
               onChange={handleChange}
               required
             />
           </div>
 
-          <div className="mb-3">
+          <div className="edit-your-goal">
             <label className="title">Self Expectations</label>
             <input
               type="text"
               className="form-control"
               name="selfExpectations"
-              value={editedGoal.selfExpectations}
+              value={formData.selfExpectations}
               onChange={handleChange}
               required
             />
           </div>
 
-          <div className="mb-3">
-            <label className="title">Due date</label>
+          <div className="edit-your-goal">
+            <label className="title">Due Date</label>
             <input
               type="date"
               className="form-control"
               name="dueDate"
-              value={editedGoal.dueDate}
+              value={formData.dueDate}
               onChange={handleChange}
               required
             />
@@ -103,10 +179,9 @@ export default function EditGoal({ goal, onClose, onSave }) {
 
           <button
             type="submit"
-            className="btn w-100"
-            style={{ backgroundColor: "orange", borderColor: "orange" }}
+            className="button-save"
           >
-            Save
+            Update
           </button>
         </form>
       </div>

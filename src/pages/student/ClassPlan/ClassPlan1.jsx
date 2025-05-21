@@ -6,7 +6,7 @@ import GoalChecklist from '../../../components/student/CheckList/GoalCheckList';
 
 function ClassPlan1() {
   const [addStudyPlan, setStudyPlan] = useState(false);
-  const [classForm, setClassForm] = useState(true)
+  const [classForm, setClassForm] = useState(true);
   return (
     <div>
       <div className="tabs">

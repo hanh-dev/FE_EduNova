@@ -1,62 +1,85 @@
-import React, { useState } from 'react';
-import './Buttons.css'; 
-import UpdateClassPlanForm from '../AddForm/ClassPlanForm'; 
-import UpdateSelfStudyPlanForm from '../AddForm/SelfStudyPlanForm'; 
-import { getInClassByID } from '../../../services/api/StudentAPI';
+import React, { useState } from "react";
+import "./Buttons.css";
+import ClassPlanForm from "../AddForm/ClassPlanForm";
+import {
+  getInClassByID,
+  deleteInClass,
+  getAllSelfStudy,
+  getSelfStudyByID
+} from "../../../services/api/StudentAPI";
 
-function Buttons({ type, inclass }) {
+export default function Buttons({ type, selfstudy, onUpdate, onDelete }) {
   const [showForm, setShowForm] = useState(false);
-  const [goalToEdit, setGoalToEdit] = useState(null);
+  const [record, setRecord] = useState(null);
 
   const handleUpdateClick = async () => {
-    if (!inclass || !inclass.id) {
-      console.error("inclass or inclass.id is undefined");
-      return;
-    }
+
     try {
-      const data = await getInClassByID(inclass.id);
-      setGoalToEdit(data);
+      let data = null;
+
+      if (type === "inclass") {
+         data = await getAllInClass(inclass.id);
+      } else {
+        data= await getSelfStudyByID(selfstudy);
+      }
+
+      setRecord(data);
       setShowForm(true);
-    } catch (error) {
-      console.error("Failed to fetch inclass data:", error);
+    } catch (e) {
+      console.error("Fetch error:", e);
     }
   };
 
-  const handleCancelClick = () => {
-    setShowForm(false);
-    setGoalToEdit(null);
+  const handleDelete = async () => {
+    if (!selfstudy?.id) return console.error("Missing selfstudy.id");
+
+    const confirmDelete = window.confirm("Are you sure you want to delete this record?");
+    if (!confirmDelete) return;
+
+    try {
+      if (type === "class") {
+        await deleteInClass(selfstudy.id);
+      } else {
+        await deleteselfstudy(selfstudy.id);
+      }
+
+      alert("Delete successful");
+
+      if (onDelete) onDelete(selfstudy.id);
+    } catch (e) {
+      console.error("Delete error:", e);
+    }
   };
 
-  const handleSave = () => {
-    console.log('Form data saved!');
+  const handleSave = (updatedItem) => {
+    if (onUpdate) onUpdate(updatedItem);
     setShowForm(false);
-    setGoalToEdit(null);
+    setRecord(null);
+  };
+
+  const handleCancelForm = () => {
+    setShowForm(false);
+    setRecord(null);
   };
 
   return (
-    <td className="test">
-      <button className="btn" onClick={handleUpdateClick}>Update</button>
-      <button className="btn" onClick={handleCancelClick}>Cancel</button>
+    <>
+        <button className="btn update btn-selfstudy" onClick={handleUpdateClick}>
+          Update
+        </button>
+        <button className="btn delete btn-selfstudy" onClick={handleDelete}>
+          Delete
+        </button>
 
-      {showForm && (
+      {showForm && record && (
         <div className="modal-overlay">
-          {type === "class" ? (
-            <UpdateClassPlanForm
-              goal={goalToEdit}
-              onSave={handleSave}
-              onCancel={handleCancelClick}
-            />
-          ) : (
-            <UpdateSelfStudyPlanForm
-              goal={goalToEdit}
-              onSave={handleSave}
-              onCancel={handleCancelClick}
-            />
-          )}
+          <ClassPlanForm
+            selfstudy={record}
+            onCancel={handleCancelForm}
+            onSave={handleSave}
+          />
         </div>
       )}
-    </td>
+    </>
   );
 }
-
-export default Buttons;

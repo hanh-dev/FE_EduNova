@@ -53,7 +53,9 @@ function ClassPlan() {
                 <td>
                   <span className={`a-status ${item.problemSolved ? 'green' : 'red'}`}></span>
                 </td>
+                <td>
                 <Buttons type="class" inclass={item} />
+                </td>
               </tr>
             ))}
           </tbody>

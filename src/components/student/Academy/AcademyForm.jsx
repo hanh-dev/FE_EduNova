@@ -4,15 +4,15 @@ import "./AcademyForm.css";
 const AcademyForm = ({ onClose, onSave, initialData }) => {
   const [title, setTitle] = useState("");
   const [desc, setDesc] = useState("");
-  const [mediaFile, setMediaFile] = useState(null); // ảnh hoặc video
+  const [mediaFile, setMediaFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState("");
-  const [mediaType, setMediaType] = useState(""); // 'image' hoặc 'video'
+  const [mediaType, setMediaType] = useState("");
 
   useEffect(() => {
     if (initialData) {
       setTitle(initialData.title || "");
       setDesc(initialData.description || "");
-      setPreviewUrl(initialData.mediaUrl || "");
+      setPreviewUrl(initialData.mediaUrl || ""); 
       setMediaType(initialData.mediaType || "");
     }
   }, [initialData]);
@@ -21,35 +21,46 @@ const AcademyForm = ({ onClose, onSave, initialData }) => {
     const file = e.target.files[0];
     if (!file) return;
 
-    const fileType = file.type.startsWith("image")
+    const type = file.type.startsWith("image")
       ? "image"
       : file.type.startsWith("video")
-      ? "video"
-      : "";
+        ? "video"
+        : "";
 
-    if (!fileType) {
+    if (!type) {
       alert("Chỉ chấp nhận ảnh hoặc video!");
       return;
     }
 
     setMediaFile(file);
-    setMediaType(fileType);
+    setMediaType(type);
     setPreviewUrl(URL.createObjectURL(file));
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
 
-    const newCert = {
-      id: initialData ? initialData.id : Date.now(),
-      title,
-      description: desc,
-      mediaUrl: mediaFile ? URL.createObjectURL(mediaFile) : previewUrl, // lưu tạm bằng blob URL
-      mediaType,
-    };
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", desc);
 
-    onSave(newCert);
+    if (mediaFile) {
+      formData.append("media_file", mediaFile);
+      formData.append("media_type", mediaType); 
+    } else if (initialData?.mediaType) {
+      formData.append("media_type", mediaType || initialData?.media_type || ""); 
+    } else {
+      alert("Vui lòng chọn file hoặc đảm bảo media_type có giá trị.");
+      return;
+    }
+
+    for (let pair of formData.entries()) {
+      console.log("📦 FormData Key-Value:", pair[0], pair[1]);
+    }
+
+    onSave(formData);
   };
+
 
   return (
     <div className="form-overlay">
@@ -94,7 +105,7 @@ const AcademyForm = ({ onClose, onSave, initialData }) => {
                 maxHeight: "150px",
                 borderRadius: "8px",
               }}
-            />
+/>
           )}
           <div className="btn-group">
             <button type="submit">Save</button>

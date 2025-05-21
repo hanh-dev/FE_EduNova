@@ -102,7 +102,7 @@ const AddNewSelfStudy = ({ onAddNewStudy }) => {
                   className="selfstudy-textarea"
                   placeholder="Resources used..."
                 />
-              </div>
+              </div> 
 
               <div className="selfstudy-form-section">
                 <h3 className="selfstudy-subsection-title">Concentration</h3>

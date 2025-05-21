@@ -1,6 +1,6 @@
 // src/layouts/StudentLayout.jsx
+import Header from '../components/admin/Header/Header';
 import Sidebar from '../components/shared/SideBar';
-import Header from '../components/shared/Header';
 import { Outlet } from 'react-router-dom';
 
 const AdminLayout = () => {

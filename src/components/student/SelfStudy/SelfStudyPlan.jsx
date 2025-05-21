@@ -57,25 +57,26 @@ function SelfStudy() {
             ) : (
               selfStudyData.map((item, index) => (
                 <tr key={index}>
-                  <td>{item.date}</td>
-                  <td>{item.skill_module}</td>
-                  <td>{item.lesson_summary}</td>
-                  <td>{item.time_allocation}</td>
-                  <td>{item.learning_resources}</td>
-                  <td>{item.learning_activities}</td>
-                  <td>{item.concentration}</td>
-                  <td>{item.follow_plan}</td>
-                  <td>{item.evaluation}</td>
-                  <td>{item.reinforcement}</td>
-                  <td>{item.notes}</td>
-                  <td>
-                    <span className={`a-status ${item.status === 'done' ? 'green' : 'red'}`}></span>
-                    {item.status}
-                  </td>
-
-                    <Buttons type="class" selfstudy={item} />
-  
-                </tr>
+                <td>{item.date}</td>
+                <td>{item.skill_module}</td>
+                <td>{item.lesson_summary}</td>
+                <td>{item.time_allocation}</td>
+                <td>{item.learning_resources}</td>
+                <td>{item.learning_activities}</td>
+                <td>{item.concentration}</td>
+                <td>{item.follow_plan}</td>
+                <td>{item.evaluation}</td>
+                <td>{item.reinforcement}</td>
+                <td>{item.notes}</td>
+                <td>
+                  <span className={`a-status ${item.status === 'done' ? 'green' : 'red'}`}></span>
+                  {item.status}
+                </td>
+                <td>
+                  <Buttons type="class" selfstudy={item.id}  />
+                </td> 
+              </tr>
+              
               ))
             )}
           </tbody>
