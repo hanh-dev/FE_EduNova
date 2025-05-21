@@ -97,6 +97,27 @@ export const updateClass = async (id, data) => {
   }
 };
 
+export const createInClass = async (data) => {
+  try {
+    console.log("Creating inClass with data:", data);
+    const response = await api.post('/inclass', data);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to create inClass:", error);
+    throw error;
+  }
+};
+
+
+export const getGoalsByUser = async (userId) => {
+  try {
+    const response = await api.get(`/goal?user_id=${userId}`); 
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch goals", error);
+    throw error;
+  }
+};
 // =========================
 // 🎯 Goal Management
 // =========================
