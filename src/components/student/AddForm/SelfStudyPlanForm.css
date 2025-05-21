@@ -1,45 +1,34 @@
-/* Overlay: nền mờ tối */
 .overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.5); /* mờ nền */
+  top: 0; left: 0;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-y: auto; /* Cho phép scroll dọc */
-  z-index: 9999;
+  z-index: 999;
+  border-radius: 10px;
+  
 }
 
-/* Form hiển thị */
 .form-container6 {
-  background-color: #fff;
-  padding: 30px;
-  border-radius: 12px;
-  width: 90%;
-  max-width: 800px;
-  max-height: 90vh; /* Để giới hạn chiều cao và cho phép cuộn */
-  overflow-y: auto;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  max-height: 80vh;     
+  overflow-y: auto;   
+  border-radius: 10px;
+
 }
 
-/* Grid layout cho form */
-.form-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 20px;
-}
-
-.form-group.full-width {
-  grid-column: span 2;
-}
-
-/* Nút hành động */
-.form-actions {
-  margin-top: 20px;
+.self-study-plan-form{
   display: flex;
-  justify-content: flex-end;
-  gap: 10px;
+  grid-template-columns: 1fr 1fr;
+   max-height: 500px;
+  overflow-y: auto;
+  background-color: #ffff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 500px;
 }

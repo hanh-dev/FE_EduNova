@@ -25,6 +25,7 @@ export default function Buttons({ type, recordData, onUpdate, onDelete }) {
         data = await getInClassByID(recordData.id);
       } else if (type === "selfstudy") {
         data = await getSelfStudyByID(recordData.id);
+        console.log("data: ",data)
       }
       setRecord(data);
       setShowForm(true);
@@ -66,23 +67,24 @@ export default function Buttons({ type, recordData, onUpdate, onDelete }) {
         )}
       </div>
 
-      {showForm && record && (
-        <div className="modal-overlay">
-          {type === "class" ? (
-            <ClassPlanForm
-              inclass={record}
-              onCancel={handleCancelForm}
-              onSave={handleSave}
-            />
-          ) : (
-            <SelfStudyPlanForm
-              inclass={record}
-              onCancel={handleCancelForm}
-              onSave={handleSave}
-            />
-          )}
-        </div>
-      )}
+{showForm && record && (
+  <div className="modal-overlay">
+    {type === "class" ? (
+      <ClassPlanForm
+        inclass={record} // giữ nguyên cho ClassPlanForm nếu nó đang dùng prop này
+        onCancel={handleCancelForm}
+        onSave={handleSave}
+      />
+    ) : (
+      <SelfStudyPlanForm
+        record={record}      // đổi tên prop rõ hơn
+        onCancel={handleCancelForm}
+        onSave={handleSave}
+      />
+    )}
+  </div>
+)}
+
     </>
   );
 }

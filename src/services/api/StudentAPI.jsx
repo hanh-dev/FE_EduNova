@@ -283,15 +283,20 @@ export const editSelfStudy = async (id, data) => {
     const response = await api.put(`/selfstudy/${id}`, data);
     return response.data;
   } catch (error) {
-    console.error("Failed to edit self study:", error);
+    if (error.response && error.response.status === 422) {
+      console.error("Validation errors:", error.response.data.errors);
+    } else {
+      console.error("Failed to edit self study:", error);
+    }
     throw error;
   }
 };
 
+
 export const getSelfStudyByID = async (id) => {
   try {
     const response = await api.get(`/selfstudy/${id}`);
-    console.log(response);
+    console.log("selfStudy",response);
     return response.data;
   } catch (error) {
     console.error("Failed to get inClass by ID:", error);
@@ -383,5 +388,20 @@ export const getAllTasks = async (id) => {
     }
 };
 
+// =========================
+// ❗ Week
+// =========================
+
+export const getAllWeek= async (id) => {
+    try {
+        console.log("ID to delete Week:", id);
+        const response = await api.get(`/week`);
+        console.log("Week deleted:", response.data);
+        return response.data;
+    } catch (error) {
+        handleApiError(error);
+        throw error;
+    }
+};
 
 export default academyAPI;
