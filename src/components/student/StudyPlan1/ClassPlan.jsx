@@ -1,13 +1,13 @@
-import React, { useEffect, useState } from 'react';
-import Buttons from '../Buttons/Buttons';
-import Date from '../DateSchedule/Date';
-import AddNewClassPlan from '../Buttons/AddNewClassPlan';
-import { getAllInClass } from '../../../services/api/StudentAPI';
-import './ClassPlan.css';
+import React, { useEffect, useState } from "react";
+import Buttons from "../Buttons/Buttons";
+import AddNewClassPlan from "../Buttons/AddNewClassPlan";
+import { getAllInClass, editInClass } from "../../../services/api/StudentAPI";
+import "./ClassPlan.css";
 
 function ClassPlan() {
   const [inClassData, setInClassData] = useState([]);
 
+  // Lấy dữ liệu khi mount component
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -20,10 +20,52 @@ function ClassPlan() {
     fetchData();
   }, []);
 
+  // Thay đổi problem_solved
+  const handleProblemSolvedChange = async (id, newValue) => {
+    const currentItem = inClassData.find((item) => item.id === id);
+    if (!currentItem) return;
+
+    const updatedData = {
+      ...currentItem,
+      problem_solved: newValue ? 1 : 0,
+    };
+
+    // Cập nhật local ngay
+    setInClassData((prevItems) =>
+      prevItems.map((item) => (item.id === id ? updatedData : item))
+    );
+
+    try {
+      await editInClass(id, updatedData);
+      console.log("Updated successfully");
+    } catch (error) {
+      console.error("Failed to update problem_solved", error);
+    }
+  };
+
+  // Cập nhật 1 item trong bảng (callback từ Buttons)
+  const handleUpdateItem = (updatedItem) => {
+    setInClassData((prevData) =>
+      prevData.map((item) => (item.id === updatedItem.id ? updatedItem : item))
+    );
+  };
+
+  // Xóa 1 item khỏi bảng (callback từ Buttons)
+  const handleDeleteItem = (deletedId) => {
+    setInClassData((prevData) =>
+      prevData.filter((item) => item.id !== deletedId)
+    );
+  };
+
+  // Thêm mới 1 item (callback từ AddNewClassPlan)
+  const handleAddNewItem = (newItem) => {
+    setInClassData((prevData) => [newItem, ...prevData]);
+  };
+
   return (
     <div className="a-main-content-check">
       <div className="a-table-section">
-        <AddNewClassPlan />
+        <AddNewClassPlan onAddNewPlan={handleAddNewItem} />
         <h2>In class</h2>
         <table>
           <thead>
@@ -33,28 +75,43 @@ function ClassPlan() {
               <th>My lesson - What did I learn today?</th>
               <th>Self-assessment</th>
               <th>My difficulties</th>
-              <th>My plan</th>
+              <th>My improvement plan</th>
               <th>Problem Solved</th>
-              <th>Status</th>
               <th>Actions</th>
             </tr>
           </thead>
           <tbody>
             {inClassData.map((item, index) => (
-              <tr key={index}>
+              <tr key={item.id || index}>
                 <td>{item.date}</td>
                 <td>{item.skill_module}</td>
                 <td>{item.lesson_summary}</td>
                 <td>{item.self_assessment}</td>
                 <td>{item.difficulties}</td>
                 <td>{item.improvement_plan}</td>
-                <td>{item.problem_solved}</td>
-                <td>
-                  <span className={`a-status ${item.problemSolved ? 'green' : 'red'}`}></span>
+                <td className="option_yes_no">
+                  <select
+                    value={item.problem_solved ? "yes" : "no"}
+                    onChange={(e) =>
+                      handleProblemSolvedChange(
+                        item.id,
+                        e.target.value === "yes"
+                      )
+                    }
+                  >
+                    <option value="yes">Yes</option>
+                    <option value="no">No</option>
+                  </select>
                 </td>
-                <td>
-                <Buttons type="class" recordData={item} />
+                <td className="action-buttons">
+                {/* <Buttons type="class" recordData={item} /> */}
 
+                  <Buttons
+                   type="class" recordData={item}
+                    inclass={item}
+                    onUpdate={handleUpdateItem}
+                    onDelete={handleDeleteItem}
+                  />
                 </td>
               </tr>
             ))}
