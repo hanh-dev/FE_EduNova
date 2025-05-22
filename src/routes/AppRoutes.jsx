@@ -11,8 +11,8 @@ const AppRoutes = () => {
     <Routes>
         <Route path="/login" element={<Login />} />
         {!user && <Route path="*" element={<Navigate to="/login" replace />} />}
-        {user?.role === 'student' && StudentRoutes({ userRole: user.role })}
-        {user?.role === 'teacher' && TeacherRoutes({ userRole: user.role })}
+        {/* {user?.role === 'student' && StudentRoutes({ userRole: user.role })}   */}
+        {user?.role === 'student' && TeacherRoutes({ userRole: user.role })}
         {user?.role === 'admin' && AdminRoutes({ userRole: user.role })}
     </Routes>
   );

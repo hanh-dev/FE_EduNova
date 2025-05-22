@@ -9,11 +9,29 @@ export const clearUser = () => {
 
 export const getUser = () => {
     const data = localStorage.getItem('user');
-    return data ? JSON.parse(data) : null;
+    if (!data || data === "undefined") return null;
+
+    try {
+        return JSON.parse(data);
+    } catch (e) {
+        console.error("Lỗi khi parse user JSON:", e);
+        return null;
+    }
 };
 
+
 export const getToken = () => {
-    const data = JSON.parse(localStorage.getItem('user'));
-    return data ? data.token : null;
-}
+    const raw = localStorage.getItem('user');
+
+    if (!raw || raw === "undefined") return null;
+
+    try {
+        const data = JSON.parse(raw);
+        return data?.token || null;
+    } catch (e) {
+        console.error("Lỗi khi parse user trong getToken:", e);
+        return null;
+    }
+};
+
   
