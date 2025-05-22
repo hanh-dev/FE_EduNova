@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getInClassByID, editInClass } from "../../../services/api/StudentAPI";
+import { getInClassByID, editInClass, getAllGoal } from "../../../services/api/StudentAPI";
 import "./ClassPlanForm.css";
 
 export default function ClassPlanForm({ inclass, onCancel, onSave }) {
@@ -11,12 +11,24 @@ export default function ClassPlanForm({ inclass, onCancel, onSave }) {
     difficulties: "",
     improvement_plan: "",
     user_id: "",
-    goal_id: "",
+    goal_id: "", // giữ trống hoặc 0 lúc đầu
   });
   const [errorMessage, setErrorMessage] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [goals, setGoals] = useState([]); // lưu danh sách goal
 
-  // Lấy user_id từ localStorage khi component mount
+  useEffect(() => {
+    const fetchGoals = async () => {
+      try {
+        const data = await getAllGoal();
+        setGoals(data);
+      } catch (error) {
+        console.error("Failed to fetch goals:", error);
+      }
+    };
+    fetchGoals();
+  }, []);
+
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user?.user_id) {
@@ -26,31 +38,8 @@ export default function ClassPlanForm({ inclass, onCancel, onSave }) {
     }
   }, []);
 
-  // Khi prop inclass thay đổi, cập nhật formData
   useEffect(() => {
     if (!inclass?.id) return;
-
-    if (
-      inclass.date &&
-      inclass.skill_module &&
-      typeof inclass.self_assessment !== "undefined"
-    ) {
-      setFormData((prev) => ({
-        ...prev,
-        date: inclass.date || "",
-        skill_module: inclass.skill_module || "TOEIC",
-        lesson_summary: inclass.lesson_summary || "",
-        self_assessment:
-          typeof inclass.self_assessment === "number"
-            ? inclass.self_assessment
-            : null,
-        difficulties: inclass.difficulties || "",
-        improvement_plan: inclass.improvement_plan || "",
-        goal_id: Number(inclass.goal_id) || 0,
-        user_id: prev.user_id,
-      }));
-      return;
-    }
 
     (async () => {
       try {
@@ -60,13 +49,10 @@ export default function ClassPlanForm({ inclass, onCancel, onSave }) {
           date: data.date || "",
           skill_module: data.skill_module || "TOEIC",
           lesson_summary: data.lesson_summary || "",
-          self_assessment:
-            typeof data.self_assessment === "number"
-              ? data.self_assessment
-              : null,
+          self_assessment: typeof data.self_assessment === "number" ? data.self_assessment : null,
           difficulties: data.difficulties || "",
           improvement_plan: data.improvement_plan || "",
-          goal_id: Number(data.goal_id) || 0,
+          goal_id: data.goal_id ? String(data.goal_id) : "", // đặt về string cho select dễ chọn
           user_id: prev.user_id,
         }));
       } catch (error) {
@@ -98,6 +84,12 @@ export default function ClassPlanForm({ inclass, onCancel, onSave }) {
       return;
     }
 
+    // Bắt buộc chọn goal_id (có thể bỏ nếu không bắt buộc)
+    if (!formData.goal_id) {
+      setErrorMessage("Please select a Goal.");
+      return;
+    }
+
     setIsSubmitting(true);
     try {
       const payload = {
@@ -108,7 +100,7 @@ export default function ClassPlanForm({ inclass, onCancel, onSave }) {
         difficulties: formData.difficulties,
         improvement_plan: formData.improvement_plan,
         user_id: Number(formData.user_id),
-        goal_id: Number(formData.goal_id),
+        goal_id: Number(formData.goal_id), // ép kiểu số khi gửi lên API
       };
 
       const updated = await editInClass(inclass.id, payload);
@@ -152,6 +144,24 @@ export default function ClassPlanForm({ inclass, onCancel, onSave }) {
               <option value="TOEIC">TOEIC</option>
               <option value="Speaking">Speaking</option>
               <option value="IT_English">IT_English</option>
+            </select>
+          </div>
+          <div className="form-group">
+            <label>
+              Goal <span style={{ color: "red" }}>*</span>
+            </label>
+            <select
+              name="goal_id"
+              value={formData.goals}
+              onChange={handleChange}
+              required
+            >
+              <option value="">-- Select Goal --</option>
+              {goals.map((goal) => (
+                <option key={goal.id} value={goal.id}>
+                  {goal.goals}
+                </option>
+              ))}
             </select>
           </div>
         </div>

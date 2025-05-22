@@ -23,9 +23,21 @@ const DeleteSelfStudyButton = ({ id, onDeleted }) => {
   };
 
   return (
-    <button type="button" onClick={handleDelete} style={{ marginLeft: "10px", backgroundColor: "red", color: "white" }}>
-      Delete
-    </button>
+  <button
+  type="button"
+  onClick={handleDelete}
+  style={{
+    padding: "10px",
+    marginLeft: "10px",
+    backgroundColor: "red",
+    color: "white",
+    border: "none",
+    borderRadius: "10px"
+  }}
+>
+  Delete
+</button>
+
   );
 };
 

@@ -19,7 +19,7 @@ export default function DeleteClassPlanButton({ id, onDeleted }) {
   };
 
   return (
-    <button className="btn delete btn-inclass" onClick={handleDelete}>
+    <button className="btn delete-btn-inclass" onClick={handleDelete}>
       Delete
     </button>
   );

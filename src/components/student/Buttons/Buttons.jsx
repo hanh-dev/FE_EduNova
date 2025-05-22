@@ -71,13 +71,12 @@ export default function Buttons({ type, recordData, onUpdate, onDelete }) {
   <div className="modal-overlay">
     {type === "class" ? (
       <ClassPlanForm
-        inclass={record} // giữ nguyên cho ClassPlanForm nếu nó đang dùng prop này
-        onCancel={handleCancelForm}
+        inclass={record} 
         onSave={handleSave}
       />
     ) : (
       <SelfStudyPlanForm
-        record={record}      // đổi tên prop rõ hơn
+        record={record}     
         onCancel={handleCancelForm}
         onSave={handleSave}
       />

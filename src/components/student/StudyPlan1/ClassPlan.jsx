@@ -7,7 +7,6 @@ import "./ClassPlan.css";
 function ClassPlan() {
   const [inClassData, setInClassData] = useState([]);
 
-  // Lấy dữ liệu khi mount component
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -20,7 +19,6 @@ function ClassPlan() {
     fetchData();
   }, []);
 
-  // Thay đổi problem_solved
   const handleProblemSolvedChange = async (id, newValue) => {
     const currentItem = inClassData.find((item) => item.id === id);
     if (!currentItem) return;
@@ -30,7 +28,6 @@ function ClassPlan() {
       problem_solved: newValue ? 1 : 0,
     };
 
-    // Cập nhật local ngay
     setInClassData((prevItems) =>
       prevItems.map((item) => (item.id === id ? updatedData : item))
     );
@@ -43,21 +40,18 @@ function ClassPlan() {
     }
   };
 
-  // Cập nhật 1 item trong bảng (callback từ Buttons)
   const handleUpdateItem = (updatedItem) => {
     setInClassData((prevData) =>
       prevData.map((item) => (item.id === updatedItem.id ? updatedItem : item))
     );
   };
 
-  // Xóa 1 item khỏi bảng (callback từ Buttons)
   const handleDeleteItem = (deletedId) => {
     setInClassData((prevData) =>
       prevData.filter((item) => item.id !== deletedId)
     );
   };
 
-  // Thêm mới 1 item (callback từ AddNewClassPlan)
   const handleAddNewItem = (newItem) => {
     setInClassData((prevData) => [newItem, ...prevData]);
   };
@@ -67,7 +61,7 @@ function ClassPlan() {
       <div className="a-table-section">
         <AddNewClassPlan onAddNewPlan={handleAddNewItem} />
         <h2>In class</h2>
-        <table>
+        <table className="table-inclass">
           <thead>
             <tr>
               <th>Date</th>

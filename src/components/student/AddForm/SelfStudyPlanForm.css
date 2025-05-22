@@ -32,3 +32,15 @@
   border-radius: 10px;
   width: 500px;
 }
+.save-self, .cancle-self{
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+}
+.save-self{
+  background-color: #ff9933;
+}
+.cancle-self{
+  background-color: red;
+}

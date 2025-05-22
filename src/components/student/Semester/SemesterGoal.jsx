@@ -25,17 +25,18 @@ export default function SemesterGoal({ semester }) {
     if (semester) setSelectedSemester(semester);
   }, [semester]);
 
-  useEffect(() => {
-    const fetchGoals = async () => {
-      try {
-        const fetchedGoals = await getAllGoal();
-        setGoals(fetchedGoals);
-      } catch (error) {
-        console.error("Error fetching goals:", error);
-      }
-    };
-    fetchGoals();
-  }, []);
+useEffect(() => {
+  const fetchGoals = async () => {
+    try {
+      const fetchedGoals = await getAllGoal();
+      console.log("Fetched goals:", fetchedGoals); // 👈 Thêm dòng này
+      setGoals(fetchedGoals);
+    } catch (error) {
+      console.error("Error fetching goals:", error);
+    }
+  };
+  fetchGoals();
+}, []);
 
   const updateGoals = (newGoals) => {
     setGoals(newGoals);

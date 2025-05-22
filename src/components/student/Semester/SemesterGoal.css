@@ -1,10 +1,12 @@
 .your-goal-big{
-  width:calc(100%-260px);
-  margin-left: 260px;
+  width:calc(100%-250px);
+  margin-left: 250px;
    display: flex;
   flex-direction: column;
   min-height: 100vh;  
+  padding: 0px 20px;
 }
+
 .goal-header{
   display: flex;
   justify-content:center;
@@ -21,15 +23,9 @@
 
 }
 
-/* .goal-wrapper {
-  max-width: 900px;
-  margin: 0 auto;
-  overflow-x: auto; 
-} */
-
 .table-your-goal {
   width: 100%;
-  min-width: 800px; 
+  /* min-width: 800px;  */
   border-collapse: collapse;
 }
 

@@ -7,19 +7,22 @@
   width: 99%;
 
 }
-
+.study-table{
+  width: 100%;
+}
 .study-table-container {
-  margin-left: 280px;
-  width: calc(100% - 280px);
+  padding: 0px 20px;
+  margin-left: 250px;
+  width: calc(100% - 250px);
 
 }
 
 .study-table-container h2 {
-  background-color: #00AEEF;
+  background-color: #ff9933;
   color: white;
   padding: 12px 25px;
   border-radius: 10px 10px 0 0;
-  font-size: 20px;
+  font-size: 14px;
   margin: 0;
   box-sizing: border-box;  
 }
@@ -33,14 +36,14 @@
 .study-table th,
 .study-table td {
   border: 1px solid #ddd;
-  padding: 12px;
-  text-align: left;
-  font-size: 15px;
+  padding: 5px;
+  font-size: 14px;
 }
 
 .study-table th {
   background-color: white;
   font-weight: bold;
+  text-align: center;
 }
 
 @media (max-width: 768px) {
@@ -57,5 +60,49 @@
 
   .study-table {
     width: 1000px;
-  }
+  } 
+}
+
+.week-buttons-container {
+  display: flex;     
+  flex-wrap: wrap;         
+  gap: 8px;               
+  justify-content: flex-start;
+}
+
+.week-button {
+  padding: 8px 16px;
+  background-color: #f0f0f0;
+  border: none;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  white-space: nowrap; 
+  overflow: hidden;      
+  text-overflow: ellipsis;
+  max-width: 120px;     
+  transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+.week-button:hover {
+  background-color: #e0e0e0;
+}
+
+.week-button.active-week {
+  background-color: #ff9933;
+  color: white;
+  border-color: #0056b3;
+  border: none;
+}
+
+.week-button.add-week {
+  font-weight: bold;
+  font-size: 18px;
+  background-color: #ff9933;
+  color: white;
+}
+
+.week-button.add-week:hover {
+  background-color: #ff9933;
+  border-color: #ff9933;
 }

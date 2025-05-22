@@ -425,4 +425,17 @@ export const getAllWeek= async (id) => {
     }
 };
 
+
+export const createWeek = async (weekData) => {
+  try {
+    const response = await api.post("/week", weekData);
+    console.log("SemesterData created:", response.data);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
+
 export default academyAPI;

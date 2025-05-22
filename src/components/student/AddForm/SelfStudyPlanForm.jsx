@@ -1,6 +1,7 @@
+// components/SelfStudyPlanForm.jsx
 import React, { useState, useEffect } from "react";
-import { editSelfStudy } from "../../../services/api/StudentAPI";
-import { getAllWeek } from "../../../services/api/StudentAPI";
+import { editSelfStudy } from "../../../services/api/StudentAPI"; // sửa đúng đường dẫn
+import { getAllWeek } from "../../../services/api/StudentAPI"; // lấy danh sách tuần
 import './SelfStudyPlanForm.css';
 
 export default function SelfStudyPlanForm({ record, onCancel, onSave }) {
@@ -21,7 +22,7 @@ export default function SelfStudyPlanForm({ record, onCancel, onSave }) {
     user_id: '',
   });
 
-  const [weeks, setWeeks] = useState([]); // Danh sách tuần
+  const [weeks, setWeeks] = useState([]); 
   const [errorMessage, setErrorMessage] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -55,7 +56,7 @@ export default function SelfStudyPlanForm({ record, onCancel, onSave }) {
     fetchWeeks();
   }, []);
 
-  // Gán dữ liệu record vào form
+  // Gán dữ liệu record vào form khi thay đổi record
   useEffect(() => {
     if (!record) return;
 
@@ -111,7 +112,7 @@ export default function SelfStudyPlanForm({ record, onCancel, onSave }) {
         evaluation: formData.evaluation,
         reinforcement: formData.reinforcement,
         notes: formData.notes,
-        status: formData.status, // gửi đúng enum
+        status: formData.status,
         user_id: Number(formData.user_id),
       };
 
@@ -161,6 +162,8 @@ export default function SelfStudyPlanForm({ record, onCancel, onSave }) {
           />
         </label>
       </div>
+
+      {/* Các trường khác tương tự... */}
 
       <div className="form-group-self">
         <label>
@@ -293,7 +296,7 @@ export default function SelfStudyPlanForm({ record, onCancel, onSave }) {
         </label>
       </div>
 
-      <div className="form-buttons">
+      <div className="form-group-self">
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Saving..." : "Save"}
         </button>

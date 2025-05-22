@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import "./AddClassPlan.css";
 import {
   createInClass,
-  getGoalsByUser,
+  getAllGoal
 } from "../../../services/api/StudentAPI";
 
 const AddNewClassPlan = ({ onAddNewPlan }) => {
@@ -17,24 +17,30 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
     problem_solved: false,
     goal_id: "",
   });
-  console.log(formData);
+
   const [errorMessage, setErrorMessage] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [goals, setGoals] = useState([]);
 
+  // Gọi API lấy danh sách tất cả goals
+  useEffect(() => {
+    const fetchGoals = async () => {
+      try {
+        const data = await getAllGoal();
+        setGoals(data);
+      } catch (error) {
+        console.error("Failed to fetch goals:", error);
+      }
+    };
+    fetchGoals();
+  }, []);
+
+  // Khi mở form, lấy user từ localStorage
   useEffect(() => {
     if (showForm) {
       const user = JSON.parse(localStorage.getItem("user"));
       if (user?.user_id) {
         setFormData((prev) => ({ ...prev, user_id: Number(user.user_id) }));
-
-        getGoalsByUser(user.user_id)
-          .then((data) => {
-            setGoals(data);
-          })
-          .catch(() => {
-            setErrorMessage("Failed to load goals.");
-          });
       } else {
         setErrorMessage("User not found. Please login again.");
       }
@@ -74,17 +80,17 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
       const response = await createInClass({
         ...formData,
         user_id: Number(formData.user_id),
-        goal_id: Number(formData.goal_id),
+        goal_id: Number(formData.goal_id), // Đảm bảo gửi goal_id là số
         self_assessment: Number(formData.self_assessment),
         problem_solved: formData.problem_solved ? 1 : 0,
       });
 
       if (response) {
-        console.log("Goal saved successfully!", response);
-        if (onAddNewPlan) {
-          onAddNewPlan(response);
-        }
+        console.log("Class Plan saved successfully!", response);
+        if (onAddNewPlan) onAddNewPlan(response);
         alert("Class Plan added successfully!");
+
+        // Reset form
         setFormData({
           user_id: formData.user_id,
           skill_module: "TOEIC",
@@ -106,11 +112,15 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
 
   return (
     <>
-      <div style={{ textAlign: "right" }}>
-  <button onClick={() => setShowForm(true)} className="add-button-inclass">
-    Add Class Plan
-  </button>
-</div>
+      <div>
+        <button
+          onClick={() => setShowForm(true)}
+          className="add-button-inclass"
+        >
+          Add Class Plan
+        </button>
+      </div>
+
       {showForm && (
         <div className="modal-overlay">
           <div className="modal-content">
@@ -136,42 +146,48 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
                 />
               </div>
 
-              <div className="form-group">
+              <div className="form-group select-with-icon">
                 <label>
                   Skill/Module <span style={{ color: "red" }}>*</span>
                 </label>
-                <select
-                  name="skill_module"
-                  value={formData.skill_module}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="TOEIC">TOEIC</option>
-                  <option value="Speaking">Speaking</option>
-                  <option value="IT_English">IT_English</option>
-                </select>
+                <div className="select-wrapper">
+                  <select
+                    name="skill_module"
+                    value={formData.skill_module}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="TOEIC">TOEIC</option>
+                    <option value="Speaking">Speaking</option>
+                    <option value="IT_English">IT English</option>
+                  </select>
+                  <i className="fa-solid fa-chevron-down"></i>
+                </div>
               </div>
 
-              <div className="form-group">
+              <div className="form-group select-with-icon">
                 <label>
                   Goal <span style={{ color: "red" }}>*</span>
                 </label>
-                <select
-                  name="goal_id"
-                  value={formData.goal_id}
-                  onChange={handleChange}
-                  required
-                >
-                  <option value="">-- Select Goal --</option>
-                  {goals.map((goal) => (
-                    <option key={goal.id} value={goal.id}>
-                      {goal.goals /* hoặc goal.course */}
-                    </option>
-                  ))}
-                </select>
+                <div className="select-wrapper">
+                  <select
+                    name="goal_id"
+                    value={formData.goals}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">-- Select Goal --</option>
+                    {goals.map((goal) => (
+                      <option key={goal.id} value={goal.id}>
+                        {goal.goals}
+                      </option>
+                    ))}
+                  </select>
+                  <i className="fa-solid fa-chevron-down"></i>
+                </div>
               </div>
 
-              <div className="form-group" style={{ flex: 1 }}>
+              <div className="form-group">
                 <label>Lesson Summary</label>
                 <textarea
                   name="lesson_summary"
@@ -180,7 +196,8 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
                   rows={3}
                 />
               </div>
-              <div className="form-group" style={{ flex: 1 }}>
+
+              <div className="form-group">
                 <label>Difficulties</label>
                 <textarea
                   name="difficulties"
@@ -190,7 +207,7 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
                 />
               </div>
 
-              <div className="form-group" style={{ flex: 1 }}>
+              <div className="form-group">
                 <label>Improvement Plan</label>
                 <textarea
                   name="improvement_plan"
@@ -199,7 +216,8 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
                   rows={3}
                 />
               </div>
-              <div className="form-group" style={{ flex: 1 }}>
+
+              <div className="form-group">
                 <label>
                   Self-assessment <span style={{ color: "red" }}>*</span>
                 </label>
@@ -220,20 +238,16 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
               </div>
 
               <div className="form-buttons">
-                  <button
-                  type="submit"
-                  className="btn save-btn"
-                >
+                <button type="submit" className="save-btn">
                   Save
                 </button>
                 <button
                   type="button"
                   onClick={() => setShowForm(false)}
-                  className="btn cancel-btn"
+                  className="cancel-btn"
                 >
                   Cancel
                 </button>
-              
               </div>
             </form>
           </div>
