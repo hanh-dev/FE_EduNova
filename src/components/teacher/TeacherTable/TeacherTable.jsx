@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { } from 'react';
 import { Table, Button, Image } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { deleteStudent, getStudents } from '../../../services/api/StudentAPI';
+import { deleteStudent, getTeachers } from '../../../services/api/StudentAPI';
 import { toast } from 'react-toastify';
 
-function StudentTable({ students, setStudents, setUpdateForm, setUserToEdit }) {
+function TeacherTable({ students, setStudents, setUpdateForm, setUserToEdit }) {
   const handleDelete = async(id) => {
     try {
       const confirmed = window.confirm("Are you sure that you want to delete this student ?");
@@ -12,9 +12,9 @@ function StudentTable({ students, setStudents, setUpdateForm, setUserToEdit }) {
       {
         const response = await deleteStudent(id);
         if(response.status){
-          const updateStudents = await getStudents();
+          const updateStudents = await getTeachers();
           setStudents(updateStudents);
-          toast.success("Student Deleted Successfully!");
+          toast.success("Teacher Deleted Successfully!");
         }
       }
     } catch (error) {
@@ -29,7 +29,7 @@ function StudentTable({ students, setStudents, setUpdateForm, setUserToEdit }) {
       render: (text, record, index) => index + 1,
     },
     {
-      title: 'Student Name',
+      title: 'Teacher Name',
       dataIndex: 'name',
       key: 'name',
     },
@@ -80,4 +80,4 @@ function StudentTable({ students, setStudents, setUpdateForm, setUserToEdit }) {
   );
 }
 
-export default StudentTable;
+export default TeacherTable;
