@@ -1,51 +1,109 @@
-.notification-card {
-  border: 1px solid #ccc;
-  padding: 20px;
-  border-radius: 8px;
-  max-width: 500px;
-  margin: 20px auto;
-  background-color: #f9f9f9;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+/* Overlay that covers the entire screen */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* Semi-transparent black overlay */
+  backdrop-filter: blur(5px); /* Blur effect for modern browsers */
+  -webkit-backdrop-filter: blur(5px); /* Safari support */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000; /* Ensure modal is above other content */
 }
 
-.title {
-  margin-bottom: 20px;
-  text-align: center;
+/* Modal content container */
+.modal-content {
+  background: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto; /* Allow scrolling if content overflows */
+  position: relative;
+  padding: 20px;
+}
+
+/* Styling for the notification card inside the modal */
+.notification-card {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.notification-card .title {
   font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
   color: #333;
 }
 
 .form-group {
-  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
 }
 
-label {
-  font-weight: bold;
-  display: block;
-  margin-bottom: 5px;
+.form-group label {
+  font-weight: 500;
   color: #333;
 }
 
-select,
-textarea {
-  width: 100%;
-  padding: 8px;
-  border-radius: 4px;
+.form-group select,
+.form-group textarea {
+  padding: 10px;
   border: 1px solid #ccc;
-  resize: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  width: 100%;
+  box-sizing: border-box;
 }
 
-button {
+.form-group textarea {
+  resize: vertical; /* Allow vertical resizing only */
+  min-height: 100px;
+}
+
+.button-group {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+}
+
+.button-group button {
   padding: 10px 20px;
-  background-color: #007bff;
-  color: white;
   border: none;
   border-radius: 4px;
   cursor: pointer;
-  display: block;
-  width: 100%;
+  font-size: 1rem;
+  transition: background-color 0.2s;
 }
 
-button:hover {
+.button-group button:first-child {
+  background-color: #007bff;
+  color: white;
+}
+
+.button-group button:first-child:hover {
   background-color: #0056b3;
+}
+
+.button-group button:last-child {
+  background-color: #dc3545;
+  color: white;
+}
+
+.button-group button:last-child:hover {
+  background-color: #b02a37;
+}
+
+/* Ensure the modal is centered and responsive */
+@media (max-width: 600px) {
+  .modal-content {
+    width: 95%;
+    padding: 15px;
+  }
 }

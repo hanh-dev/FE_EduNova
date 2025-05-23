@@ -8,6 +8,7 @@ import {
 import DeleteGoal from "../GoalForm/DeleteGoal";
 import EditGoal from "../GoalForm/EditGoal";
 import "./SemesterGoal.css";
+import TagTeacher from "../Form/TagTeacher";
 
 export default function SemesterGoal() {
   const [goals, setGoals] = useState([]);
@@ -17,6 +18,8 @@ export default function SemesterGoal() {
   const [goalToEdit, setGoalToEdit] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [tagTeacher, setTagTeacher] = useState(false); 
+  const [selectedGoalId, setSelectedGoalId] = useState(null); 
   const goalsPerPage = 10;
 
   useEffect(() => {
@@ -64,6 +67,16 @@ export default function SemesterGoal() {
   const indexOfFirstGoal = indexOfLastGoal - goalsPerPage;
   const currentGoals = goals.slice(indexOfFirstGoal, indexOfLastGoal);
 
+  const handleCommentClick = (goalId) => {
+    setSelectedGoalId(goalId); 
+    setTagTeacher(true); 
+  };
+
+  const handleTagTeacherClose = () => {
+    setTagTeacher(false);
+    setSelectedGoalId(null);
+  };
+
   return (
     <div className="container">
       <div className="yourGoall">
@@ -96,10 +109,17 @@ export default function SemesterGoal() {
           />
         )}
 
+        {tagTeacher && (
+          <TagTeacher
+            onClose={handleTagTeacherClose}
+            goalId={selectedGoalId} 
+          />
+        )}
+
         <div className="table-wrapper">
           <table className="table table-your-goal">
             <thead>
-<tr>
+              <tr>
                 <th>Course</th>
                 <th>Goal</th>
                 <th>Course Expectations</th>
@@ -170,7 +190,7 @@ export default function SemesterGoal() {
                       <i
                         className="fa-regular fa-pen-to-square"
                         style={{ marginRight: "10px", cursor: "pointer" }}
-title="Edit"
+                        title="Edit"
                         onClick={async () => {
                           try {
                             const goalData = await getGoal(goal.id);
@@ -197,6 +217,12 @@ title="Edit"
                             console.error("Failed to fetch goal:", error);
                           }
                         }}
+                      />
+                      <i
+                        className="fa-regular fa-comment"
+                        style={{ color: "#007bff", cursor: "pointer" }}
+                        title="Comment"
+                        onClick={() => handleCommentClick(goal.id)} 
                       />
                     </td>
                   </tr>

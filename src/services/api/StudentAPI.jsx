@@ -374,10 +374,11 @@ export const deleteStudent = async (id) => {
 }
 
 // Gửi thông báo tag teacher
-export const sendTagTeacher = async (teacherId, message) => {
+export const sendTagTeacher = async (user_id, teacherId, message, goalId) => {
   try {
-    const payload = { teacher: teacherId, message };
-    const response = await api.post('/send-tagteacher', payload);
+    console.log("Test data", user_id, teacherId, message, goalId);
+    const payload = { teacherId, message, user_id, goalId };
+    const response = await api.post('/tag-teacher', payload);
     return response.data;
   } catch (error) {
     handleApiError(error);
