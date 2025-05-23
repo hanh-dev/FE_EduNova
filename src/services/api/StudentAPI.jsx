@@ -312,6 +312,67 @@ export const deleteInClass = async (id) => {
   }
 };
 
+export const createUser  = async (data) => {
+  try {
+    console.log("Test data before saving: ", data);
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+    formData.append("image", data.image);
+    if(data.role) {
+      formData.append("role", data.role);
+    }
+
+    const response = await api.post('/v1/student', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Failed at creating a new student: ", error);
+    throw error;
+  }
+}
+
+export const updateUser = async(id, data) => {
+  try {
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    if (data.password) formData.append('password', data.password);
+    if (data.image instanceof File) {
+        formData.append("image", data.image);
+    } else {
+      console.log("Đéo thấy");
+    }
+    console.log("FormData content:");
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+    const response = await api.post(`/v1/student/${id}?_method=PATCH`, formData);
+    console.log("Test response: ", response.data);
+    return response.data;
+  } catch (error) {
+      console.error("Failed at updating a new student: ", error);
+      throw error;
+  }
+}
+
+export const deleteStudent = async (id) => {
+  try {
+    const response = await api.delete(`/v1/student/${id}`,id);
+    console.log("Test ID before deleting: ", id);
+    return response.data;
+
+  } catch (error) {
+      console.error("Failed at creating a new student: ", error);
+      throw error;
+  }
+}
+
 // Gửi thông báo tag teacher
 export const sendTagTeacher = async (teacherId, message) => {
   try {
