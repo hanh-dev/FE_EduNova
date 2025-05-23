@@ -38,13 +38,14 @@
   gap: 16px;
 }
 
-.modal-label {
+label {
   display: flex;
   flex-direction: column;
+  /* font-size: 14px; */
   color: #333;
 }
 
-.model-label input, select {
+input, select {
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 6px;
@@ -71,11 +72,11 @@
   text-align: left;
 }
 
-.modal-label textarea {
+/* textarea {
   resize: vertical;
   padding: 8px;
   border: 1px solid #ccc;
   border-radius: 6px;
   outline: none;
-}
+} */
 

@@ -1,12 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import './TeacherManagement.css';
-import { FaPlus, FaEdit, FaTrash } from 'react-icons/fa';
+import '../student-management/StudentManagement.css'
 import { getTeachers } from '../../../services/api/StudentAPI';
 import { PulseLoader } from 'react-spinners';
-
+import { add } from '../../../assets';
+import StudentTable from '../../../components/admin/StudentTable/StudentTable';
+import AddStudentForm from '../../../components/admin/AddStudent/AddStudentForm';
+import AddTeacher from '../../../components/teacher/AddTeacher/AddTeacher';
+import TeacherTable from '../../../components/teacher/TeacherTable/TeacherTable';
 function TeacherManagement() {
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [addForm, setAddForm] = useState(false);
+  const [updateForm, setUpdateForm] = useState(false);
+  const [userToEdit, setUserToEdit] = useState([]);
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -14,7 +20,7 @@ function TeacherManagement() {
         const students = await getTeachers();
         setStudents(students);
       } catch (error) {
-        console.error('Failed to fetch students:', error);
+        console.error('Failed to fetch teachers:', error);
       } finally {
         setLoading(false);
       }
@@ -32,42 +38,15 @@ function TeacherManagement() {
       ) : (
         <>
           <div className="add-student-btn">
-            <button>
-              <FaPlus /> Add Student
+            <button onClick={() => setAddForm(true)}>
+              <img src={add} alt="Add Icon" className="button-icon" />
+              Add new teacher
             </button>
           </div>
-          <h2>Student Management</h2>
-          <table className="student-table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Student Name</th>
-                <th>Image</th>
-                <th>Email</th>
-                <th>Password</th>
-                <th>Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {students.map((student, index) => (
-                <tr key={index}>
-                  <td>{index + 1}</td>
-                  <td>{student.name}</td>
-                  <td>
-                    <img src={student.image} alt={student.name} className="student-image" />
-                  </td>
-                  <td>{student.email}</td>
-                  <td>{student.password}</td>
-                  <td>
-                    <div className="action-buttons">
-                      <button className="edit"><FaEdit /></button>
-                      <button className="delete"><FaTrash /></button>
-                    </div>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          <h2>Teacher Management</h2>
+          <TeacherTable students={students} setStudents={setStudents} setUpdateForm={setUpdateForm} setUserToEdit={setUserToEdit}/>
+          {addForm && <AddTeacher setAddForm={setAddForm} setStudents={setStudents}/>}
+          {updateForm && <AddTeacher setStudents={setStudents} userToEdit={userToEdit} setUpdateForm={setUpdateForm} setAddForm={setAddForm}/>}
         </>
       )}
     </div>

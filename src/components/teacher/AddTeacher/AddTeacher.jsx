@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import '../AddClassForm/AddClassForm.css'
 import { toast } from 'react-toastify';
-import { createUser, getStudents, updateUser } from '../../../services/api/StudentAPI';
+import './AddForm.css'
+import { createUser, getTeachers, updateUser } from '../../../services/api/StudentAPI';
 
-const AddStudentForm = ({ setStudents, userToEdit, setAddForm, setUpdateForm }) => {
+const AddTeacher = ({ setStudents, userToEdit, setAddForm, setUpdateForm }) => {
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     password: '',
+    role: 'teacher',
     image: null
   });
 
@@ -47,14 +48,14 @@ const AddStudentForm = ({ setStudents, userToEdit, setAddForm, setUpdateForm }) 
         console.log("Test coi nha: ", result);
       } else {
         result = await createUser(formData);
-        console.log("test coi: ", result, result.status);
+        console.log("test coi: ", result);
       }
 
       if (result.status == true) {
-        const updatedUsers = await getStudents();
+        const updatedUsers = await getTeachers();
         setStudents(updatedUsers);
         handleCloseForm();
-        toast.success(`${userToEdit ? 'User updated' : 'User created'} successfully!`, { autoClose: 1500 });
+        toast.success(`${userToEdit ? 'Teacher updated' : 'Teacher created'} successfully!`, { autoClose: 1500 });
       } else {
         toast.error(result.error || "Operation failed.");
       }
@@ -75,7 +76,7 @@ const AddStudentForm = ({ setStudents, userToEdit, setAddForm, setUpdateForm }) 
     <div className="modal-overlay">
       <div className="modal">
         <button className="close-button" onClick={() => (userToEdit ? setUpdateForm(false) : setAddForm(false))}>×</button>
-        <h2>{userToEdit ? 'Update Student' : 'Add New User'}</h2>
+        <h2>{userToEdit ? 'Update Teacher' : 'Add New Teacher'}</h2>
         <form onSubmit={handleSubmit}>
           <label className="modal-label">
             Name
@@ -124,7 +125,7 @@ const AddStudentForm = ({ setStudents, userToEdit, setAddForm, setUpdateForm }) 
           </label>
 
           <button type="submit" className="submit-button1">
-            {userToEdit ? 'Update User' : 'Save User'}
+            {userToEdit ? 'Update Teacher' : 'Save Teacher'}
           </button>
         </form>
       </div>
@@ -132,4 +133,4 @@ const AddStudentForm = ({ setStudents, userToEdit, setAddForm, setUpdateForm }) 
   );
 };
 
-export default AddStudentForm;
+export default AddTeacher;

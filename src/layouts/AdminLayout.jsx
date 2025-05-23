@@ -1,5 +1,6 @@
 // src/layouts/StudentLayout.jsx
 import Header from '../components/admin/Header/Header';
+import AdminMessage from '../components/shared/AdminMessage/AdminMessage';
 import Sidebar from '../components/shared/SideBar';
 import { Outlet } from 'react-router-dom';
 
@@ -12,8 +13,8 @@ const AdminLayout = () => {
         <div className="main-content">
           <Outlet />
         </div>
-
       </main>
+      <AdminMessage />
     </div>
   );
 };

@@ -23,7 +23,7 @@ const ClassCard = ({ classItem, triggerReload, handleUpdateClick }) => {
       </div>
 
       <img
-        src={`/images/${classItem.teacher_image}`}
+        src={classItem.teacher_image}
         alt="Teacher avatar"
         className="class-card__avatar"
       />
