@@ -312,4 +312,16 @@ export const deleteInClass = async (id) => {
   }
 };
 
+// Gửi thông báo tag teacher
+export const sendTagTeacher = async (teacherId, message) => {
+  try {
+    const payload = { teacher: teacherId, message };
+    const response = await api.post('/send-tagteacher', payload);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
 export default academyAPI;

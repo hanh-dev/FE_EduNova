@@ -6,6 +6,7 @@ import RequireAuth from '../components/shared/RequireAuth/RequireAuth';
 import { Academy1 } from '../pages/student/Academy/Academy1';
 import { Dashboard } from '../pages/student/Dashboard/Dashboard';
 import Semester from '../pages/student/Semester/Semester';
+import TagTeacher from '../components/student/Form/TagTeacher';
 
 const StudentRoutes = () => [
   <Route path="/" element={<StudentLayout />} key="layout-student">
@@ -15,6 +16,7 @@ const StudentRoutes = () => [
     <Route path="achievement" element={<Academy1 />} />
     <Route path="study-plans" element={<ClassPlan1 />} />
     <Route path="profile" element={<RequireAuth><Profile /></RequireAuth>} />
+    <Route path="tag-teacher" element={<TagTeacher />} />
   </Route>
 ];
 
