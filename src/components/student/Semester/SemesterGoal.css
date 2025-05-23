@@ -25,7 +25,6 @@
 
 .table-your-goal {
   width: 100%;
-  /* min-width: 800px;  */
   border-collapse: collapse;
 }
 
@@ -40,9 +39,9 @@
 
 .goal-header {
   display: flex;
-  justify-content: center;        /* Cho h2 nằm giữa */
+  justify-content: center;   
   align-items: center;
-  position: relative;             /* Cho phép định vị icon */
+  position: relative;         
   padding: 10px 0;
 }
 
@@ -53,7 +52,7 @@
 
 .add-goal-btn {
   position: absolute;
-  right: 0;                       /* Đẩy về cuối bên phải */
+  right: 0;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;

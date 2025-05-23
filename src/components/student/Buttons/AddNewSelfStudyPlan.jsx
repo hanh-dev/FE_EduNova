@@ -118,14 +118,14 @@ const AddNewSelfStudy = ({ onAddNewStudy }) => {
                 Week:
                 <select
                   name="week_id"
-                  value={formData.week_id}
+                  value={formData.week_numnber}
                   onChange={handleChange}
                   required
                 >
                   <option value="">-- Select Week --</option>
                   {weeks.map((week) => (
                     <option key={week.id} value={week.id}>
-                      {week.name || `Week ${week.id}`}
+                      {week.week_numnber || `Week ${week.id}`}
                     </option>
                   ))}
                 </select>

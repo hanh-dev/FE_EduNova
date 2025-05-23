@@ -4,33 +4,34 @@
 }
 .study-table-wrapper {
   overflow-x: auto;
-  width: 99%;
+  /* padding: 0px 20px 0px 0px; */
+margin-right: 40px;
+width: calc(100% - 40px);
+}
 
-}
-.study-table{
-  width: 100%;
-}
 .study-table-container {
   padding: 0px 20px;
   margin-left: 250px;
   width: calc(100% - 250px);
-
+  min-height: 100vh;
 }
 
 .study-table-container h2 {
-  background-color: #ff9933;
+  background-color: #00AEEF;
   color: white;
   padding: 12px 25px;
   border-radius: 10px 10px 0 0;
-  font-size: 14px;
+  font-size: 20px;
   margin: 0;
-  box-sizing: border-box;  
+  box-sizing: border-box;
+  text-align: center; 
 }
 
 .study-table {
   border-collapse: collapse;
   background-color: white;
-  display: table;    
+  display: table; 
+  width: 100%;   
 }
 
 .study-table th,
@@ -63,35 +64,36 @@
   } 
 }
 
+
 .week-buttons-container {
-  display: flex;     
-  flex-wrap: wrap;         
-  gap: 8px;               
+  position: fixed;
+  bottom: 0px;
+  width: calc( 100% - 250px);
+  margin-left: 250px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0px 20px;
   justify-content: flex-start;
 }
 
 .week-button {
-  padding: 8px 16px;
-  background-color: #f0f0f0;
-  border: none;
-  border-radius: 4px;
-  font-size: 14px;
-  cursor: pointer;
-  white-space: nowrap; 
-  overflow: hidden;      
-  text-overflow: ellipsis;
-  max-width: 120px;     
-  transition: background-color 0.3s ease, border-color 0.3s ease;
+    padding: 8px 12px;
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
 }
 
 .week-button:hover {
-  background-color: #e0e0e0;
+  background-color: #22BBEA;
 }
 
 .week-button.active-week {
-  background-color: #ff9933;
+  background-color: #22BBEA;
   color: white;
-  border-color: #0056b3;
   border: none;
 }
 
@@ -106,3 +108,4 @@
   background-color: #ff9933;
   border-color: #ff9933;
 }
+

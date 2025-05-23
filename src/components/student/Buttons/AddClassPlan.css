@@ -52,11 +52,14 @@
 }
 
 .add-button-inclass{
-  padding: 10px;
-  border: none;
-  border-radius: 10px;
-  color: #fff;
-  background-color: #ff9933;
+    padding: 10px 15px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 40px;
+    border: none;
+    background-color: #ff9933;
+    color: #fff;
+    border-radius: 10px;
 }
 
 .class-plan-form input[type="text"],
@@ -80,7 +83,8 @@
 
 .class-plan-form input:focus,
 .class-plan-form select:focus {
-  border-color: #00aaff;
+    border: 1px solid #ff9933;
+outline: none;
 }
 
 .form-group .radio-group {

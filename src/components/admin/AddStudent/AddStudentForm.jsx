@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import '../AddClassForm/AddClassForm.css'
 import { toast } from 'react-toastify';
-import { createUser, getStudents, updateUser } from '../../../services/api/StudentAPI';
+// import { createUser, getStudents, updateUser } from '../../../services/api/StudentAPI';
+import { getStudents, createUser, updateUser} from '../../../services/api/StudentAPI';
 
 const AddStudentForm = ({ setStudents, userToEdit, setAddForm, setUpdateForm }) => {
   const [formData, setFormData] = useState({

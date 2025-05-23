@@ -2,10 +2,7 @@ import React, { useState } from "react";
 import "./Buttons.css";
 import ClassPlanForm from "../AddForm/ClassPlanForm";
 import SelfStudyPlanForm from "../AddForm/SelfStudyPlanForm";
-import {
-  getInClassByID,
-  getSelfStudyByID,
-} from "../../../services/api/StudentAPI";
+import { getInClassByID, getSelfStudyByID } from "../../../services/api/StudentAPI";
 import DeleteSelfStudyButton from "../AddForm/DeleteSelfStudyButton";
 import DeleteClassPlanButton from "../AddForm/DeleteClassPlanForm";
 
@@ -25,7 +22,7 @@ export default function Buttons({ type, recordData, onUpdate, onDelete }) {
         data = await getInClassByID(recordData.id);
       } else if (type === "selfstudy") {
         data = await getSelfStudyByID(recordData.id);
-        console.log("data: ",data)
+        console.log("data: ", data);
       }
       setRecord(data);
       setShowForm(true);
@@ -67,23 +64,23 @@ export default function Buttons({ type, recordData, onUpdate, onDelete }) {
         )}
       </div>
 
-{showForm && record && (
-  <div className="modal-overlay">
-    {type === "class" ? (
-      <ClassPlanForm
-        inclass={record} 
-        onSave={handleSave}
-      />
-    ) : (
-      <SelfStudyPlanForm
-        record={record}     
-        onCancel={handleCancelForm}
-        onSave={handleSave}
-      />
-    )}
-  </div>
-)}
-
+      {showForm && record && (
+        <div className="modal-overlay">
+          {type === "class" ? (
+            <ClassPlanForm
+              inclass={record}
+              onCancel={handleCancelForm}
+              onSave={handleSave}
+            />
+          ) : (
+            <SelfStudyPlanForm
+              record={record}
+              onCancel={handleCancelForm}
+              onSave={handleSave}
+            />
+          )}
+        </div>
+      )}
     </>
   );
 }

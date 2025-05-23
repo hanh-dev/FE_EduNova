@@ -29,7 +29,7 @@ useEffect(() => {
   const fetchGoals = async () => {
     try {
       const fetchedGoals = await getAllGoal();
-      console.log("Fetched goals:", fetchedGoals); // 👈 Thêm dòng này
+      console.log("Fetched goals:", fetchedGoals); 
       setGoals(fetchedGoals);
     } catch (error) {
       console.error("Error fetching goals:", error);
@@ -235,7 +235,6 @@ useEffect(() => {
           </div>
         )}
       </div>
-
       {showDeletePopup && (
         <DeleteGoal
           id={goalToDeleteId}

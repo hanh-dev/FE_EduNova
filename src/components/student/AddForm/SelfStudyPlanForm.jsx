@@ -296,7 +296,7 @@ export default function SelfStudyPlanForm({ record, onCancel, onSave }) {
         </label>
       </div>
 
-      <div className="form-group-self">
+      <div className="form-group-selff">
         <button type="submit" disabled={isSubmitting}>
           {isSubmitting ? "Saving..." : "Save"}
         </button>

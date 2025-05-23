@@ -30,14 +30,13 @@ function SelfStudy() {
     fetchSelfStudyData();
   }, []);
 
-  // Lấy danh sách các tuần
+  // Lấy dữ liệu tuần
   useEffect(() => {
     const fetchWeeks = async () => {
       try {
         const data = await getAllWeek();
         setWeeks(data);
 
-        // Mặc định chọn tuần đầu (tuần số 1)
         const weekOne = data.find(w => w.week_number === 1);
         if (weekOne) setSelectedWeekId(weekOne.id);
       } catch (error) {
@@ -48,10 +47,10 @@ function SelfStudy() {
     fetchWeeks();
   }, []);
 
-  // Hàm định dạng ngày thành YYYY-MM-DD 00:00:00
+  // Định dạng ngày
   const formatDateTime = (date) => {
     const yyyy = date.getFullYear();
-    const mm = String(date.getMonth() + 1).padStart(2, '0'); // Tháng bắt đầu từ 0
+    const mm = String(date.getMonth() + 1).padStart(2, '0');
     const dd = String(date.getDate()).padStart(2, '0');
     return `${yyyy}-${mm}-${dd} 00:00:00`;
   };
@@ -59,7 +58,6 @@ function SelfStudy() {
   // Thêm tuần mới
   const handleAddWeek = async () => {
     try {
-      // Tìm số tuần lớn nhất hiện tại
       const maxWeekNumber = weeks.length > 0
         ? Math.max(...weeks.map(w => w.week_number))
         : 0;
@@ -68,18 +66,15 @@ function SelfStudy() {
 
       let startDate;
       if (weeks.length > 0) {
-        // Lấy tuần có số tuần lớn nhất
-        const lastWeek = weeks.reduce((prev, current) => 
+        const lastWeek = weeks.reduce((prev, current) =>
           prev.week_number > current.week_number ? prev : current
         );
         startDate = new Date(lastWeek.end_date);
-        startDate.setDate(startDate.getDate() + 1); // start_date là ngày kế tiếp end_date tuần trước
+        startDate.setDate(startDate.getDate() + 1);
       } else {
-        // Nếu chưa có tuần nào, start_date là ngày hiện tại
         startDate = new Date();
       }
 
-      // end_date cách start_date 6 ngày (tổng 7 ngày 1 tuần)
       const endDate = new Date(startDate);
       endDate.setDate(endDate.getDate() + 6);
 
@@ -90,7 +85,7 @@ function SelfStudy() {
         end_date: formatDateTime(endDate),
       };
 
-      const createdWeek = await createWeek(newWeekPayload); // Gọi API tạo tuần mới
+      const createdWeek = await createWeek(newWeekPayload);
       setWeeks(prev => [...prev, createdWeek]);
       setSelectedWeekId(createdWeek.id);
     } catch (error) {
@@ -99,69 +94,74 @@ function SelfStudy() {
     }
   };
 
-  // Lọc dữ liệu tự học theo tuần được chọn
+  // Lọc dữ liệu theo tuần
   const filteredData = selectedWeekId
     ? selfStudyData.filter(item => item.week_id === selectedWeekId)
     : selfStudyData;
 
   return (
-    <div className="study-table-container">
-      <AddNewSelfStudy />
-      <h2 className="table-title">Self-study</h2>
+    <>
+      
 
-      <div className="study-table-wrapper">
-        <table className="study-table">
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Skill/Module</th>
-              <th>What did I learn today?</th>
-              <th>Time Allocation</th>
-              <th>Resources</th>
-              <th>Activities</th>
-              <th>Concentration</th>
-              <th>Follow Plan</th>
-              <th>Evaluation</th>
-              <th>Reinforcement</th>
-              <th>Notes</th>
-              <th>Status</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {filteredData.length === 0 ? (
+      <div className="study-table-container">
+        <AddNewSelfStudy />
+        <h2 className="table-title">Self-study</h2>
+
+        <div className="study-table-wrapper">
+          
+          <table className="study-table">
+            <thead>
               <tr>
-                <td colSpan="13">No self-study data found.</td>
+                <th>Date</th>
+                <th>Skill/Module</th>
+                <th>What did I learn today?</th>
+                <th>Time Allocation</th>
+                <th>Resources</th>
+                <th>Activities</th>
+                <th>Concentration</th>
+                <th>Follow Plan</th>
+                <th>Evaluation</th>
+                <th>Reinforcement</th>
+                <th>Notes</th>
+                <th>Status</th>
+                <th>Actions</th>
               </tr>
-            ) : (
-              filteredData.map((item) => (
-                <tr key={item.id || `${item.date}-${item.skill_module}`}>
-                  <td>{item.date}</td>
-                  <td>{item.skill_module}</td>
-                  <td>{item.lesson_summary}</td>
-                  <td>{item.time_allocation}</td>
-                  <td>{item.learning_resources}</td>
-                  <td>{item.learning_activities}</td>
-                  <td>{item.concentration}</td>
-                  <td>{item.follow_plan}</td>
-                  <td>{item.evaluation}</td>
-                  <td>{item.reinforcement}</td>
-                  <td>{item.notes}</td>
-                  <td>
-                    <span className={`a-status ${item.status === 'done' ? 'green' : 'red'}`}></span>
-                    {item.status}
-                  </td>
-                  <td>
-                    <Buttons type="selfstudy" recordData={item} />
-                  </td>
+            </thead>
+            <tbody>
+              {filteredData.length === 0 ? (
+                <tr>
+                  <td colSpan="13">No self-study data found.</td>
                 </tr>
-              ))
-            )}
-          </tbody>
-        </table>
+              ) : (
+                filteredData.map((item) => (
+                  <tr key={item.id || `${item.date}-${item.skill_module}`}>
+                    <td>{item.date}</td>
+                    <td>{item.skill_module}</td>
+                    <td>{item.lesson_summary}</td>
+                    <td>{item.time_allocation}</td>
+                    <td>{item.learning_resources}</td>
+                    <td>{item.learning_activities}</td>
+                    <td>{item.concentration}</td>
+                    <td>{item.follow_plan}</td>
+                    <td>{item.evaluation}</td>
+                    <td>{item.reinforcement}</td>
+                    <td>{item.notes}</td>
+                    <td>
+                      <span className={`a-status ${item.status === 'done' ? 'green' : 'red'}`}></span>
+                      {item.status}
+                    </td>
+                    <td>
+                      <Buttons type="selfstudy" recordData={item} />
+                    </td>
+                  </tr>
+                ))
+              )}
+            </tbody>
+          </table>
+        </div>
       </div>
 
-      <div className="week-buttons-container" style={{ marginTop: '20px' }}>
+      <div className="week-buttons-container" style={{ marginBottom: '20px' }}>
         {weeks.map((week) => (
           <button
             key={week.id}
@@ -179,8 +179,7 @@ function SelfStudy() {
           +
         </button>
       </div>
-
-    </div>
+    </>
   );
 }
 

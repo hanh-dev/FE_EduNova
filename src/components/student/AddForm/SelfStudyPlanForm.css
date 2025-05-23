@@ -23,8 +23,6 @@
 }
 
 .self-study-plan-form{
-  display: flex;
-  grid-template-columns: 1fr 1fr;
    max-height: 500px;
   overflow-y: auto;
   background-color: #ffff;
@@ -38,9 +36,21 @@
   border-radius: 10px;
   color: #fff;
 }
-.save-self{
-  background-color: #ff9933;
+
+.form-group-selff{
+  display: flex;
+  gap: 30px;
+  justify-content: center;
 }
-.cancle-self{
+.form-group-selff button{
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+  background-color: #ff9933;
+  border: none;
+  font-size: 16px;
+}
+.form-group-selff button:last-child{
   background-color: red;
 }

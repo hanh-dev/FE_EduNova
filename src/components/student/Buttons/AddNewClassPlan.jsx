@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import "./AddClassPlan.css";
 import {
   createInClass,
-  getAllGoal
+  getAllGoal,
+  getAllWeek
 } from "../../../services/api/StudentAPI";
 
 const AddNewClassPlan = ({ onAddNewPlan }) => {
@@ -16,13 +17,26 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
     date: "",
     problem_solved: false,
     goal_id: "",
+    week_id: "",
   });
 
   const [errorMessage, setErrorMessage] = useState("");
   const [showForm, setShowForm] = useState(false);
   const [goals, setGoals] = useState([]);
+  const [weeks, setWeeks] = useState([]);
 
-  // Gọi API lấy danh sách tất cả goals
+  useEffect(() => {
+    const fetchWeeks = async () => {
+      try {
+        const data = await getAllWeek();
+        setWeeks(data);
+      } catch (error) {
+        console.error("Failed to fetch weeks:", error);
+      }
+    };
+    fetchWeeks();
+  }, []);
+
   useEffect(() => {
     const fetchGoals = async () => {
       try {
@@ -35,7 +49,6 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
     fetchGoals();
   }, []);
 
-  // Khi mở form, lấy user từ localStorage
   useEffect(() => {
     if (showForm) {
       const user = JSON.parse(localStorage.getItem("user"));
@@ -66,8 +79,8 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
     e.preventDefault();
     setErrorMessage("");
 
-    if (!formData.date || !formData.skill_module || !formData.goal_id) {
-      setErrorMessage("Please fill in Date, Skill/Module and Goal.");
+    if (!formData.date || !formData.skill_module || !formData.goal_id || !formData.week_id) {
+      setErrorMessage("Please fill in Date, Skill/Module, Goal and Week.");
       return;
     }
 
@@ -80,7 +93,8 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
       const response = await createInClass({
         ...formData,
         user_id: Number(formData.user_id),
-        goal_id: Number(formData.goal_id), // Đảm bảo gửi goal_id là số
+        goal_id: Number(formData.goal_id),
+        week_id: Number(formData.week_id),
         self_assessment: Number(formData.self_assessment),
         problem_solved: formData.problem_solved ? 1 : 0,
       });
@@ -90,7 +104,6 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
         if (onAddNewPlan) onAddNewPlan(response);
         alert("Class Plan added successfully!");
 
-        // Reset form
         setFormData({
           user_id: formData.user_id,
           skill_module: "TOEIC",
@@ -101,6 +114,7 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
           date: "",
           problem_solved: false,
           goal_id: "",
+          week_id: "",
         });
         setShowForm(false);
       }
@@ -113,10 +127,7 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
   return (
     <>
       <div>
-        <button
-          onClick={() => setShowForm(true)}
-          className="add-button-inclass"
-        >
+        <button onClick={() => setShowForm(true)} className="add-button-inclass">
           Add Class Plan
         </button>
       </div>
@@ -167,12 +178,34 @@ const AddNewClassPlan = ({ onAddNewPlan }) => {
 
               <div className="form-group select-with-icon">
                 <label>
+                  Week <span style={{ color: "red" }}>*</span>
+                </label>
+                <div className="select-wrapper">
+                  <select
+                    name="week_id"
+                    value={formData.week_numnber}
+                    onChange={handleChange}
+                    required
+                  >
+                    <option value="">-- Select Week --</option>
+                    {weeks.map((week) => (
+                      <option key={week.id} value={week.id}>
+                        Week {week.week_number}
+                      </option>
+                    ))}
+                  </select>
+                  <i className="fa-solid fa-chevron-down"></i>
+                </div>
+              </div>
+
+              <div className="form-group select-with-icon">
+                <label>
                   Goal <span style={{ color: "red" }}>*</span>
                 </label>
                 <div className="select-wrapper">
                   <select
                     name="goal_id"
-                    value={formData.goals}
+                    value={formData.goal_id}
                     onChange={handleChange}
                     required
                   >

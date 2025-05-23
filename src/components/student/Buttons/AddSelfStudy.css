@@ -47,6 +47,7 @@
   font-weight: 600;
   font-size: 14px;
   color: #333;
+  margin-top: 20px;
 }
 
 .form-group-self input,
@@ -59,6 +60,12 @@
   border-radius: 4px;
   resize: vertical;
   border: 1px solid #ff9933;
+}
+.form-group-self input:focus,
+.form-group-self select:focus,
+.form-group-self textarea:focus {
+  border: 1px solid #ff9933;
+  outline: none;
 }
 
 .form-group-self textarea {
