@@ -1,9 +1,16 @@
 import React from 'react'
+import './Dashboard.css'
 
 function Dashboard() {
   return (
-    <div>
-      <h2>This is dashboard of admin</h2>
+    <div className='test-nha'>
+        <div>Dashboard</div>
+        <div>Dashboard</div>
+        <div>Dashboard</div>
+        <div>Dashboard</div>
+        <div>Dashboard</div>
+        <div>Dashboard</div>
+        <div>Dashboard</div>
     </div>
   )
 }
