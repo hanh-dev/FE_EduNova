@@ -14,7 +14,10 @@ const sidebarItemsAdmin = [
   { label: 'Student Management', icon: '🧑‍🎓', href: '/student-management' },
 ];
 
-
+const sidebarItemsTeacher = [
+  { label: 'Alert', icon: '📊', href: '/notifications' },
+  { label: 'Logout', icon: '🚪', isLogout: true, href: '/login' },
+];
 
 const courses = [
 {
@@ -53,4 +56,4 @@ const initialTasks = [
     { task: "Practice listening", course: "TOEIC", status: "In progress" },
   ];
 
-export { sidebarItems, courses, initialTasks, sidebarItemsAdmin }
+export { sidebarItems, courses, initialTasks, sidebarItemsAdmin, sidebarItemsTeacher }

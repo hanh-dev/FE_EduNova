@@ -24,15 +24,18 @@ const Header = () => {
                 ></path>
               </svg>
             </div>
-            <div className="user-avatar">KT</div>
-            <span className="user-name">Kim Thanh</span>
+            <div className="user-avatar">CT</div>
+            <span className="user-name">Cô Trang</span>
+            {/* <div className="user-avatar">KT</div>
+            <span className="user-name">Kim Thanh</span> */}
           </div>
         </div>
 
         {/* Main Card */}
         <div className="welcome-card">
           <div className="welcome-text">
-            <h1 className="welcome-title">Welcome back Kim Thanh</h1>
+            {/* <h1 className="welcome-title">Welcome back Kim Thanh</h1> */}
+            <h1 className="welcome-title">Welcome back Trang</h1>
             <p className="welcome-info">
               Today you have <span className="highlight">9 new applications</span>.
             </p>
