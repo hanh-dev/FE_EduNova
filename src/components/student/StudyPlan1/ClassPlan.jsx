@@ -171,7 +171,7 @@ function ClassPlan() {
         <div className="week-buttons-container-inclass" style={{ marginTop: '20px' }}>
           {weeks.map(w => (
             <button
-              key={w.id}
+              key={w.week_number}
               className={`week-button-inclass ${selectedWeekId === w.id ? 'active-week' : ''}`}
               onClick={() => setSelectedWeekId(w.id)}
             >

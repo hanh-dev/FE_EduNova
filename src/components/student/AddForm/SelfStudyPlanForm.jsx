@@ -143,8 +143,8 @@ export default function SelfStudyPlanForm({ record, onCancel, onSave }) {
             <option value="">-- Select Week --</option>
             {weeks.map((week) => (
               <option key={week.id} value={week.id}>
-                {week.name || `Week ${week.id}`}
-              </option>
+                        Week {week.week_number}
+                      </option>
             ))}
           </select>
         </label>

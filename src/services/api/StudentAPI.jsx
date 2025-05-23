@@ -511,4 +511,25 @@ export const createWeek = async (weekData) => {
 };
 
 
+export const getTotals = async () => {
+  try {
+    const [teacherList, studentList, classList] = await Promise.all([
+      getTeachers(),
+      getStudents(),
+      getClasses()
+    ]);
+
+    const data = {
+      teachers: teacherList.length,
+      students: studentList.length,
+      classes: classList.length
+    };
+
+    return data;
+  } catch (error) {
+    console.error("Error at fetching totals: ", error);
+    return { teachers: 0, students: 0, classes: 0 };
+  }
+};
+
 export default academyAPI;
