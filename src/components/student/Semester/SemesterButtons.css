@@ -1,0 +1,80 @@
+.semesterbutton{
+    padding: 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: #FF9933;
+    color: #fff;
+}
+
+
+.fixed-buttons {
+    position: fixed;
+    bottom: 0px;
+    width: calc(100%-250px);
+   margin-left: 250px;
+    padding: 10px;
+    border-radius: 8px;
+}
+
+.semesterbutton {
+    margin: 5px;
+    padding: 8px 12px;
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.semesterbutton:active{
+    background-color: #22BBEA;
+}
+.loading{
+    margin-left: 5%;
+}
+
+.semesterbutton {
+  background-color: #FF9933;
+  border: none;
+  color: #fff;
+  padding: 10px 16px;
+  margin: 5px;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  font-weight: 500;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.semesterbutton:hover {
+  background-color: #1976d2;
+}
+
+.semesterbutton.active {
+  background-color: #2196f3; 
+  color: white;
+}
+
+.semesterbutton.add-button {
+  background-color: #FF9933;
+  color: white;
+}
+
+.semesterbutton.add-button:hover {
+  background-color: #1976d2;
+}
+
+.loading {
+  font-size: 18px;
+  font-weight: bold;
+  color: #666;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.fixed-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 15px;
+}

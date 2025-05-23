@@ -1,16 +1,29 @@
 import React, { useState } from "react";
 import "./Buttons.css";
 import ClassPlanForm from "../AddForm/ClassPlanForm";
-import { deleteInClass, getInClassByID } from "../../../services/api/StudentAPI";
+import SelfStudyPlanForm from "../AddForm/SelfStudyPlanForm";
+import { getInClassByID, getSelfStudyByID } from "../../../services/api/StudentAPI";
+import DeleteSelfStudyButton from "../AddForm/DeleteSelfStudyButton";
+import DeleteClassPlanButton from "../AddForm/DeleteClassPlanForm";
 
-export default function Buttons({ type, inclass, onUpdate, onDelete }) {
+export default function Buttons({ type, recordData, onUpdate, onDelete }) {
   const [showForm, setShowForm] = useState(false);
   const [record, setRecord] = useState(null);
 
   const handleUpdateClick = async () => {
-    if (!inclass?.id) return console.error("Missing inclass.id");
+    if (!recordData?.id) {
+      console.error("Missing recordData.id");
+      return;
+    }
+
     try {
-      const data = await getInClassByID(inclass.id);
+      let data;
+      if (type === "class") {
+        data = await getInClassByID(recordData.id);
+      } else if (type === "selfstudy") {
+        data = await getSelfStudyByID(recordData.id);
+        console.log("data: ", data);
+      }
       setRecord(data);
       setShowForm(true);
     } catch (e) {
@@ -18,20 +31,8 @@ export default function Buttons({ type, inclass, onUpdate, onDelete }) {
     }
   };
 
-  const handleDelete = async () => {
-    if (!inclass?.id) return console.error("Missing inclass.id");
-    try {
-      await deleteInClass(inclass.id);
-      alert("Delete successful");
-
-      if (onDelete) onDelete(inclass.id); // Gọi callback xóa đúng prop
-    } catch (e) {
-      console.error("Delete error:", e);
-    }
-  };
-
   const handleSave = (updatedItem) => {
-    if (onUpdate) onUpdate(updatedItem); // Cập nhật lên danh sách chính
+    if (onUpdate) onUpdate(updatedItem);
     setShowForm(false);
     setRecord(null);
   };
@@ -47,18 +48,37 @@ export default function Buttons({ type, inclass, onUpdate, onDelete }) {
         <button className="btn update btn-inclass" onClick={handleUpdateClick}>
           Update
         </button>
-        <button className="btn delete btn-inclass" onClick={handleDelete}>
-          Delete
-        </button>
+
+        {type === "class" ? (
+          <DeleteClassPlanButton
+            id={recordData?.id}
+            onDeleted={() => onDelete && onDelete(recordData.id)}
+          />
+        ) : (
+          type === "selfstudy" && (
+            <DeleteSelfStudyButton
+              id={recordData?.id}
+              onDeleted={() => onDelete && onDelete(recordData.id)}
+            />
+          )
+        )}
       </div>
 
       {showForm && record && (
         <div className="modal-overlay">
-          <ClassPlanForm
-            inclass={record}
-            onCancel={handleCancelForm}
-            onSave={handleSave}
-          />
+          {type === "class" ? (
+            <ClassPlanForm
+              inclass={record}
+              onCancel={handleCancelForm}
+              onSave={handleSave}
+            />
+          ) : (
+            <SelfStudyPlanForm
+              record={record}
+              onCancel={handleCancelForm}
+              onSave={handleSave}
+            />
+          )}
         </div>
       )}
     </>

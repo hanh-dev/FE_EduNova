@@ -1,0 +1,58 @@
+[33m7fbb2b5[m[33m ([m[1;36mHEAD[m[33m -> [m[1;32mthanh/Goal[m[33m)[m thanh/goal done frontend and backend of yourgoal
+[33m580fae7[m thanh/Goal done deleteGoal -- thanh
+[33m5d09169[m thanh/Goal done backend editGoal --thanh
+[33m3464178[m[33m ([m[1;31morigin/develop[m[33m, [m[1;31morigin/SPGTS-9-hanh/class-management[m[33m)[m Merge pull request #17 from hanh-dev/SPGTS-48-hanh/login
+[33m3a474ce[m[33m ([m[1;31morigin/SPGTS-48-hanh/login[m[33m)[m SPGTS-48 hanh/add/admin-routes
+[33m1425a96[m thanh/goal done backend of creataGoal yourGoal -- Thanh
+[33mdc6b075[m Merge pull request #16 from hanh-dev/SPGTS-48-hanh/login
+[33mef4f2a4[m SPGTS-48 hanh/fix/ui-semesters
+[33m824d947[m Merge pull request #15 from hanh-dev/SPGTS-48-hanh/login
+[33m5ee20e3[m SPGTS-48 add/study-plans
+[33me405f3e[m Merge pull request #14 from hanh-dev/SPGTS-21-Phong/StudyPlan
+[33m18f5dd8[m Merge branch 'develop' into SPGTS-21-Phong/StudyPlan
+[33m99b364f[m SPGTS-48 merge/dashboard
+[33md39f276[m Merge pull request #13 from hanh-dev/SPGTS-23-hien/dashboard
+[33mc4c7f61[m[33m ([m[1;31morigin/SPGTS-23-hien/dashboard[m[33m)[m SPGTS-23 fix dashboard/hien
+[33ma710e4f[m SPGTS-23 dashboard/hien
+[33mff0aca3[m Merge pull request #12 from hanh-dev/thanh/Goal
+[33meb1041b[m[33m ([m[1;31morigin/thanh/Goal[m[33m)[m done yourgoal
+[33m2027ceb[m done
+[33m954b5fd[m fix recognize buttons
+[33m200b37b[m Merge pull request #11 from hanh-dev/SPGTS-48-hanh/login
+[33m8ead814[m SPGTS-48 add logout feature
+[33m2f4aaf1[m done yourgoal
+[33mf7f0512[m Merge pull request #10 from hanh-dev/SPGTS-22-dieu/achievemet
+[33maafb777[m[33m ([m[1;31morigin/SPGTS-22-dieu/achievemet[m[33m)[m SPGTS-22 fixed FE Academy & Achievement
+[33m6cbaa6e[m SPGTS-22 Done FE Academy & Achievement
+[33m3a8c71b[m Merge pull request #8 from hanh-dev/SPGTS-48-hanh/login
+[33m21daa56[m SPGTS-48 feat: add toastify for login
+[33m84a2636[m  update Cancel and Update buttons
+[33md3c54e2[m  done SelfStudy Plan Form
+[33md43f530[m  done Class update form
+[33m021a8cf[m Merge pull request #6 from hanh-dev/SPGTS-48-hanh/login
+[33m0399856[m SPGTS-48 hanh/done/fetch-login-jwt
+[33mf33b8f1[m SPGTS-48 hanh/done/fetch-login-jwt
+[33m51ec3a9[m  change ClassPlan.css and SelfStudy.css
+[33m1e5485b[m complete form update
+[33m4e2a5af[m SPGTS-48 hanh/done/login-ui
+[33ma233023[m  done Date component
+[33md37aa40[m  done Sefl-Study table plan
+[33mb8fbf8c[m  update In Class table's CSS
+[33m998635d[m Merge pull request #5 from hanh-dev/SPGTS-49-hanh/structure-folder
+[33md8fc9dd[m[33m ([m[1;31morigin/SPGTS-49-hanh/structure-folder[m[33m)[m SPGT-49 hanh/done/structure-folder
+[33m2de0785[m  complete button component
+[33m1f10600[m  complete table component
+[33mafcb185[m action buttons - kimhien
+[33m0e9f549[m header -kimhien
+[33mf1d41e2[m not change
+[33m29577ba[m not change
+[33m8c2bed6[m[33m ([m[1;31morigin/SPGTS-22-dieu/achievement[m[33m, [m[1;32mdevelop[m[33m)[m Merge pull request #4 from hanh-dev/SPGTS-49-hanh/structure-folder
+[33mb1df543[m SPGTS-49 chore: hanh/remove extra/unused files after refactor
+[33m6c5edb0[m Merge pull request #3 from hanh-dev/SPGTS-49-hanh/structure-folder
+[33m787a3be[m SPGTS-49 hanh/remove/extra-files
+[33m4b561a8[m Merge pull request #2 from hanh-dev/SPGTS-49-hanh/structure-folder
+[33mad2c3be[m SPGTS-49 hanh/test/create-structure-1
+[33me3b0d63[m SPGTS-49 hanh/test/create-structure
+[33m96ccda8[m Merge pull request #1 from hanh-dev/init
+[33m9dd475a[m[33m ([m[1;31morigin/init[m[33m)[m hanh/separate/roles
+[33md63a929[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m init project

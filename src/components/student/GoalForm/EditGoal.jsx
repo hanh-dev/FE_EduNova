@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { getGoal, editGoal } from "../../../services/api/StudentAPI";
+import { getGoal, editGoal, getSemester } from "../../../services/api/StudentAPI";
 import "./EditGoal.css";
 
 export default function EditForm({ onClose, onSave, goal }) {
@@ -11,62 +11,83 @@ export default function EditForm({ onClose, onSave, goal }) {
     teacherExpectations: "",
     selfExpectations: "",
     dueDate: "",
+    semester_id: "",
   });
-console.log(formData);
+
+  const [semesters, setSemesters] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    if (user && user.user_id) {
+    if (user?.user_id) {
       setFormData((prev) => ({ ...prev, user_id: user.user_id }));
     } else {
       setErrorMessage("User not found. Please login again.");
     }
   }, []);
 
-
-useEffect(() => {
-  if (goal) {
-    const fetchGoalData = async () => {
+  useEffect(() => {
+    const fetchSemesters = async () => {
       try {
-        const response = await getGoal(goal.id);
-        console.log("Goal Data:", response);  
-        if (response) {
-          setFormData((prev) => ({
-            ...prev,
-            course: response.course || "English",
-            goals: response.goals || "",
-            courseExpectations: response.courseExpectations || "",
-            teacherExpectations: response.teacherExpectations || "",
-            selfExpectations: response.selfExpectations || "",
-            dueDate: response.dueDate || "",
-          }));
-        }
+        const data = await getSemester();
+        setSemesters(data);
       } catch (error) {
-        console.error("Error fetching goal data:", error);
+        console.error("Error fetching semesters:", error);
       }
     };
+    fetchSemesters();
+  }, []);
 
-    fetchGoalData();
-  }
-}, [goal]);
-
+  useEffect(() => {
+    if (goal) {
+      const fetchGoalData = async () => {
+        try {
+          const response = await getGoal(goal.id);
+          if (response) {
+            setFormData({
+              user_id: response.user_id || "",
+              course: response.course || "English",
+              goals: response.goals || "",
+              courseExpectations: response.courseExpectations || "",
+              teacherExpectations: response.teacherExpectations || "",
+              selfExpectations: response.selfExpectations || "",
+              dueDate: response.dueDate || "",
+              semester_id: response.semester_id || "",
+            });
+          }
+        } catch (error) {
+          console.error("Error fetching goal data:", error);
+        }
+      };
+      fetchGoalData();
+    }
+  }, [goal]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsSubmitting(true);
+    setErrorMessage("");
 
-    const { user_id, course, goals, courseExpectations, teacherExpectations, selfExpectations, dueDate } = formData;
+    const {
+      user_id,
+      course,
+      goals,
+      courseExpectations,
+      teacherExpectations,
+      selfExpectations,
+      dueDate,
+      semester_id,
+    } = formData;
 
-    if (!user_id || !goals || !courseExpectations || !teacherExpectations || !selfExpectations || !dueDate) {
+    if (!user_id || !goals || !courseExpectations || !teacherExpectations || !selfExpectations || !dueDate || !semester_id) {
       setErrorMessage("Please fill out all fields.");
+      setIsSubmitting(false);
       return;
     }
 
@@ -78,6 +99,7 @@ useEffect(() => {
       teacherExpectations,
       selfExpectations,
       dueDate,
+      semester_id,
     };
 
     try {
@@ -89,6 +111,8 @@ useEffect(() => {
     } catch (error) {
       console.error("Error updating goal:", error);
       setErrorMessage("Failed to update goal. Please try again.");
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
@@ -102,9 +126,6 @@ useEffect(() => {
         <form onSubmit={handleSubmit}>
           <div className="edit-your-goal">
             <label className="title">Course</label>
-            <span className="close-down">
-              <i className="fa-solid fa-caret-down"></i>
-            </span>
             <select
               className="form-control"
               name="course"
@@ -177,12 +198,29 @@ useEffect(() => {
             />
           </div>
 
-          <button
-            type="submit"
-            className="button-save"
-          >
-            Update
-          </button>
+          <div className="edit-your-goal">
+            <label className="title">Semester</label>
+            <select
+              className="form-control"
+              name="semester_id"
+              value={formData.semester_id}
+              onChange={handleChange}
+              required
+            >
+              <option value="">-- Select Semester --</option>
+              {semesters.map((semester) => (
+                <option key={semester.id} value={semester.id}>
+                  {semester.name}
+                </option>
+              ))}
+            </select>
+          </div>
+
+          <div className="button-container">
+            <button type="submit" className="button-update" disabled={isSubmitting}>
+              {isSubmitting ? "Updating..." : "Update"}
+            </button>
+          </div>
         </form>
       </div>
     </div>

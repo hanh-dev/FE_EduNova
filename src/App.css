@@ -22,7 +22,7 @@ html, body, #root {
   min-height: 100vh;
   position: fixed;
   z-index: 9900;
-  /* position: fixed; */
+   width: 250px;
 }
 
 .sidebar-logo {

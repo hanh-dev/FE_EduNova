@@ -39,7 +39,8 @@ export const getNameOfTeachers = async () => {
 export const getTeachers = async () => {
   try {
     const response = await api.get("/v1/teachers");
-    return response.data.data;
+    console.log("Test teachers: ", response.data);
+    return response.data;
   } catch (error) {
     console.log("Failed to fetch teachers", error);
     throw error;
@@ -55,6 +56,78 @@ export const getStudents = async () => {
     throw error;
   }
 };
+
+export const getStudentList = async (className) => {
+  try {
+    const response = await api.get(`/classes/${encodeURIComponent(className)}/students`);
+    return response.data.data; // hoặc chỉnh theo cấu trúc API trả về
+  } catch (error) {
+    console.error('Failed to fetch student list:', error);
+    throw error;
+  }
+};
+
+ 
+export const deleteStudent = async (id) => {
+  try {
+    const response = await api.delete(`/v1/student/${id}`,id);
+    console.log("Test ID before deleting: ", id);
+    return response.data;
+
+  } catch (error) {
+      console.error("Failed at creating a new student: ", error);
+      throw error;
+  }
+};
+
+export const createUser  = async (data) => {
+  try {
+    console.log("Test data before saving: ", data);
+    const formData = new FormData();
+    formData.append("name", data.name);
+    formData.append("email", data.email);
+    formData.append("password", data.password);
+    formData.append("image", data.image);
+    if(data.role) {
+      formData.append("role", data.role);
+    }
+
+    const response = await api.post('/v1/student', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+
+    return response.data;
+  } catch (error) {
+    console.error("Failed at creating a new student: ", error);
+    throw error;
+  }
+}
+
+export const updateUser = async(id, data) => {
+  try {
+    const formData = new FormData();
+    formData.append('name', data.name);
+    formData.append('email', data.email);
+    if (data.password) formData.append('password', data.password);
+    if (data.image instanceof File) {
+        formData.append("image", data.image);
+    } else {
+      console.log("Đéo thấy");
+    }
+    console.log("FormData content:");
+    for (let [key, value] of formData.entries()) {
+      console.log(key, value);
+    }
+    const response = await api.post(`/v1/student/${id}?_method=PATCH`, formData);
+    console.log("Test response: ", response.data);
+    return response.data;
+  } catch (error) {
+      console.error("Failed at updating a new student: ", error);
+      throw error;
+  }
+}
 
 export const createClass = async (data) => {
   try {
@@ -97,6 +170,27 @@ export const updateClass = async (id, data) => {
   }
 };
 
+export const createInClass = async (data) => {
+  try {
+    console.log("Creating inClass with data:", data);
+    const response = await api.post('/inclass', data);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to create inClass:", error);
+    throw error;
+  }
+};
+
+
+export const getGoalsByUser = async (userId) => {
+  try {
+    const response = await api.get(`/goal?user_id=${userId}`); 
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch goals", error);
+    throw error;
+  }
+};
 // =========================
 // 🎯 Goal Management
 // =========================
@@ -171,6 +265,46 @@ export const getGoalsByStatus = async (status) => {
     throw error;
   }
 };
+// =========================
+// Add Semester 
+// =========================
+export const getSemester = async () => {
+    try {
+        const response = await api.get(`/semester`);
+        console.log("Semesters fetched:", response.data);
+        return response.data;
+    } catch (error) {
+        handleApiError(error);
+        throw error;
+    }
+};
+
+
+
+export const getSemesterByID = async (id) => {
+  try {
+    console.log("Getting semester by ID:", id);
+    const response = await api.get(`/semester/${id}`);
+    console.log("Semester fetched:", response.data);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching semester:", error);
+    throw error;
+  }
+};
+
+// Thêm một học kì mới 
+export const createSemesterByID = async (SemesterData) => {
+  try {
+    const response = await api.post("/semester", SemesterData);
+    console.log("SemesterData created:", response.data);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
 
 // =========================
 // 🏫 In-Class Management
@@ -205,6 +339,17 @@ export const editInClass = async (id, updatedGoal) => {
   }
 };
 
+export const deleteInClass = async (id) => {
+  try {
+    const response = await api.delete(`/inclass/${id}`); 
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch inclass", error);
+    throw error;
+  }
+};
+
+
 // =========================
 // 📚 Self Study
 // =========================
@@ -227,6 +372,41 @@ export const creatSelfStudy = async (data) => {
     throw error;
   }
 };
+export const editSelfStudy = async (id, data) => {
+  try {
+    const response = await api.put(`/selfstudy/${id}`, data);
+    return response.data;
+  } catch (error) {
+    if (error.response && error.response.status === 422) {
+      console.error("Validation errors:", error.response.data.errors);
+    } else {
+      console.error("Failed to edit self study:", error);
+    }
+    throw error;
+  }
+};
+
+
+export const getSelfStudyByID = async (id) => {
+  try {
+    const response = await api.get(`/selfstudy/${id}`);
+    console.log("selfStudy",response);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to get inClass by ID:", error);
+    throw error;
+  }
+}; 
+
+export const deleteSelfStudy = async (id) => {
+  try {
+    const response = await api.delete(`/selfstudy/${id}`);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to get inClass by ID:", error);
+    throw error;
+  }
+}; 
 
 // =========================
 // ❗ Global API Error Handler
@@ -302,76 +482,34 @@ export const getAllTasks = async (id) => {
     }
 };
 
-export const deleteInClass = async (id) => {
+// =========================
+// ❗ Week
+// =========================
+
+export const getAllWeek= async (id) => {
+    try {
+        console.log("ID to delete Week:", id);
+        const response = await api.get(`/week`);
+        console.log("Week deleted:", response.data);
+        return response.data;
+    } catch (error) {
+        handleApiError(error);
+        throw error;
+    }
+};
+
+
+export const createWeek = async (weekData) => {
   try {
-    const response = await api.delete(`/inclass/${id}`); 
+    const response = await api.post("/week", weekData);
+    console.log("SemesterData created:", response.data);
     return response.data;
   } catch (error) {
-    console.error("Failed to fetch inclass", error);
+    handleApiError(error);
     throw error;
   }
 };
 
-export const createUser  = async (data) => {
-  try {
-    console.log("Test data before saving: ", data);
-    const formData = new FormData();
-    formData.append("name", data.name);
-    formData.append("email", data.email);
-    formData.append("password", data.password);
-    formData.append("image", data.image);
-    if(data.role) {
-      formData.append("role", data.role);
-    }
-
-    const response = await api.post('/v1/student', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data'
-      }
-    });
-
-    return response.data;
-  } catch (error) {
-    console.error("Failed at creating a new student: ", error);
-    throw error;
-  }
-}
-
-export const updateUser = async(id, data) => {
-  try {
-    const formData = new FormData();
-    formData.append('name', data.name);
-    formData.append('email', data.email);
-    if (data.password) formData.append('password', data.password);
-    if (data.image instanceof File) {
-        formData.append("image", data.image);
-    } else {
-      console.log("Đéo thấy");
-    }
-    console.log("FormData content:");
-    for (let [key, value] of formData.entries()) {
-      console.log(key, value);
-    }
-    const response = await api.post(`/v1/student/${id}?_method=PATCH`, formData);
-    console.log("Test response: ", response.data);
-    return response.data;
-  } catch (error) {
-      console.error("Failed at updating a new student: ", error);
-      throw error;
-  }
-}
-
-export const deleteStudent = async (id) => {
-  try {
-    const response = await api.delete(`/v1/student/${id}`,id);
-    console.log("Test ID before deleting: ", id);
-    return response.data;
-
-  } catch (error) {
-      console.error("Failed at creating a new student: ", error);
-      throw error;
-  }
-}
 
 export const getTotals = async () => {
   try {

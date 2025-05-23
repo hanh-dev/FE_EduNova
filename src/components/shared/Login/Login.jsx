@@ -21,6 +21,7 @@ function Login() {
       console.log("Data: ", data);
       if(data) {
         setUser({
+          user_id: data.user_id,
           username: data.username,
           role: data.role,
           token: data.access_token,
