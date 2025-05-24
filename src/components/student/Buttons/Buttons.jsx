@@ -2,13 +2,16 @@ import React, { useState } from "react";
 import "./Buttons.css";
 import ClassPlanForm from "../AddForm/ClassPlanForm";
 import SelfStudyPlanForm from "../AddForm/SelfStudyPlanForm";
-import { getInClassByID, getSelfStudyByID } from "../../../services/api/StudentAPI";
+import { getInClassByID, getSelfStudyByID, deleteInClass } from "../../../services/api/StudentAPI";
 import DeleteSelfStudyButton from "../AddForm/DeleteSelfStudyButton";
 import DeleteClassPlanButton from "../AddForm/DeleteClassPlanForm";
+import TagTeacher from "../Form/TagTeacher"; // Import TagTeacher component
+// import { deleteInClass, getInClassByID } from "../../../services/api/StudentAPI";
 
 export default function Buttons({ type, recordData, onUpdate, onDelete }) {
   const [showForm, setShowForm] = useState(false);
   const [record, setRecord] = useState(null);
+  const [showTagTeacher, setShowTagTeacher] = useState(false); // State for TagTeacher modal
 
   const handleUpdateClick = async () => {
     if (!recordData?.id) {
@@ -31,7 +34,20 @@ export default function Buttons({ type, recordData, onUpdate, onDelete }) {
     }
   };
 
+  const handleDelete = async () => {
+    if (!inclass?.id) return console.error("Missing inclass.id");
+    try {
+      await deleteInClass(inclass.id);
+      alert("Delete successful");
+
+      if (onDelete) onDelete(inclass.id);
+    } catch (e) {
+      console.error("Delete error:", e);
+    }
+  };
+
   const handleSave = (updatedItem) => {
+    if (onUpdate) onUpdate(updatedItem);
     if (onUpdate) onUpdate(updatedItem);
     setShowForm(false);
     setRecord(null);
@@ -40,6 +56,16 @@ export default function Buttons({ type, recordData, onUpdate, onDelete }) {
   const handleCancelForm = () => {
     setShowForm(false);
     setRecord(null);
+  };
+
+  // Handle comment button click
+  const handleCommentClick = () => {
+    setShowTagTeacher(true);
+  };
+
+  // Handle closing the TagTeacher modal
+  const handleTagTeacherClose = () => {
+    setShowTagTeacher(false);
   };
 
   return (
@@ -62,6 +88,15 @@ export default function Buttons({ type, recordData, onUpdate, onDelete }) {
             />
           )
         )}
+        <button className="btn delete btn-inclass" onClick={handleDelete}>
+          Delete
+        </button>
+        <i
+          className="fa-regular fa-comment"
+          style={{ color: "#007bff", cursor: "pointer", marginLeft: "10px" }}
+          title="Comment"
+          onClick={handleCommentClick}
+        />
       </div>
 
       {showForm && record && (
@@ -80,6 +115,13 @@ export default function Buttons({ type, recordData, onUpdate, onDelete }) {
             />
           )}
         </div>
+      )}
+
+      {showTagTeacher && (
+        <TagTeacher
+          onClose={handleTagTeacherClose}
+          goalId={inclass.id}
+        />
       )}
     </>
   );

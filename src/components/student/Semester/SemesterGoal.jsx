@@ -8,6 +8,7 @@ import {
   getAllGoal,
 } from "../../../services/api/StudentAPI";
 import "./SemesterGoal.css";
+import TagTeacher from "../Form/TagTeacher";
 
 export default function SemesterGoal({ semester }) {
   const [goals, setGoals] = useState([]);
@@ -19,6 +20,8 @@ export default function SemesterGoal({ semester }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedSemester, setSelectedSemester] = useState({ id: 1 });
 
+  const [tagTeacher, setTagTeacher] = useState(false); 
+  const [selectedGoalId, setSelectedGoalId] = useState(null); 
   const goalsPerPage = 10;
 
   useEffect(() => {
@@ -73,6 +76,17 @@ useEffect(() => {
   const indexOfLastGoal = currentPage * goalsPerPage;
   const indexOfFirstGoal = indexOfLastGoal - goalsPerPage;
   const currentGoals = filteredGoals.slice(indexOfFirstGoal, indexOfLastGoal);
+  // const currentGoals = goals.slice(indexOfFirstGoal, indexOfLastGoal);
+
+  const handleCommentClick = (goalId) => {
+    setSelectedGoalId(goalId); 
+    setTagTeacher(true); 
+  };
+
+  const handleTagTeacherClose = () => {
+    setTagTeacher(false);
+    setSelectedGoalId(null);
+  };
 
   return (
     <div className="container your-goal-big">
@@ -103,6 +117,13 @@ useEffect(() => {
               setShowEditForm(false);
             }}
             onSave={handleUpdateGoal}
+          />
+        )}
+
+        {tagTeacher && (
+          <TagTeacher
+            onClose={handleTagTeacherClose}
+            goalId={selectedGoalId} 
           />
         )}
 
@@ -174,6 +195,7 @@ useEffect(() => {
                       <i
                         className="fa-regular fa-pen-to-square"
                         title="Edit"
+                        style={{ marginRight: "10px", cursor: "pointer" }}
                         onClick={async () => {
                           try {
                             const goalData = await getGoal(goal.id);
@@ -184,7 +206,6 @@ useEffect(() => {
                             console.error("Failed to fetch goal:", error);
                           }
                         }}
-                        style={{ marginRight: "10px", cursor: "pointer" }}
                       ></i>
                       <i
                         className="fa-solid fa-trash"
@@ -199,7 +220,13 @@ useEffect(() => {
                           }
                         }}
                         style={{ color: "red", cursor: "pointer" }}
-                      ></i>
+                      />
+                      <i
+                        className="fa-regular fa-comment"
+                        style={{ color: "#007bff", cursor: "pointer" }}
+                        title="Comment"
+                        onClick={() => handleCommentClick(goal.id)} 
+                      />
                     </td>
                   </tr>
                 ))
