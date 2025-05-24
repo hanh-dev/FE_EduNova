@@ -71,7 +71,7 @@ function TeacherTable({ students, setStudents, setUpdateForm, setUserToEdit }) {
     <>
       <Table
         columns={columns}
-        dataSource={students}
+        dataSource={Array.isArray(students) ? students : []}
         rowKey={(record, index) => index}
         pagination={{ pageSize: 8 }}
         style={{ fontSize: '12px' }}

@@ -40,7 +40,7 @@ export const getTeachers = async () => {
   try {
     const response = await api.get("/v1/teachers");
     console.log("Test teachers: ", response.data);
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.log("Failed to fetch teachers", error);
     throw error;
