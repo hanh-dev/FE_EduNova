@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import "./Buttons.css";
 import ClassPlanForm from "../AddForm/ClassPlanForm";
 import SelfStudyPlanForm from "../AddForm/SelfStudyPlanForm";
-import { getInClassByID, getSelfStudyByID } from "../../../services/api/StudentAPI";
+import { getInClassByID, getSelfStudyByID, deleteInClass } from "../../../services/api/StudentAPI";
 import DeleteSelfStudyButton from "../AddForm/DeleteSelfStudyButton";
 import DeleteClassPlanButton from "../AddForm/DeleteClassPlanForm";
 import TagTeacher from "../Form/TagTeacher"; // Import TagTeacher component
-import { deleteInClass, getInClassByID } from "../../../services/api/StudentAPI";
+// import { deleteInClass, getInClassByID } from "../../../services/api/StudentAPI";
 
 export default function Buttons({ type, recordData, onUpdate, onDelete }) {
   const [showForm, setShowForm] = useState(false);

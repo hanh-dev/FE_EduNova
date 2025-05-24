@@ -76,7 +76,7 @@ useEffect(() => {
   const indexOfLastGoal = currentPage * goalsPerPage;
   const indexOfFirstGoal = indexOfLastGoal - goalsPerPage;
   const currentGoals = filteredGoals.slice(indexOfFirstGoal, indexOfLastGoal);
-  const currentGoals = goals.slice(indexOfFirstGoal, indexOfLastGoal);
+  // const currentGoals = goals.slice(indexOfFirstGoal, indexOfLastGoal);
 
   const handleCommentClick = (goalId) => {
     setSelectedGoalId(goalId); 
@@ -130,7 +130,6 @@ useEffect(() => {
         <div className="table-goal">
           <table className="table table-your-goal">
             <thead>
-              <tr>
               <tr>
                 <th>Course</th>
                 <th>Goal</th>
@@ -197,7 +196,6 @@ useEffect(() => {
                         className="fa-regular fa-pen-to-square"
                         title="Edit"
                         style={{ marginRight: "10px", cursor: "pointer" }}
-                        title="Edit"
                         onClick={async () => {
                           try {
                             const goalData = await getGoal(goal.id);
@@ -208,7 +206,6 @@ useEffect(() => {
                             console.error("Failed to fetch goal:", error);
                           }
                         }}
-                        style={{ marginRight: "10px", cursor: "pointer" }}
                       ></i>
                       <i
                         className="fa-solid fa-trash"
@@ -223,7 +220,6 @@ useEffect(() => {
                           }
                         }}
                         style={{ color: "red", cursor: "pointer" }}
-                      ></i>
                       />
                       <i
                         className="fa-regular fa-comment"
