@@ -1,8 +1,12 @@
+
+.goal-checklist-container{
+  width: calc(100%-250px);
+  margin-left: 250px;
+  padding: 0px 20px;
+}
 .goal-checklist {
   display: flex;
   gap: 20px;
-  padding: 10px;
-  margin-left: 230px;
   margin-top: 15px;
   max-width: 100%;
   flex-wrap: wrap;

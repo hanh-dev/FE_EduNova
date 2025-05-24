@@ -4,7 +4,9 @@ select.form-control {
   padding: 10px;
   border-radius: 6px;
   border: 1px solid #FF9933;
+  border: 1px solid #FF9933;
   font-size: 14px;
+  cursor: pointer;
   cursor: pointer;
 }
 select.form-control{
@@ -16,6 +18,18 @@ select.form-control{
 .goal-form .title {
   font-size: 20px;
 margin-left: 10px;
+}
+
+.button-update{
+   width: 40%;
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  color: #fff !important;
+  font-size: 16px;
+  cursor: pointer;
+  background-color: #ff9933;
+  margin-top: 15px;
 }
 .edit-your-goal{
   margin-top: 20px;
@@ -32,4 +46,16 @@ margin-left: 10px;
   max-height: 40px;
   background-color: #FF9933;
   border-radius: 10px;
+}
+.goal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.4); /* màu đen mờ */
+  z-index: 9999;
+    display: flex;
+  justify-content: center;
+  align-items: center;
 }

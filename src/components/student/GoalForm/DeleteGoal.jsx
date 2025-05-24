@@ -5,8 +5,8 @@ import "./DeleteGoal.css";
 export default function DeleteGoal({ id, onDeleteSuccess, onClose }) {
   const handleDelete = async () => {
     try {
-      await deleteGoal(id); 
-      onDeleteSuccess(id); 
+      await deleteGoal(id);
+      onDeleteSuccess(id);
     } catch (error) {
       console.error("Failed to delete goal:", error);
     }

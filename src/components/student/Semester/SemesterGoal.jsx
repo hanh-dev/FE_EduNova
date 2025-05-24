@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from "react";
 import GoalForm from "../../student/GoalForm/GoalForm";
+import DeleteGoal from "../GoalForm/DeleteGoal";
+import EditGoal from "../GoalForm/EditGoal";
 import {
   updateGoalStatus,
   getGoal,
   getAllGoal,
 } from "../../../services/api/StudentAPI";
-import DeleteGoal from "../GoalForm/DeleteGoal";
-import EditGoal from "../GoalForm/EditGoal";
 import "./SemesterGoal.css";
 import TagTeacher from "../Form/TagTeacher";
 
-export default function SemesterGoal() {
+export default function SemesterGoal({ semester }) {
   const [goals, setGoals] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [showDeletePopup, setShowDeletePopup] = useState(false);
@@ -18,22 +18,28 @@ export default function SemesterGoal() {
   const [goalToEdit, setGoalToEdit] = useState(null);
   const [showEditForm, setShowEditForm] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
+  const [selectedSemester, setSelectedSemester] = useState({ id: 1 });
+
   const [tagTeacher, setTagTeacher] = useState(false); 
   const [selectedGoalId, setSelectedGoalId] = useState(null); 
   const goalsPerPage = 10;
 
   useEffect(() => {
-    const fetchGoals = async () => {
-      try {
-        const fetchedGoals = await getAllGoal();
-        setGoals(fetchedGoals);
-      } catch (error) {
-        console.error("Error fetching goals:", error);
-      }
-    };
+    if (semester) setSelectedSemester(semester);
+  }, [semester]);
 
-    fetchGoals();
-  }, []);
+useEffect(() => {
+  const fetchGoals = async () => {
+    try {
+      const fetchedGoals = await getAllGoal();
+      console.log("Fetched goals:", fetchedGoals); 
+      setGoals(fetchedGoals);
+    } catch (error) {
+      console.error("Error fetching goals:", error);
+    }
+  };
+  fetchGoals();
+}, []);
 
   const updateGoals = (newGoals) => {
     setGoals(newGoals);
@@ -62,9 +68,14 @@ export default function SemesterGoal() {
     setShowEditForm(false);
   };
 
-  const totalPages = Math.ceil(goals.length / goalsPerPage);
+  const filteredGoals = goals.filter(
+    (goal) => goal.semester_id === selectedSemester?.id
+  );
+
+  const totalPages = Math.ceil(filteredGoals.length / goalsPerPage);
   const indexOfLastGoal = currentPage * goalsPerPage;
   const indexOfFirstGoal = indexOfLastGoal - goalsPerPage;
+  const currentGoals = filteredGoals.slice(indexOfFirstGoal, indexOfLastGoal);
   const currentGoals = goals.slice(indexOfFirstGoal, indexOfLastGoal);
 
   const handleCommentClick = (goalId) => {
@@ -78,8 +89,8 @@ export default function SemesterGoal() {
   };
 
   return (
-    <div className="container">
-      <div className="yourGoall">
+    <div className="container your-goal-big">
+      <div className="your-goal">
         <div className="goal-header">
           <h2>Your Study Goal</h2>
           <span className="add-goal-btn" onClick={() => setShowForm(true)}>
@@ -116,9 +127,10 @@ export default function SemesterGoal() {
           />
         )}
 
-        <div className="table-wrapper">
+        <div className="table-goal">
           <table className="table table-your-goal">
             <thead>
+              <tr>
               <tr>
                 <th>Course</th>
                 <th>Goal</th>
@@ -147,66 +159,59 @@ export default function SemesterGoal() {
                               goal.id,
                               goal.completeStatus === "done" ? "doing" : "done"
                             );
-
-                            const realIndex = goals.findIndex(
-                              (g) => g.id === goal.id
-                            );
+                            const realIndex = goals.findIndex((g) => g.id === goal.id);
                             const updatedGoals = [...goals];
-                            updatedGoals[realIndex].completeStatus =
-                              updatedGoal.completeStatus;
+                            updatedGoals[realIndex].completeStatus = updatedGoal.completeStatus;
                             updateGoals(updatedGoals);
                           } catch (error) {
-                            console.error(
-                              "Error toggling complete status:",
-                              error
-                            );
+                            console.error("Error toggling complete status:", error);
                           }
                         }}
                         style={{
-                          display: "inline-block",
-                          backgroundColor:
-                            goal.completeStatus === "done"
-                              ? "#28a745"
-                              : "#ffc107",
-                          color:
-                            goal.completeStatus === "done"
-                              ? "white"
-                              : "inherit",
-                          width: "20px",
-                          height: "20px",
+                          display: "inline-flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          backgroundColor: goal.completeStatus === "done" ? "#28a745" : "#ffc107",
+                          color: "white",
+                          width: "24px",
+                          height: "24px",
                           borderRadius: "4px",
                           cursor: "pointer",
+                          fontSize: "16px",
                         }}
-                      />
+                      >
+                        {goal.completeStatus === "done" && (
+                          <i className="fa-solid fa-check"></i>
+                        )}
+                      </span>
                     </td>
                     <td>{goal.dueDate}</td>
                     <td>
                       <i
                         className="fa-regular fa-clock"
-                        style={{ marginRight: "10px", cursor: "pointer" }}
                         title="View time"
                         onClick={() => alert("View time clicked")}
+                        style={{ marginRight: "10px", cursor: "pointer" }}
                       ></i>
                       <i
                         className="fa-regular fa-pen-to-square"
+                        title="Edit"
                         style={{ marginRight: "10px", cursor: "pointer" }}
                         title="Edit"
                         onClick={async () => {
                           try {
                             const goalData = await getGoal(goal.id);
-                            const realIndex = goals.findIndex(
-                              (g) => g.id === goal.id
-                            );
+                            const realIndex = goals.findIndex((g) => g.id === goal.id);
                             setGoalToEdit({ ...goalData, index: realIndex });
                             setShowEditForm(true);
                           } catch (error) {
                             console.error("Failed to fetch goal:", error);
                           }
                         }}
-                      />
+                        style={{ marginRight: "10px", cursor: "pointer" }}
+                      ></i>
                       <i
                         className="fa-solid fa-trash"
-                        style={{ color: "red", cursor: "pointer" }}
                         title="Delete"
                         onClick={async () => {
                           try {
@@ -217,6 +222,8 @@ export default function SemesterGoal() {
                             console.error("Failed to fetch goal:", error);
                           }
                         }}
+                        style={{ color: "red", cursor: "pointer" }}
+                      ></i>
                       />
                       <i
                         className="fa-regular fa-comment"
@@ -229,33 +236,27 @@ export default function SemesterGoal() {
                 ))
               ) : (
                 <tr>
-                  <td colSpan="9">No goals found</td>
+                  <td colSpan="8">No goals found</td>
                 </tr>
               )}
             </tbody>
           </table>
         </div>
 
-        {/* Pagination */}
         {totalPages > 1 && (
           <div className="pagination">
-            <button
-              disabled={currentPage === 1}
-              onClick={() => setCurrentPage(currentPage - 1)}
-            >
+            <button disabled={currentPage === 1} onClick={() => setCurrentPage(currentPage - 1)}>
               Previous
             </button>
-
             {[...Array(totalPages)].map((_, index) => (
               <button
                 key={index}
-                onClick={() => setCurrentPage(index + 1)}
                 className={currentPage === index + 1 ? "active" : ""}
+                onClick={() => setCurrentPage(index + 1)}
               >
                 {index + 1}
               </button>
             ))}
-
             <button
               disabled={currentPage === totalPages}
               onClick={() => setCurrentPage(currentPage + 1)}
@@ -265,7 +266,6 @@ export default function SemesterGoal() {
           </div>
         )}
       </div>
-
       {showDeletePopup && (
         <DeleteGoal
           id={goalToDeleteId}

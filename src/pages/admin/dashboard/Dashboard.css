@@ -1,4 +1,37 @@
-.test-nha {
-    margin-left: 50%;
-    position: absolute;
+.dashboard-container {
+  background-color: #fafbfc;
+  min-height: 100vh;
+}
+
+.grid {
+  display: grid;
+  gap: 20px;
+}
+
+.stats {
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.section-title {
+  font-size: 18px;
+  margin-bottom: 10px;
+  font-weight: bold;
+}
+
+.alerts {
+  margin: 0;
+  padding-left: 20px;
+  color: #b91c1c;
+}
+
+
+.box-content {
+  margin-left: 220px;
+  padding: 10px;
+  margin-top: 40px;
+  height: 100vh;
+}
+
+.box-content h2 {
+  place-self: center;
 }
