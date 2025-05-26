@@ -1,20 +1,28 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import './ClassList.css';
 import classListImage from "../../../assets/images/class_list.png";
 import { useNavigate } from 'react-router-dom';
 import Header from '../../../components/teacher/Header/Header';
+import { getClasses } from '../../../services/api/StudentAPI';
 
 const ClassList = () => {
   const navigate = useNavigate();
 
-  const classes = [
-    { name: 'PNV26A', students: 30 },
-    { name: 'PNV26B', students: 30 },
-    { name: 'PNV27A', students: 30 },
-    { name: 'PNV27B', students: 30 },
-    { name: 'PNV25B', students: 30 },
-    { name: 'PNV25A', students: 30 },
-  ];
+
+  const [classess, setClasses] = useState([]);
+  useEffect(() =>{
+    const fetchData = async ()=>{
+      try{
+        const classData = await getClasses();
+        console.log("Test classes:", classData);
+        setClasses(classData);
+      } catch (error){
+        console.log("Error fetching data:", error);
+      }
+    };
+
+    fetchData();
+  }, []);
 
   const handleView = (className) => {
     navigate(`/class/${className}`);
@@ -22,16 +30,20 @@ const ClassList = () => {
 
   return (
     <div className="class-container1">
-      <h2>Class</h2>
+      <h2>All Classes</h2>
       <div className="class-grid1">
-        {classes.map((classItem, index) => (
+        {classess.map((classItem, index) => (
           <div key={index} className="class-card1">
+
             <div className="class-content1">
-              <div className="class-text1">
+             <div className="class-text1">
                 <h3>{classItem.name}</h3>
-                <p>Students: {classItem.students}</p>
               </div>
-              <img src={classListImage} alt="Classx Illustration" className="class-list-img1" />
+              <img
+                src={classListImage}
+                alt={`Image of ${classItem.name}`}
+                className="class-list-img1"
+              />
             </div>
             <button
               className="view-button1"
@@ -44,6 +56,7 @@ const ClassList = () => {
       </div>
     </div>
   );
+  
 };
 
 export default ClassList;

@@ -56,6 +56,7 @@ export const getStudents = async () => {
   }
 };
 
+
 export const createClass = async (data) => {
   try {
     const formData = new FormData();
@@ -461,4 +462,5 @@ export const createSelfClass  = async (inClassData) => {
     throw error;
   }
 };
+
 

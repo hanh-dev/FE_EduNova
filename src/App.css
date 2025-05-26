@@ -67,7 +67,7 @@ html, body, #root {
 }
 
 .main-content-area {
-  background: #fafbfc;
+  /* background: #fafbfc; */
   min-height: 100vh;
   width: 100%;
   display: flex;
