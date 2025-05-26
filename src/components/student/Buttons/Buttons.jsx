@@ -11,7 +11,7 @@ import TagTeacher from "../Form/TagTeacher"; // Import TagTeacher component
 export default function Buttons({ type, recordData, onUpdate, onDelete }) {
   const [showForm, setShowForm] = useState(false);
   const [record, setRecord] = useState(null);
-  const [showTagTeacher, setShowTagTeacher] = useState(false); // State for TagTeacher modal
+  const [showTagTeacher, setShowTagTeacher] = useState(false);
 
   const handleUpdateClick = async () => {
     if (!recordData?.id) {

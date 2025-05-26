@@ -18,6 +18,7 @@ function TeacherManagement() {
     const fetchStudents = async () => {
       try {
         const students = await getTeachers();
+        console.log("Test teachers: ", students);
         setStudents(students);
       } catch (error) {
         console.error('Failed to fetch teachers:', error);

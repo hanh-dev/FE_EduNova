@@ -3,6 +3,8 @@ import { ref, onChildAdded, get } from 'firebase/database';
 import { api } from '../../../utils/constants';
 import './AdminMessage.css';
 import { database } from '../../../firebase';
+import { getStudents } from '../../../services/api/StudentAPI';
+
 const AdminMessage = () => {
     const [conversations, setConversations] = useState({});
     const [users, setUsers] = useState({});
@@ -10,25 +12,33 @@ const AdminMessage = () => {
     const [replyContent, setReplyContent] = useState('');
     const [isChatOpen, setIsChatOpen] = useState(false);
 
-    // Tải dữ liệu ban đầu và lắng nghe thời gian thực
     useEffect(() => {
-        // Tải thông tin sinh viên
-        const usersRef = ref(database, 'users');
-        get(usersRef).then((snapshot) => {
-            if (snapshot.exists()) {
-                setUsers(snapshot.val());
-                console.log('Users loaded:', snapshot.val());
+        const fetchUsers = async () => {
+            try {
+                const response = await getStudents();
+                console.log('Users from API:', response);
+                const mappedUsers = {};
+                response.forEach(student => {
+                    mappedUsers[student.id] = student;
+                });
+                console.log('Mapped users:', mappedUsers);
+                setUsers(mappedUsers);
+            } catch (error) {
+                console.error('Error loading students from API:', error);
             }
-        }).catch((error) => {
-            console.error('Error loading users:', error);
-        });
+        };
 
-        // Tải tất cả các cuộc trò chuyện
+        fetchUsers();
+
+        // Tải tất cả các cuộc trò chuyện từ Firebase
         const conversationsRef = ref(database, 'conversations');
         get(conversationsRef).then((snapshot) => {
             if (snapshot.exists()) {
-                setConversations(snapshot.val());
-                console.log('Initial conversations loaded:', snapshot.val());
+                const conversationsData = snapshot.val();
+                console.log('Initial conversations loaded:', conversationsData);
+                setConversations(conversationsData);
+            } else {
+                console.log('No conversations found in Firebase');
             }
         }).catch((error) => {
             console.error('Error loading initial conversations:', error);
@@ -83,8 +93,14 @@ const AdminMessage = () => {
             });
             setReplyContent('');
         } catch (error) {
+            console.error('Failed to send reply:', error);
             alert('Gửi tin nhắn trả lời thất bại.');
         }
+    };
+
+    const handleImageError = (e, defaultImage) => {
+        console.error('Failed to load image:', e.target.src);
+        e.target.src = defaultImage; // Hiển thị hình ảnh mặc định nếu lỗi
     };
 
     const toggleChat = () => setIsChatOpen(!isChatOpen);
@@ -123,9 +139,10 @@ const AdminMessage = () => {
                                         className={`student-item ${selectedStudentId === studentId ? 'active' : ''}`}
                                     >
                                         <img
-                                            src={users[studentId]?.avatar || 'https://i.pravatar.cc/40?img=12'}
+                                            src={users[studentId]?.image || 'https://i.pravatar.cc/40?img=12'}
                                             alt="Avatar"
                                             className="avatar"
+                                            onError={(e) => handleImageError(e, 'https://i.pravatar.cc/40?img=12')}
                                         />
                                         <div>
                                             <p className="student-name">{users[studentId]?.name || `Sinh viên ${studentId}`}</p>
@@ -143,6 +160,17 @@ const AdminMessage = () => {
                                             Object.entries(conversations[selectedStudentId].messages).map(([messageId, message]) => (
                                                 <div key={messageId} className={`message-row ${message.sender === 'admin' ? 'admin' : 'student'}`}>
                                                     <div className={`message-bubble ${message.sender === 'admin' ? 'admin-bubble' : 'student-bubble'}`}>
+                                                        <div className="message-header">
+                                                            <img
+                                                                src={message.image || 'https://i.pravatar.cc/40?img=12'}
+                                                                alt={`${message.sender} Avatar`}
+                                                                className="message-avatar"
+                                                                onError={(e) => handleImageError(e, 'https://i.pravatar.cc/40?img=12')}
+                                                            />
+                                                            <span className="message-name">
+                                                                {message.sender === 'admin' ? 'Admin' : (users[selectedStudentId]?.name || `Sinh viên ${selectedStudentId}`)}
+                                                            </span>
+                                                        </div>
                                                         <p>{message.content}</p>
                                                         <span className="message-time">{message.created_at}</span>
                                                         {message.read_at && (

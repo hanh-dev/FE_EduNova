@@ -36,13 +36,15 @@ function StudentManagement() {
         </div>
       ) : (
         <>
-          <div className="add-student-btn">
-            <button onClick={() => setAddForm(true)}>
-              <img src={add} alt="Add Icon" className="button-icon" />
-              Add new student
-            </button>
+          <div className='student-header'>
+            <div className="add-student-btn">
+              <button onClick={() => setAddForm(true)}>
+                <img src={add} alt="Add Icon" className="button-icon" />
+                Add new student
+              </button>
+            </div>
+            <h2>Student Management</h2>
           </div>
-          <h2>Student Management</h2>
           <StudentTable students={students} setStudents={setStudents} setUpdateForm={setUpdateForm} setUserToEdit={setUserToEdit}/>
           {addForm && <AddStudentForm setAddForm={setAddForm} setStudents={setStudents}/>}
           {updateForm && <AddStudentForm setStudents={setStudents} userToEdit={userToEdit} setUpdateForm={setUpdateForm} setAddForm={setAddForm}/>}

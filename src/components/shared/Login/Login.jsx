@@ -25,7 +25,6 @@ function Login() {
           username: data.username,
           role: data.role,
           token: data.access_token,
-          user_id: data.user_id
         });
 
         toast.success("Login successful!", {
