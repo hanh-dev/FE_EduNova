@@ -15,7 +15,8 @@ const sidebarItemsAdmin = [
 ];
 
 const sidebarItemsTeacher = [
-  { label: 'Alert', icon: '📊', href: '/notifications' },
+  { label: 'Dashboard', icon: '📊', href: '/dashboard' },
+  { label: 'Alert', icon: '🏫', href: '/notifications' },
   { label: 'Logout', icon: '🚪', isLogout: true, href: '/login' },
 ];
 
