@@ -19,7 +19,7 @@ const ClassCard = ({ classItem, triggerReload, handleUpdateClick }) => {
   return (
     <div className="class-card">
       <div className="class-card__banner">
-        <img src={`/images/${classItem.image}`} alt="Class banner" className="class-card__image" />
+        <img src={`images/${classItem.image}`} alt="Class banner" className="class-card__image" />
       </div>
 
       <img

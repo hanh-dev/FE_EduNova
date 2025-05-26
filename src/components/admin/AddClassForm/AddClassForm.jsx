@@ -3,13 +3,15 @@ import './AddClassForm.css';
 import { createClass, updateClass, getClasses } from '../../../services/api/StudentAPI';
 import { toast } from 'react-toastify';
 
-const AddClassForm = ({ onClose, teacherData, setClassData, classToEdit }) => {
+const AddClassForm = ({ onClose, teacherData, setClassData, classToEdit, students }) => {
+  const [method, setMethod] = useState('manual');
   const [formData, setFormData] = useState({
     className: '',
     teacherName: '',
     description: '',
     image: null,
-    students: []
+    students: [],
+    studentName: ''
   });
 
   useEffect(() => {
@@ -86,6 +88,23 @@ const AddClassForm = ({ onClose, teacherData, setClassData, classToEdit }) => {
     }
   };
 
+  const handleAddStudent = (e) => {
+    const selectedName = e.target.value;
+    if (!selectedName) return;
+
+    const alreadyAdded = formData.students.find(s => s.name === selectedName);
+    if (alreadyAdded) return;
+
+    const studentToAdd = students.find(s => s.name === selectedName);
+    if (!studentToAdd) return;
+
+    setFormData(prev => ({
+      ...prev,
+      students: [...prev.students, studentToAdd],
+      studentName: '',
+    }));
+  };
+
   return (
     <div className="modal-overlay">
       <div className="modal">
@@ -129,16 +148,57 @@ const AddClassForm = ({ onClose, teacherData, setClassData, classToEdit }) => {
               rows="3"
             />
           </label>
-
           <label className='modal-label'>
-            Upload Students (CSV)
-            <input
-              type="file"
-              accept=".csv"
-              onChange={handleCSVUpload}
-            />
+            Select Add Method
+            <select value={method} onChange={(e) => setMethod(e.target.value)} required>
+              <option value="manual">Select Students Manually</option>
+              <option value="fromClass">Import From Existing Class</option>
+              <option value="csv">Upload CSV</option>
+            </select>
           </label>
+          {method === 'manual' && (
+            <label className='modal-label'>
+              Select Students
+              <select
+                multiple
+                name="studentName"
+                value={formData.studentName}
+                onChange={handleAddStudent}
+              >
+                <option value="">Select student</option>
+                {students
+                  .filter(s => !formData.students.find(sel => sel.id === s.id))
+                  .map(student => (
+                    <option key={student.id} value={student.name}>{student.name}</option>
+                  ))}
+              </select>
 
+              <div className="selected-students-container">
+                {formData.students.map(student => (
+                  <div key={student.id} className="student-chip">
+                    {student.name}
+                    <button type="button" className="remove-student-btn" onClick={() => {
+                      setFormData(prev => ({
+                        ...prev,
+                        students: prev.students.filter(s => s.id !== student.id)
+                      }));
+                    }}>×</button>
+                  </div>
+                ))}
+              </div>
+            </label>
+          )}
+
+          {method === 'csv' && (
+            <label className='modal-label'>
+              Upload Students (CSV)
+              <input
+                type="file"
+                accept=".csv"
+                onChange={handleCSVUpload}
+              />
+            </label>
+          )}
           <button type="submit" className="submit-button1">
             {classToEdit ? 'Update Class' : 'Save Class'}
           </button>

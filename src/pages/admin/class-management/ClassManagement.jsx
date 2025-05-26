@@ -4,7 +4,7 @@ import { PulseLoader } from 'react-spinners';
 import { add } from '../../../assets';
 import AddClassForm from '../../../components/admin/AddClassForm/AddClassForm';
 import './ClassManagement.css';
-import { getClasses, getNameOfTeachers } from '../../../services/api/StudentAPI';
+import { getClasses, getNameOfTeachers, getStudents } from '../../../services/api/StudentAPI';
 
 function ClassManagement() {
   const [showAddClassForm, setShowAddClassForm] = useState(false);
@@ -13,6 +13,7 @@ function ClassManagement() {
   const [teachers, setTeachers] = useState([]);
   const [reloadTrigger, setReloadTrigger] = useState(false);
   const [classToEdit, setClassToEdit] = useState(null);
+  const [students, setStudents] = useState([]);
 
   const triggerReload = () => setReloadTrigger(prev => !prev);
 
@@ -39,9 +40,19 @@ function ClassManagement() {
     }
   };
 
+  const fetchStudents = async () => {
+    try {
+      const response = await getStudents();
+      setStudents(response);
+    } catch (error) {
+      console.error("Error at fetching student data: ", error);
+    }
+  }
+
   useEffect(() => {
     fetchClasses();
     fetchTeachers();
+    fetchStudents();
   }, [reloadTrigger]);
 
   const handleAddClick = () => {
@@ -77,6 +88,7 @@ function ClassManagement() {
               setClassData={setClassData}
               classToEdit={classToEdit}
               triggerReload={triggerReload}
+              students={students}
             />
           )}
 

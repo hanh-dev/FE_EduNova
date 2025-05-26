@@ -532,4 +532,17 @@ export const getTotals = async () => {
   }
 };
 
+// Gửi thông báo tag teacher
+export const sendTagTeacher = async (user_id, teacherId, message, goalId) => {
+  try {
+    console.log("Test data", user_id, teacherId, message, goalId);
+    const payload = { teacherId, message, user_id, goalId };
+    const response = await api.post('/tag-teacher', payload);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
 export default academyAPI;

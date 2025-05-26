@@ -76,7 +76,7 @@ const AddStudentForm = ({ setStudents, userToEdit, setAddForm, setUpdateForm }) 
     <div className="modal-overlay">
       <div className="modal">
         <button className="close-button" onClick={() => (userToEdit ? setUpdateForm(false) : setAddForm(false))}>×</button>
-        <h2>{userToEdit ? 'Update Student' : 'Add New User'}</h2>
+        <h2>{userToEdit ? 'Update Student' : 'Add New Student'}</h2>
         <form onSubmit={handleSubmit}>
           <label className="modal-label">
             Name
