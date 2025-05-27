@@ -470,18 +470,25 @@ export const getAllWeekGoal = async (id) => {
     }
 };
 
-export const getAllTasks = async (id) => {
-    try {
-        console.log("ID to delete:", id);
-        const response = await api.get(`/task`);
-        console.log("Goal deleted:", response.data);
-        return response.data;
-    } catch (error) {
-        handleApiError(error);
-        throw error;
-    }
+export const getAllTasks = async () => {
+  try {
+    const response = await api.get(`/task`);
+    return response.data;
+  } catch (error) {
+    console.error("Get tasks error:", error);
+    throw error;
+  }
 };
 
+export const updateTaskStatus = async (id, data) => {
+  try {
+    const response = await api.put(`/tasks/${id}`, data);
+    return response.data;
+  } catch (error) {
+    console.error("Update task error:", error.response ? error.response.data : error);
+    throw error;
+  }
+};
 // =========================
 // ❗ Week
 // =========================

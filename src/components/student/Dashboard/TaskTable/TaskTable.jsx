@@ -1,36 +1,25 @@
 import React, { useState, useEffect } from "react";
 import "./TaskTable.css";
-import { getAllTasks } from "../../../../services/api/StudentAPI";
+import { getAllTasks, updateTaskStatus } from "../../../../services/api/StudentAPI";
 
-const statusOptions = [
-  { value: "inprogress", label: "In progress" },
-  { value: "done", label: "Completed" },
-  { value: "cancel", label: "Cancelled" },
-];
+const statusMap = {
+  inprogress: "In progress",
+  done: "Completed",
+  cancel: "Cancelled",
+};
+
+const displayToDbStatus = {
+  "In progress": "inprogress",
+  "Completed": "done",
+  "Cancelled": "cancel",
+};
 
 const getCourseColorClass = (course) => {
   switch (course) {
-    case "TOEIC":
-      return "course-toeic";
-    case "IT English":
-      return "course-it-english";
-    case "Speaking":
-      return "course-speaking";
-    default:
-      return "course-default";
-  }
-};
-
-const getStatusClass = (status) => {
-  switch (status) {
-    case "inprogress":
-      return "in-progress";
-    case "done":
-      return "completed";
-    case "cancel":
-      return "cancel";
-    default:
-      return "default";
+    case "TOEIC": return "course-toeic";
+    case "IT English": return "course-it-english";
+    case "Speaking": return "course-speaking";
+    default: return "course-default";
   }
 };
 
@@ -43,21 +32,19 @@ const TaskTable = () => {
     const fetchTasks = async () => {
       try {
         const response = await getAllTasks();
-        console.log("Fetched tasks: ", response);
-
         if (response.success) {
-          const formattedTasks = response.data.map((task) => ({
+          const formatted = response.data.map((task) => ({
+            id: task.id,
             task: task.lesson_summary || "No task",
             course: task.skill_module || "Unknown",
             status: task.status || "inprogress",
           }));
-          setTasks(formattedTasks);
+          setTasks(formatted);
         } else {
           setErrorMessage(response.message || "Failed to load tasks.");
         }
-      } catch (error) {
-        setErrorMessage("An unexpected error occurred. Please try again later.");
-        console.error("Error fetching tasks: ", error);
+      } catch (err) {
+        setErrorMessage("An error occurred. Please try again later.");
       } finally {
         setLoading(false);
       }
@@ -66,22 +53,28 @@ const TaskTable = () => {
     fetchTasks();
   }, []);
 
-  const handleStatusChange = (index, e) => {
-    const newStatus = e.target.value;
-    setTasks((prevTasks) => {
-      const updatedTasks = [...prevTasks];
-      updatedTasks[index].status = newStatus;
-      return updatedTasks;
-    });
+  const handleStatusChange = async (index, event) => {
+    const newDisplay = event.target.value;
+    const newDbStatus = displayToDbStatus[newDisplay];
+    const taskId = tasks[index].id;
+
+    try {
+      await updateTaskStatus(taskId, { status: newDbStatus });
+      setTasks((prev) => {
+        const updated = [...prev];
+        updated[index].status = newDbStatus;
+        return updated;
+      });
+    } catch (err) {
+      alert("Failed to update task status.");
+    }
   };
 
   return (
     <div className="task-table-wrapper">
-      <h1>Course You're Taking</h1>
-
+      <h1>Courses You're Taking</h1>
       {loading && <div>Loading tasks...</div>}
       {errorMessage && <div className="error-message">{errorMessage}</div>}
-
       {!loading && !errorMessage && (
         <table className="task-table">
           <thead>
@@ -94,30 +87,26 @@ const TaskTable = () => {
           <tbody>
             {tasks.length > 0 ? (
               tasks.map((item, index) => (
-                <tr key={index}>
+                <tr key={item.id}>
                   <td>{item.task}</td>
                   <td className={`course-name ${getCourseColorClass(item.course)}`}>
                     {item.course}
                   </td>
                   <td>
                     <select
-                      value={item.status}
+                      value={statusMap[item.status]}
                       onChange={(e) => handleStatusChange(index, e)}
-className={`task-status ${getStatusClass(item.status)}`}
+                      className={`task-status ${item.status}`}
                     >
-                      {statusOptions.map((option) => (
-                        <option key={option.value} value={option.value}>
-                          {option.label}
-                        </option>
+                      {Object.values(statusMap).map((label) => (
+                        <option key={label} value={label}>{label}</option>
                       ))}
                     </select>
                   </td>
                 </tr>
               ))
             ) : (
-              <tr>
-                <td colSpan="3">No tasks available.</td>
-              </tr>
+              <tr><td colSpan="3">No tasks available.</td></tr>
             )}
           </tbody>
         </table>

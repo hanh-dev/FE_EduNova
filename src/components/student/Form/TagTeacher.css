@@ -83,21 +83,23 @@
 }
 
 .button-group button:first-child {
-  background-color: #007bff;
+  background-color: #dc3545;
   color: white;
+  cursor: pointer;
 }
 
 .button-group button:first-child:hover {
-  background-color: #0056b3;
+  background-color: #b02a37;
 }
 
 .button-group button:last-child {
-  background-color: #dc3545;
+  background-color: #007bff;
   color: white;
+  cursor: pointer;
 }
 
 .button-group button:last-child:hover {
-  background-color: #b02a37;
+  background-color: #0056b3;
 }
 
 /* Ensure the modal is centered and responsive */

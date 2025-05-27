@@ -208,7 +208,13 @@ useEffect(() => {
                         }}
                       ></i>
                       <i
-                        className="fa-solid fa-trash"
+                        className="fa-regular fa-comment"
+                        style={{ color: "black", cursor: "pointer"}}
+                        title="Comment"
+                        onClick={() => handleCommentClick(goal.id)} 
+                      />
+                      <i
+                        className="fa-solid fa-trash" 
                         title="Delete"
                         onClick={async () => {
                           try {
@@ -219,13 +225,7 @@ useEffect(() => {
                             console.error("Failed to fetch goal:", error);
                           }
                         }}
-                        style={{ color: "red", cursor: "pointer" }}
-                      />
-                      <i
-                        className="fa-regular fa-comment"
-                        style={{ color: "#007bff", cursor: "pointer" }}
-                        title="Comment"
-                        onClick={() => handleCommentClick(goal.id)} 
+                        style={{ color: "red", cursor: "pointer", marginLeft: "10px"}}
                       />
                     </td>
                   </tr>
