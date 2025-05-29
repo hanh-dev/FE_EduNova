@@ -3,7 +3,7 @@ import CertificateCard from "./CertificateCard";
 import AddCertificateButton from "./AddCertificateButton";
 import AcademyForm from "./AcademyForm";
 import "./AchievementSection.css";
-import { academyAPI } from '../../../services/api/StudentAPI';
+import { academyAPI } from "../../../services/api/StudentAPI";
 import { toast } from "react-toastify";
 
 const AchievementSection = () => {
@@ -25,8 +25,8 @@ const AchievementSection = () => {
         title: item.title,
         description: item.description,
         media_type: item.media_type,
-        media_path_url: item.media_path_url,   
-      }));      
+        media_path_url: item.media_path_url,
+      }));
       setCertificates(formattedData);
     } catch (error) {
       toast.error("Không thể tải dữ liệu. Vui lòng thử lại sau.");
@@ -73,7 +73,6 @@ const AchievementSection = () => {
       console.error("Error saving academy:", error);
     }
   };
-  
 
   const handleDelete = async (id) => {
     const confirmed = window.confirm("Bạn có chắc muốn xóa?");
@@ -98,7 +97,7 @@ const AchievementSection = () => {
     <div className="achievement-section">
       <div className="header">
         <h2>Academy achievements</h2>
-<AddCertificateButton
+        <AddCertificateButton
           onClick={() => {
             setEditingCert(null);
             setShowForm(true);
@@ -107,7 +106,7 @@ const AchievementSection = () => {
       </div>
 
       {loading ? (
-        <div className="loading">Đang tải...</div>
+        <div className="loading">Loading...</div>
       ) : (
         <div className="card-grid-1">
           {certificates.length > 0 ? (

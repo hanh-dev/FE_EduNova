@@ -84,3 +84,8 @@
 .cert-btn.delete:hover {
     background-color: #f4511e;
 }
+
+.certificate-desc{
+    word-wrap: break-word;
+overflow-wrap: break-word;
+}

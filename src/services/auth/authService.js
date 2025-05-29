@@ -1,6 +1,6 @@
 export const saveUser = (userData) => {
     localStorage.setItem('user', JSON.stringify(userData));
-    console.log("TEst save: ", getUser)
+    console.log("Test local user:", JSON.stringify(userData));
 };
 
 export const clearUser = () => {

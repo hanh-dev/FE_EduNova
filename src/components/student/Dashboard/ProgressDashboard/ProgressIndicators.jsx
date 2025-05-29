@@ -14,7 +14,8 @@ const ProgressIndicators = () => {
 
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
-    if (!user || !user.token) {
+    if (!user || !user.user_id) {
+
       setErrorMessage("User not found. Please login again.");
       setLoading(false);
       return;
@@ -22,6 +23,7 @@ const ProgressIndicators = () => {
 
     const fetchGoals = async () => {
       try {
+
         // Lấy semester goals
         const response = await getAllGoal();
         console.log("All semester goals:", response);

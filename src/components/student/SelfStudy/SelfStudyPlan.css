@@ -1,16 +1,19 @@
+
 .study-table-container{
   font-family:  Arial, sans-serif; 
 }
 .study-table-wrapper {
   overflow-x: auto;
-  width: 99%;
-
+  /* padding: 0px 20px 0px 0px; */
+margin-right: 40px;
+width: calc(100% - 40px);
 }
 
 .study-table-container {
-  padding-top: 29px;
-  margin-left: 240px;
-  padding-bottom: 15px;
+  padding: 0px 20px;
+  margin-left: 250px;
+  width: calc(100% - 250px);
+  min-height: 100vh;
 }
 
 .study-table-container h2 {
@@ -20,33 +23,32 @@
   border-radius: 10px 10px 0 0;
   font-size: 20px;
   margin: 0;
-  width: 99%;
-  /* width: 1568px;  */
-  box-sizing: border-box;  
+  box-sizing: border-box;
+  text-align: center; 
+  width: calc(100% - 40px);
+  margin-right: 40px;
 }
 
-/* Table */
 .study-table {
-  /* width: 1568px;  */
   border-collapse: collapse;
   background-color: white;
-  display: table;    
+  display: table; 
+  width: 100%;   
 }
 
 .study-table th,
 .study-table td {
   border: 1px solid #ddd;
-  padding: 12px;
-  text-align: left;
-  font-size: 15px;
+  padding: 5px;
+  font-size: 14px;
 }
 
 .study-table th {
   background-color: white;
   font-weight: bold;
+  text-align: center;
 }
 
-/* Responsive tweak */
 @media (max-width: 768px) {
   .study-table-container h2 {
     font-size: 18px;
@@ -61,5 +63,51 @@
 
   .study-table {
     width: 1000px;
-  }
+  } 
 }
+
+
+.week-buttons-container {
+  position: fixed;
+  bottom: 0px;
+  width: calc( 100% - 250px);
+  margin-left: 250px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 0px 20px;
+  justify-content: flex-start;
+}
+
+.week-button {
+    padding: 8px 12px;
+    background-color: orange;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 5px;
+}
+
+.week-button:hover {
+  background-color: #22BBEA;
+}
+
+.week-button.active-week {
+  background-color: #22BBEA;
+  color: white;
+  border: none;
+}
+
+.week-button.add-week {
+  font-weight: bold;
+  font-size: 18px;
+  background-color: #ff9933;
+  color: white;
+}
+
+.week-button.add-week:hover {
+  background-color: #ff9933;
+  border-color: #ff9933;
+}
+

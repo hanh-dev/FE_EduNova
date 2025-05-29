@@ -1,4 +1,6 @@
 .action-buttons-container {
+  width: calc(100%-250px);
+  margin-left: 250px;
   display: flex;
   justify-content: space-around;
 }

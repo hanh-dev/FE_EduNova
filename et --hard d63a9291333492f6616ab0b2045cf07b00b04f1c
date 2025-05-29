@@ -1,0 +1,253 @@
+[33mcommit d63a9291333492f6616ab0b2045cf07b00b04f1c[m[33m ([m[1;31morigin/main[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmain[m[33m)[m
+Author: Hanh_Dev Clean <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Sat Apr 19 11:00:19 2025 +0700
+
+    init project
+
+[33mcommit 9dd475a07490fb3ab41d442197a20504f4b379fc[m[33m ([m[1;31morigin/init[m[33m)[m
+Author: Hanh_Dev Clean <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Sun May 4 10:16:12 2025 +0700
+
+    hanh/separate/roles
+
+[33mcommit 96ccda89a23b303918081ad538a6c0f8a356f438[m
+Merge: d63a929 9dd475a
+Author: hanh-dev <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Sun May 4 10:17:52 2025 +0700
+
+    Merge pull request #1 from hanh-dev/init
+    
+    hanh/separate/roles
+
+[33mcommit e3b0d6313cb6c22195ac294a9e36c0e2be1da089[m
+Author: Hanh_Dev Clean <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Sun May 4 10:36:10 2025 +0700
+
+    SPGTS-49 hanh/test/create-structure
+
+[33mcommit ad2c3be5b145a8bd5a05e5161fec9106e187dd6a[m
+Merge: e3b0d63 96ccda8
+Author: Hanh_Dev Clean <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Sun May 4 10:37:42 2025 +0700
+
+    SPGTS-49 hanh/test/create-structure-1
+
+[33mcommit 4b561a8269b6e00942eecf953963c044d8f0c098[m
+Merge: 96ccda8 ad2c3be
+Author: hanh-dev <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Sun May 4 10:38:38 2025 +0700
+
+    Merge pull request #2 from hanh-dev/SPGTS-49-hanh/structure-folder
+    
+    Spgts 49 hanh/structure folder
+
+[33mcommit 787a3be3b376e805ab7f686cd537e037ef190319[m
+Author: Hanh_Dev Clean <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Sun May 4 10:49:28 2025 +0700
+
+    SPGTS-49 hanh/remove/extra-files
+
+[33mcommit 6c5edb01cc801d8682363b3130add1d09e26be09[m
+Merge: 4b561a8 787a3be
+Author: hanh-dev <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Sun May 4 10:50:32 2025 +0700
+
+    Merge pull request #3 from hanh-dev/SPGTS-49-hanh/structure-folder
+    
+    SPGTS-49 hanh/remove/extra-files
+
+[33mcommit b1df54321f39de2882862150fe468526f222d5ea[m
+Author: Hanh_Dev Clean <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Sun May 4 18:31:58 2025 +0700
+
+    SPGTS-49 chore: hanh/remove extra/unused files after refactor
+
+[33mcommit 8c2bed6238d1b2e95a0b3b81f24deec72ee30258[m[33m ([m[1;31morigin/SPGTS-22-dieu/achievement[m[33m, [m[1;32mdevelop[m[33m)[m
+Merge: 6c5edb0 b1df543
+Author: hanh-dev <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Sun May 4 18:33:03 2025 +0700
+
+    Merge pull request #4 from hanh-dev/SPGTS-49-hanh/structure-folder
+    
+    SPGTS-49 chore: hanh/remove extra/unused files after refactor
+
+[33mcommit 29577badb8ae4b70c3cac283da4da4241838181c[m
+Author: KimThanh1801 <hokimthanh1234@gmail.com>
+Date:   Sun May 4 22:21:19 2025 +0700
+
+    not change
+
+[33mcommit f1d41e2183a62f5de285e45e5e16827cb2286982[m
+Merge: 29577ba 8c2bed6
+Author: KimThanh1801 <hokimthanh1234@gmail.com>
+Date:   Sun May 4 23:00:37 2025 +0700
+
+    not change
+
+[33mcommit 0e9f5496d2a65b4921bebc223c46c011bf19ed72[m
+Author: kimhien0711 <hiencaok@gmail.com>
+Date:   Mon May 5 17:32:00 2025 +0700
+
+    header -kimhien
+
+[33mcommit afcb18578e335fc49be73279fe84eb50e0b4d291[m
+Author: kimhien0711 <hiencaok@gmail.com>
+Date:   Mon May 5 17:47:40 2025 +0700
+
+    action buttons - kimhien
+
+[33mcommit 1f10600dedfbb0ceac4696acad24cdb4ea5ed23d[m
+Author: Phong <phongtrannn3005@gmail.com>
+Date:   Mon May 5 20:27:36 2025 +0700
+
+     complete table component
+
+[33mcommit 2de07853fe3396f4ccae9319b9e8be50ab9171a4[m
+Author: Phong <phongtrannn3005@gmail.com>
+Date:   Mon May 5 22:01:09 2025 +0700
+
+     complete button component
+
+[33mcommit d8fc9ddd0e3a04d8fd1a2b6634e2a799c4d33b1e[m[33m ([m[1;31morigin/SPGTS-49-hanh/structure-folder[m[33m)[m
+Author: Hanh_Dev Clean <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Tue May 6 00:19:04 2025 +0700
+
+    SPGT-49 hanh/done/structure-folder
+
+[33mcommit 998635d9b2cb4829c0cef72f0e739467f9696910[m
+Merge: 8c2bed6 d8fc9dd
+Author: hanh-dev <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Tue May 6 00:19:56 2025 +0700
+
+    Merge pull request #5 from hanh-dev/SPGTS-49-hanh/structure-folder
+    
+    SPGT-49 hanh/done/structure-folder
+
+[33mcommit b8fbf8cbc2b7d965860765adb9e7758e0bda9b64[m
+Author: Phong <phongtrannn3005@gmail.com>
+Date:   Tue May 6 09:11:50 2025 +0700
+
+     update In Class table's CSS
+
+[33mcommit d37aa40990bab4812e5f81a215a2a6de54786675[m
+Author: Phong <phongtrannn3005@gmail.com>
+Date:   Tue May 6 10:04:26 2025 +0700
+
+     done Sefl-Study table plan
+
+[33mcommit a233023ecb82dda37d06ca4a5b7f98a350c07498[m
+Author: Phong <phongtrannn3005@gmail.com>
+Date:   Tue May 6 10:53:32 2025 +0700
+
+     done Date component
+
+[33mcommit 4e2a5af3a1959a4c09d87f071d2160f5b716c644[m
+Author: Hanh_Dev Clean <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Tue May 6 20:17:24 2025 +0700
+
+    SPGTS-48 hanh/done/login-ui
+
+[33mcommit 1e5485bd6f55f98c8449e0b025dc4e1a0f0cbb00[m
+Author: KimThanh1801 <hokimthanh1234@gmail.com>
+Date:   Tue May 6 22:52:20 2025 +0700
+
+    complete form update
+
+[33mcommit 51ec3a9905754056b2f38944c4b2c3f00b99df3a[m
+Author: Phong <phongtrannn3005@gmail.com>
+Date:   Wed May 7 20:23:43 2025 +0700
+
+     change ClassPlan.css and SelfStudy.css
+
+[33mcommit f33b8f1d25f957b9f0ebd7c13defb499eb790a8e[m
+Author: Hanh_Dev Clean <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Thu May 8 00:46:16 2025 +0700
+
+    SPGTS-48 hanh/done/fetch-login-jwt
+
+[33mcommit 039985681513cb00239deab19c300f40e4a88c3b[m
+Merge: f33b8f1 998635d
+Author: Hanh_Dev Clean <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Thu May 8 00:48:29 2025 +0700
+
+    SPGTS-48 hanh/done/fetch-login-jwt
+
+[33mcommit 021a8cfce30997ee0b4df08349331660ad610e81[m
+Merge: 998635d 0399856
+Author: hanh-dev <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Thu May 8 00:49:32 2025 +0700
+
+    Merge pull request #6 from hanh-dev/SPGTS-48-hanh/login
+    
+    Spgts 48 hanh/login
+
+[33mcommit d43f53013596fb6599bec81a0430c78d2a7a0a9c[m
+Author: Phong <phongtrannn3005@gmail.com>
+Date:   Thu May 8 09:37:45 2025 +0700
+
+     done Class update form
+
+[33mcommit d3c54e2815e0f20bcf1430d46ca8fb248add12d8[m
+Author: Phong <phongtrannn3005@gmail.com>
+Date:   Thu May 8 10:52:08 2025 +0700
+
+     done SelfStudy Plan Form
+
+[33mcommit 84a2636b8db43d42dce1693b60c3c59776ae9174[m
+Author: Phong <phongtrannn3005@gmail.com>
+Date:   Thu May 8 11:18:41 2025 +0700
+
+     update Cancel and Update buttons
+
+[33mcommit 21daa56c2fdde40b0f39ce02a7936f641429e6df[m
+Author: Hanh_Dev Clean <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Thu May 8 20:56:38 2025 +0700
+
+    SPGTS-48 feat: add toastify for login
+
+[33mcommit 3a8c71bad1e7a71f80cd25247cb0844cd7097528[m
+Merge: 021a8cf 21daa56
+Author: hanh-dev <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Thu May 8 20:57:43 2025 +0700
+
+    Merge pull request #8 from hanh-dev/SPGTS-48-hanh/login
+    
+    SPGTS-48 feat: add toastify for login
+
+[33mcommit 6cbaa6e76052eba87b887ab4cea685961ab0091c[m
+Author: thidieu2005 <thidieu100625@gmail.com>
+Date:   Thu May 8 21:12:27 2025 +0700
+
+    SPGTS-22 Done FE Academy & Achievement
+
+[33mcommit aafb777380b6b7b8a440eae635f215ebd64f47df[m[33m ([m[1;31morigin/SPGTS-22-dieu/achievemet[m[33m)[m
+Merge: 6cbaa6e 3a8c71b
+Author: thidieu2005 <thidieu100625@gmail.com>
+Date:   Thu May 8 21:53:50 2025 +0700
+
+    SPGTS-22 fixed FE Academy & Achievement
+
+[33mcommit f7f0512809cd38c934920f21e386ec5af9fd7623[m
+Merge: 3a8c71b aafb777
+Author: hanh-dev <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Thu May 8 21:57:27 2025 +0700
+
+    Merge pull request #10 from hanh-dev/SPGTS-22-dieu/achievemet
+    
+    Spgts 22 dieu/achievemet
+
+[33mcommit 2f4aaf16c70b418586d8c84515f7b052f730e336[m
+Author: KimThanh1801 <hokimthanh1234@gmail.com>
+Date:   Thu May 8 21:58:10 2025 +0700
+
+    done yourgoal
+
+[33mcommit 8ead8147890787a71f82c325eee9601a3d3b7d50[m
+Author: Hanh_Dev Clean <hanh.ho26@student.passerellesnumeriques.org>
+Date:   Fri May 9 20:38:06 2025 +0700
+
+    SPGTS-48 add logout feature
+
+[33mcommit 200b37b7e36d4bec6d678f84c018e06839302217[m
+Merge: f7f0512 8ead814
+Author: hanh-dev <hanh.ho26@student.passerellesnumeriques.o

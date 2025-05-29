@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import { Table, Button, Image } from 'antd';
 import { EditOutlined, DeleteOutlined } from '@ant-design/icons';
-import { deleteStudent, getStudents } from '../../../services/api/StudentAPI';
+// import { deleteStudent, getStudents } from '../../../services/api/StudentAPI';
+import {deleteStudent, getStudents} from "../../../services/api/StudentAPI";
 import { toast } from 'react-toastify';
 
 function StudentTable({ students, setStudents, setUpdateForm, setUserToEdit }) {

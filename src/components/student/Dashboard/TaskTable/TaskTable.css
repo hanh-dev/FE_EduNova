@@ -2,12 +2,17 @@
     margin: 100px 0px;
     text-align: left;
 }
+.task-table-wrapper h1{
+  width: calc(100%-250px);
+  margin-left: 250px;
+}
 .task-table {
-    width: 1200px;
+  width: calc(100% - 250px);
     border: 1px solid rgb(0, 170, 255);
     border-spacing: 0;
     padding: 20px;
     border-radius: 20px;
+    margin-left: 250px;
 }
 
 .task-table thead {

@@ -1,6 +1,6 @@
 // src/layouts/StudentLayout.jsx
 import Sidebar from '../components/shared/SideBar';
-import Header from '../components/shared/Header';
+import TeacherHeader from '../components/shared/TeacherHeader';
 import { Outlet } from 'react-router-dom';
 
 const TeacherLayout = () => {
@@ -8,7 +8,7 @@ const TeacherLayout = () => {
     <div className="app-container">
       <Sidebar />
       <main className="main-content-area">
-        <Header />
+        <TeacherHeader />
         <div className="main-content">
           <Outlet />
         </div>

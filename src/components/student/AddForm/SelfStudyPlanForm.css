@@ -1,81 +1,56 @@
-.form-container6 {
-    background-color: #22BBEA;
-    background: white;
-    padding: 30px;
-    border-radius: 12px;
-    max-width: 800px;
-    margin: 40px auto;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
-  }
+.overlay {
+  position: fixed;
+  top: 0; left: 0;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+  border-radius: 10px;
   
-  .form-container6 h2 + .form-grid {
-    margin-top: 30px; 
-  }
-  .form-container6 h2{
-    background-color: #22BBEA;
+}
 
-  }
-  h2 {
-    text-align: center;
-    margin-bottom: 30px;
-  }
-  
-  .form-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 20px;
-  }
-  
-  .form-group {
-    display: flex;
-    flex-direction: column;
-  }
-  
-  .form-group.full-width {
-    grid-column: 1 / -1;
-  }
-  
-  label {
-    font-weight: 500;
-    margin-bottom: 6px;
-  }
-  
-  input,
-  select {
-    padding: 10px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
-    font-size: 14px;
-  }
-  
-  .form-actions {
-    display: flex;
-    justify-content: center;
-    gap: 30px; 
-    margin-top: 40px; 
-  }
-  
-  .btn-1 {
-    width: 120px;
-    height: 50px;
-    padding: 10px 28px;
-    background-color: #22BBEA;
-    border: none;
-    color: white;
-    font-size: 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-    transition: background-color 0.2s;
-  }
-  
-  .btn-1:hover {
-    opacity: 0.9;
-    background-color: #22BBEA;
-  }
-  
-  @media (max-width: 600px) {
-    .form-grid {
-      grid-template-columns: 1fr;
-    }
-  }
+.form-container6 {
+  background: white;
+  padding: 20px 30px;
+  border-radius: 8px;
+  box-shadow: 0 0 15px rgba(0,0,0,0.3);
+  max-height: 80vh;     
+  overflow-y: auto;   
+  border-radius: 10px;
+
+}
+
+.self-study-plan-form{
+   max-height: 500px;
+  overflow-y: auto;
+  background-color: #ffff;
+  padding: 30px;
+  border-radius: 10px;
+  width: 500px;
+}
+.save-self, .cancle-self{
+  padding: 10px;
+  border: none;
+  border-radius: 10px;
+  color: #fff;
+}
+
+.form-group-selff{
+  display: flex;
+  gap: 30px;
+  justify-content: center;
+}
+.form-group-selff button{
+  padding: 10px 20px;
+  border-radius: 10px;
+  text-align: center;
+  color: #fff;
+  background-color: #ff9933;
+  border: none;
+  font-size: 16px;
+}
+.form-group-selff button:last-child{
+  background-color: red;
+}
