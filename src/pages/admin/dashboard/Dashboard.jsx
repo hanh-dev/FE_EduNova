@@ -17,8 +17,6 @@ const Dashboard = () => {
     <div className="dashboard-container">
       <div className="box-content">
         <h2>Admin Dashboard</h2>
-
-        {/* Tổng quan */}
         <div className="grid stats">
           {stats.map((item, index) => (
             <AdminCard key={index} title={item.title} number={item.number} icon={item.icon}/>

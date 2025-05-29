@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import './StudentManagement.css';
 import { FaPlus } from 'react-icons/fa';
 import { getStudents } from '../../../services/api/StudentAPI';
@@ -6,7 +6,10 @@ import { PulseLoader } from 'react-spinners';
 import { add } from '../../../assets';
 import StudentTable from '../../../components/admin/StudentTable/StudentTable';
 import AddStudentForm from '../../../components/admin/AddStudent/AddStudentForm';
+import { useOutletContext } from 'react-router-dom';
+
 function StudentManagement() {
+  const { keyword } = useOutletContext();
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [addForm, setAddForm] = useState(false);
@@ -28,6 +31,12 @@ function StudentManagement() {
     fetchStudents();
   }, []);
 
+  const filteredStudent = useMemo(() => {
+    if(!keyword) return students;
+
+    return students.filter(student => student.name.toLowerCase().includes(keyword.toLowerCase()));
+  }, [keyword, students]);
+
   return (
     <div className="student-management">
       {loading ? (
@@ -45,7 +54,7 @@ function StudentManagement() {
             </div>
             <h2>Student Management</h2>
           </div>
-          <StudentTable students={students} setStudents={setStudents} setUpdateForm={setUpdateForm} setUserToEdit={setUserToEdit}/>
+          <StudentTable students={filteredStudent} setStudents={setStudents} setUpdateForm={setUpdateForm} setUserToEdit={setUserToEdit}/>
           {addForm && <AddStudentForm setAddForm={setAddForm} setStudents={setStudents}/>}
           {updateForm && <AddStudentForm setStudents={setStudents} userToEdit={userToEdit} setUpdateForm={setUpdateForm} setAddForm={setAddForm}/>}
         </>

@@ -1,0 +1,125 @@
+.announcements-tab-container {
+  padding: 20px;
+}
+
+.announcements-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.announcements-header h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #333;
+  font-weight: 600;
+}
+
+.announcements-header p {
+  margin: 5px 0 0 0;
+  color: #666;
+  font-size: 15px;
+}
+
+.new-announcement-button {
+  background-color: #222; 
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  font-size: 15px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: background-color 0.2s ease-out;
+}
+
+.new-announcement-button:hover {
+  background-color: #000;
+}
+
+.new-announcement-button .button-icon {
+  font-size: 14px;
+}
+
+.announcements-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px; 
+}
+
+.announcement-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px 25px; 
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eaeaef;
+}
+
+.announcement-card .card-top-class {
+  display: flex;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.announcement-card .announcement-title {
+  margin: 0;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+  flex-grow: 1;
+}
+
+.announcement-card .priority-tag {
+  font-size: 12px;
+  padding: 4px 8px;
+  border-radius: 10px;
+  margin-left: 15px;
+}
+
+.announcement-card .priority-tag.high {
+  background-color: #fde8e8;
+  color: #d9534f;
+}
+
+.announcement-card .priority-tag.medium {
+  background-color: #fff3cd;
+  color: #f0ad4e;
+}
+
+.announcement-card .priority-tag.low {
+  background-color: #dff0d8;
+  color: #5cb85c;
+}
+
+.announcement-card .more-options-button {
+  background: none;
+  border: none;
+  font-size: 18px;
+  color: #888;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  margin-left: 15px; 
+  transition: color 0.2s ease-out, background-color 0.2s ease-out;
+}
+
+.announcement-card .more-options-button:hover {
+  color: #333;
+  background-color: #f0f0f0;
+}
+
+.announcement-card .card-details p {
+  font-size: 14px;
+  color: #777;
+  margin: 0;
+}
+
+.announcement-card .announcement-content-snippet {
+  font-size: 14px;
+  color: #666;
+  margin-top: 10px;
+  line-height: 1.5;
+}

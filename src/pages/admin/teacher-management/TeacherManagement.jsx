@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import '../student-management/StudentManagement.css'
 import { getTeachers } from '../../../services/api/StudentAPI';
 import { PulseLoader } from 'react-spinners';
@@ -7,7 +7,9 @@ import StudentTable from '../../../components/admin/StudentTable/StudentTable';
 import AddStudentForm from '../../../components/admin/AddStudent/AddStudentForm';
 import AddTeacher from '../../../components/teacher/AddTeacher/AddTeacher';
 import TeacherTable from '../../../components/teacher/TeacherTable/TeacherTable';
+import { useOutletContext } from 'react-router-dom';
 function TeacherManagement() {
+  const { keyword } = useOutletContext();
   const [students, setStudents] = useState([]);
   const [loading, setLoading] = useState(true);
   const [addForm, setAddForm] = useState(false);
@@ -30,6 +32,12 @@ function TeacherManagement() {
     fetchStudents();
   }, []);
 
+  const filteredStudent = useMemo(() => {
+    if(!keyword) return students;
+
+    return students.filter(student => student.name.toLowerCase().includes(keyword.toLowerCase()));
+  }, [keyword, students]);
+
   return (
     <div className="student-management">
       {loading ? (
@@ -45,7 +53,7 @@ function TeacherManagement() {
             </button>
           </div>
           <h2>Teacher Management</h2>
-          <TeacherTable students={students} setStudents={setStudents} setUpdateForm={setUpdateForm} setUserToEdit={setUserToEdit}/>
+          <TeacherTable students={filteredStudent} setStudents={setStudents} setUpdateForm={setUpdateForm} setUserToEdit={setUserToEdit}/>
           {addForm && <AddTeacher setAddForm={setAddForm} setStudents={setStudents}/>}
           {updateForm && <AddTeacher setStudents={setStudents} userToEdit={userToEdit} setUpdateForm={setUpdateForm} setAddForm={setAddForm}/>}
         </>
