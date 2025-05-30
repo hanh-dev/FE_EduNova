@@ -16,16 +16,19 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await login({email, password});
+      const response = await login({ email, password });
       const data = response.data;
       console.log("Data: ", data);
-      if(data) {
-        setUser({
+      if (data) {
+        const userData = {
           username: data.username,
           role: data.role,
           token: data.access_token,
           user_id: data.user_id
-        });
+        };
+
+        setUser(userData);
+        localStorage.setItem("user", JSON.stringify(userData));
 
         toast.success("Login successful!", {
           position: "top-right",
@@ -34,6 +37,7 @@ function Login() {
 
         navigate('/');
       }
+
     } catch (error) {
       console.error("Login Error: ", error);
       toast.error("Invalid credentials.", {

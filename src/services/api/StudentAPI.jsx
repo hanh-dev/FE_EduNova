@@ -26,6 +26,16 @@ export const getClasses = async () => {
   }
 };
 
+export const getStudentsByClassId = async (classId) => {
+  try {
+    const response = await api.get(`/class-user/${classId}/students`);
+    return response.data.data;
+  } catch (error) {
+    console.error('Failed to fetch students by class:', error);
+    throw error;
+  }
+};
+
 export const getNameOfTeachers = async () => {
   try {
     const response = await api.get("/v1/teachers");

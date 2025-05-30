@@ -1,10 +1,13 @@
+import { useEffect } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 
+// Define all constants at module level (outside any component)
 const sidebarItems = [
   { label: 'Dashboard', icon: '📊', href: '/' },
   { label: 'Semester goals', icon: '🎯', href: '/semester-goals' },
   { label: 'Study Plans', icon: '📚', href: '/study-plans' },
   { label: 'Academic achievement', icon: '🏆', href: '/achievement' },
-  { label: 'Logout', icon: '🚪', isLogout : true, href: '/login'},               
+  { label: 'Logout', icon: '🚪', isLogout: true, href: '/login'},
 ];
 
 const sidebarItemsAdmin = [
@@ -14,51 +17,92 @@ const sidebarItemsAdmin = [
   { label: 'Student Management', icon: '🧑‍🎓', href: '/student-management' },
 ];
 
-  const sidebarItemsTeacher = [
-    {label: 'Dashboard', icon: '📊', href: '/' },
-    {label: 'Alert', icon: '🔔', href: '/alert' },
-
-  ];
-
-
-
-
+const sidebarItemsTeacher = [
+  { label: 'Dashboard', icon: '📊', href: '/dashboard' },
+  { label: 'Alert', icon: '🏫', href: '/notifications' },
+  { label: 'Logout', icon: '🚪', isLogout: true, href: '/login' },
+];
 
 const courses = [
-{
-  title: "TOEIC",
-  teacher: "Le Nguyen Phuc Nhan",
-  desc: "TOEIC measures English skills for the workplace, focusing on listening and reading.",
-  image: ("../../../../../src/assets/image/toeic.png"),
-},
-{
-  title: "IT English",
-  teacher: "Tran Thi Khanh Uyen",
-  desc: "IT English helps students improve communication in the IT field.",
-  image: ("../../../../../src/assets/image/itEnglish.png"),
-},
-{
-  title: "COMMUNICATE",
-  teacher: "Nguyen Thi Thuy Trang",
-  desc: "Communicate means to share information, ideas, or feelings with others.",
-  image: ("../../../../../src/assets/image/communicate.png"),
-},
-{
-  title: "TOEIC",
-  teacher: "Le Nguyen Phuc Nhan",
-  desc: "TOEIC measures English skills for the workplace, focusing on listening and reading.",
-  image: ("../../../../../src/assets/image/toeic.png"),
-}
+  {
+    title: "TOEIC",
+    teacher: "Le Nguyen Phuc Nhan",
+    desc: "TOEIC measures English skills for the workplace, focusing on listening and reading.",
+    image: ("../../../../../src/assets/image/toeic.png"),
+  },
+  {
+    title: "IT English",
+    teacher: "Tran Thi Khanh Uyen",
+    desc: "IT English helps students improve communication in the IT field.",
+    image: ("../../../../../src/assets/image/itEnglish.png"),
+  },
+  {
+    title: "COMMUNICATE",
+    teacher: "Nguyen Thi Thuy Trang",
+    desc: "Communicate means to share information, ideas, or feelings with others.",
+    image: ("../../../../../src/assets/image/communicate.png"),
+  },
+  {
+    title: "TOEIC",
+    teacher: "Le Nguyen Phuc Nhan",
+    desc: "TOEIC measures English skills for the workplace, focusing on listening and reading.",
+    image: ("../../../../../src/assets/image/toeic.png"),
+  }
 ];
 
 const initialTasks = [
-    { task: "Practice listening", course: "TOEIC", status: "In progress" },
-    { task: "Review vocabulary", course: "IT English", status: "Completed" },
-    { task: "Review vocabulary", course: "Speaking", status: "Cancel" },
-    { task: "Practice listening", course: "TOEIC", status: "In progress" },
-    { task: "Review vocabulary", course: "IT English", status: "Complete" },
-    { task: "Review vocabulary", course: "Speaking", status: "Cancel" },
-    { task: "Practice listening", course: "TOEIC", status: "In progress" },
-  ];
+  { task: "Practice listening", course: "TOEIC", status: "In progress" },
+  { task: "Review vocabulary", course: "IT English", status: "Completed" },
+  { task: "Review vocabulary", course: "Speaking", status: "Cancel" },
+  { task: "Practice listening", course: "TOEIC", status: "In progress" },
+  { task: "Review vocabulary", course: "IT English", status: "Complete" },
+  { task: "Review vocabulary", course: "Speaking", status: "Cancel" },
+  { task: "Practice listening", course: "TOEIC", status: "In progress" },
+];
 
-export { sidebarItems, courses, initialTasks, sidebarItemsAdmin, sidebarItemsTeacher }
+// Function to get dynamic sidebar items
+const getSidebarItems = (isTeacherViewing, handleBackToStudentList, classId) => {
+  return [
+    { label: 'Dashboard', icon: '📊', href: '/' },
+    { label: 'Semester goals', icon: '🎯', href: '/semester-goals' },
+    { label: 'Study Plans', icon: '📚', href: '/study-plans' },
+    { label: 'Academic achievement', icon: '🏆', href: '/achievement' },
+    ...(isTeacherViewing ? [
+      { 
+        label: 'Back to Student List', 
+        icon: '⬅️', 
+        href: `/classes/${classId}/students`,
+        onClick: handleBackToStudentList 
+      }
+    ] : []),
+    { label: 'Logout', icon: '🚪', isLogout: true, href: '/login' },
+  ];
+};
+
+const handleBackToStudentList = () => {
+  const user = localStorage.getItem('teacherData');
+  console.log('test teacher data', user);
+};
+
+// Component (if you need it here)
+const StudentSidebar = () => {
+  const location = useLocation();
+  const navigate = useNavigate();
+  const teacherView = localStorage.getItem('isTeacherView');
+  const isTeacherViewing = localStorage.getItem('isTeacherView') === 'true';
+
+  const currentSidebarItems = getSidebarItems(isTeacherViewing, handleBackToStudentList);
+  
+  // Your component logic here
+};
+
+// Export all at the end
+export { 
+  sidebarItems, 
+  sidebarItemsAdmin, 
+  sidebarItemsTeacher, 
+  courses, 
+  initialTasks, 
+  getSidebarItems,
+  StudentSidebar 
+};

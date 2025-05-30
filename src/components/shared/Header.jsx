@@ -1,7 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./Header.css";
 
 const Header = () => {
+  const [userName, setUserName] = useState("Người dùng");
+  const [userInitials, setUserInitials] = useState("??");
+
+  useEffect(() => {
+    const userData = localStorage.getItem("user");
+    if (userData) {
+      const user = JSON.parse(userData);
+      setUserName(user.username || "Người dùng");
+      const initials = user.username
+        // .split(" ")
+      //   .map(word => word[0])
+      //   .join("")
+      //   .toUpperCase();
+      // setUserInitials(initials);
+    }
+  }, []);
+
   return (
     <header className="header">
       <div className="header-container">
@@ -24,15 +41,15 @@ const Header = () => {
                 ></path>
               </svg>
             </div>
-            <div className="user-avatar">KT</div>
-            <span className="user-name">Kim Thanh</span>
+            <div className="user-avatar">{userInitials}</div>
+            <span className="user-name">{userName}</span>
           </div>
         </div>
 
         {/* Main Card */}
         <div className="welcome-card">
           <div className="welcome-text">
-            <h1 className="welcome-title">Welcome back Kim Thanh</h1>
+            <h1 className="welcome-title">Welcome back {userName}</h1>
             <p className="welcome-info">
               Today you have <span className="highlight">9 new applications</span>.
             </p>

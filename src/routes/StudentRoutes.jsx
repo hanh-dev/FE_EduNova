@@ -15,6 +15,7 @@ const StudentRoutes = () => [
     <Route path="achievement" element={<Academy1 />} />
     <Route path="study-plans" element={<ClassPlan1 />} />
     <Route path="profile" element={<RequireAuth><Profile /></RequireAuth>} />
+    
   </Route>
 ];
 

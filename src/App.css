@@ -22,6 +22,7 @@ html, body, #root {
   min-height: 100vh;
   position: fixed;
   z-index: 9900;
+  width: 250px;
   /* position: fixed; */
 }
 

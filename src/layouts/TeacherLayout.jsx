@@ -1,6 +1,6 @@
 // src/layouts/StudentLayout.jsx
 import Sidebar from '../components/shared/SideBar';
-import Header from '../components/teacher/Header';
+import Header from '../components/shared/Header';
 import { Outlet } from 'react-router-dom';
 
 const TeacherLayout = () => {
