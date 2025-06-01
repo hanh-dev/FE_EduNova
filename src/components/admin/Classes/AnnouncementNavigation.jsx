@@ -1,38 +1,68 @@
-import React from 'react';
+import React, { useEffect } from 'react';
+import { useState } from 'react';
 import { FaPlus, FaEllipsisV } from 'react-icons/fa';
 import './AnnouncementNavigation.css';
+import AnnouncementModal from '../NewAnnouncement.jsx/AnnouncementModal';
+import { createAnnouncement, deleteAnnouncement, getAllAnnouncement } from '../../../services/api/AdminAPI';
+import { toast } from 'react-toastify';
 
-function AnnouncementsTab() {
-  const announcements = [
-    {
-      id: 1,
-      title: 'Semester Registration Open',
-      priority: 'high',
-      author: 'Academic Office',
-      date: '26/05/2025',
-      target: 'all',
-      content: 'Please register for the new semester by the deadline. Visit the academic portal for details.'
-    },
-    {
-      id: 2,
-      title: 'Library Hours Extended',
-      priority: 'medium',
-      author: 'Library Services',
-      date: '27/05/2025',
-      target: 'all',
-      content: 'The library will now be open until 10 PM on weekdays starting next Monday.'
-    },
-    {
-      id: 3,
-      title: 'Workshop on Advanced React',
-      priority: 'low',
-      author: 'IT Department',
-      date: '28/05/2025',
-      target: 'Computer Science students',
-      content: 'Join our free workshop on advanced React concepts. Limited seats available.'
-    },
-  ];
+function AnnouncementsTab({classData}) {
+  const [reload, setReload] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [announcement, setAnnouncement] = useState({
+    title: '',
+    priority: 'high',
+    target_type: '',
+    content: '',
+    type: 'warning'
+  });
+  const [allAnnouncements, setAllAnnouncements] = useState([]);
+  const [openOptionsId, setOpenOptionsId] = useState(null);
+  const handleDelete = async(id) => {
+    const updated = allAnnouncements.filter(item => item.id !== id);
+    setAllAnnouncements(updated);
+    const res = await deleteAnnouncement(id);
+    if(res.status) {
+      toast.success("Announcement deleted!");
+      setReload(prev => !prev);
+    }
+    setOpenOptionsId(null);
+  };
 
+  useEffect(() => {
+    const getAllAnnouncementData = async() => {
+      const response = await getAllAnnouncement();
+      setAllAnnouncements(response);
+    };
+    getAllAnnouncementData();
+  }, [reload])
+
+  const selectedClass = classData.find(cls => cls.name === announcement.target_type);
+  const payload = {
+    title: announcement.title.trim(),
+    content: announcement.content.trim(),
+    priority: announcement.priority.toLowerCase(),
+    target_type: selectedClass ? 'class' : 'all',
+    target_id: selectedClass ? selectedClass.id : null
+  }
+
+  const handleSubmit = async() => {
+    const result = await createAnnouncement(payload);
+    if(result.status) {
+      toast.success("Successfully created an announcement!");
+      setReload(prev => !prev);
+      setShowModal(false);
+      setAnnouncement({
+        title: '',
+        priority: 'high',
+        target_type: '',
+        content: '',
+        type: 'warning'
+      })
+    }else {
+      toast.error("Failed at creating a new accouncement!")
+    }
+  }
   const getPriorityClass = (priority) => {
     switch (priority) {
       case 'high':
@@ -54,30 +84,54 @@ function AnnouncementsTab() {
           <h1>Announcements</h1>
           <p>Manage and publish announcements to students</p>
         </div>
-        <button className="new-announcement-button">
+        <button className="new-announcement-button" onClick={() => setShowModal(true)}>
           <FaPlus className="button-icon" /> New Announcement
         </button>
       </div>
 
       {/* Announcements List */}
       <div className="announcements-list">
-        {announcements.map((announcement) => (
+        {allAnnouncements.map((announcement) => (
           <div className="announcement-card" key={announcement.id}>
             <div className="card-top-class">
-              <h3 className="announcement-title">{announcement.title}
+              <h3 className="announcement-title">
+                {announcement.title}
                 <span className={getPriorityClass(announcement.priority)}>
-                {announcement.priority}
-              </span></h3>
-              <button className="more-options-button">
-                <FaEllipsisV />
-              </button>
+                  {announcement.priority}
+                </span>
+              </h3>
+
+              <div className="options-wrapper">
+                <button
+                  className="more-options-button"
+                  onClick={() =>
+                    setOpenOptionsId(openOptionsId === announcement.id ? null : announcement.id)
+                  }
+                >
+                  <FaEllipsisV />
+                </button>
+
+                {openOptionsId === announcement.id && (
+                  <div className="dropdown-menu">
+                    <button className="delete-button" onClick={() => handleDelete(announcement.id)}>
+                      Delete
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
+
             <div className="card-details">
-              <p>By {announcement.author} &bull; {announcement.date} &bull; Target: {announcement.target}</p>
+              <p>
+                By Admin • {new Date(announcement.created_at).toLocaleDateString('en-GB')} • Target: {announcement.class ? announcement.class.name : 'All Students'}
+              </p>
             </div>
           </div>
         ))}
+
       </div>
+      {/* Modal */}
+      <AnnouncementModal isOpen={showModal} onClose={() => setShowModal(false)} classData={classData} setAnnouncement={setAnnouncement} announcement={announcement} handleSubmit={handleSubmit} setReload={setReload}/>
     </div>
   );
 }

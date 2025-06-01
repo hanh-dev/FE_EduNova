@@ -47,7 +47,7 @@
 .announcements-list {
   display: flex;
   flex-direction: column;
-  gap: 20px; 
+  gap: 20px;
 }
 
 .announcement-card {
@@ -122,4 +122,19 @@
   color: #666;
   margin-top: 10px;
   line-height: 1.5;
+}
+
+.announcements-list {
+  max-height: 360px;
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+.announcements-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.announcements-list::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
 }

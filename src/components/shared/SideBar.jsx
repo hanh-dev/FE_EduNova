@@ -2,13 +2,14 @@ import { NavLink } from 'react-router-dom';
 import { sidebarItems, sidebarItemsAdmin } from '../../assets/icons/sidebar';
 import { handleLogout } from '../../utils/swal';
 import { useAuth } from '../../services/providers/AuthContext';
+import { GraduationCap } from 'lucide-react';
 const Sidebar = () => {
   const {user} = useAuth();
   const itemsToRender = user?.role === 'admin' ? sidebarItemsAdmin : sidebarItems;
   return (
   <aside className="sidebar">
     <div className="sidebar-logo">
-      <span role="img" aria-label="logo">🎓</span>
+      <span role="img" aria-label="logo"><GraduationCap size={50}/></span>
     </div>
     <nav className="sidebar-nav">
     {itemsToRender.map((item) =>

@@ -30,9 +30,9 @@ function ClassManagement() {
   const renderTabContent = () => {
     switch(activeTab) {
       case 'classes':
-        return <ClassNavigation classeTotal={classeTotal} activeClasses={activeClasses} classEmpty={classEmpty}/>
+        return <ClassNavigation classeTotal={classeTotal} activeClasses={activeClasses} classEmpty={classEmpty} classData={classData}/>
       case 'announcements':
-        return <AnnouncementNavigation />
+        return <AnnouncementNavigation classData={classData}/>
       case 'analytics':
         return <AnalyticNavigation />
       default:
@@ -135,7 +135,7 @@ function ClassManagement() {
             <button className={activeTab=='analytics' ? 'tab-button active': 'tab-button'} onClick={() => setActiveTab('analytics')}>Analytics</button>
           </div>
 
-          <div className="tab-search">
+          {activeTab=='classes' &&   <div className="tab-search">
             <div className="search-box">
               <AiOutlineSearch className="search-icon" />
               <input
@@ -149,22 +149,23 @@ function ClassManagement() {
 
             <div className="filter-box">
               <FiFilter className="filter-icon" />
-              <select className="filter-select" value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
+              <select className="filter-select new" value={selectedStatus} onChange={(e) => setSelectedStatus(e.target.value)}>
                 <option value="">All Status</option>
                 <option value="active">Active</option>
                 <option value="inactive">Inactive</option>
               </select>
             </div>
 
-          <select className="filter-select" value={selectedCourse} onChange={(e) => setSelectedCourse(e.target.value)}>
-            <option value="">All Courses</option>
-            {classData.map((className, index) => (
-              <option key={index} value={className.name}>
-                {className.name}
-              </option>
-            ))}
-        </select>
+            <select className="filter-select" value={selectedCourse} onChange={(e) => setSelectedCourse(e.target.value)}>
+              <option value="">All Courses</option>
+              {classData.map((className, index) => (
+                <option key={index} value={className.name}>
+                  {className.name}&nbsp;&nbsp;&nbsp;&nbsp;
+                </option>
+              ))}
+            </select>
           </div>
+          }
 
           {/* tab-content */}
           <div className='tab-content'>

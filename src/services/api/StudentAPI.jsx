@@ -1,4 +1,5 @@
 import { api } from "../../utils/constants";
+import { getUser } from "../auth/authService";
 
 // =========================
 // 🔐 Authentication
@@ -542,6 +543,36 @@ export const sendTagTeacher = async (user_id, teacherId, message, goalId) => {
   } catch (error) {
     handleApiError(error);
     throw error;
+  }
+};
+
+export const getNotificationsByUser = async () => {
+  try {
+    const user = getUser();
+    const userId = user.user_id;
+    const response = await api.get(`/v1/announcement/user/${userId}`);
+    console.log("Test response: ", response);
+    return response.data.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
+export const markAsRead = async (announcementId) => {
+  try {
+    const user = getUser();
+    const user_id = user.user_id;
+    const response = await api.post('/v1/announcement/markAsRead', {
+      announcement_id: announcementId,
+      user_id: user_id,
+    });
+
+    if (response.data.status) {
+      console.log('Đã đánh dấu là đã đọc!');
+    }
+  } catch (error) {
+    console.error('Lỗi khi đánh dấu đã đọc:', error);
   }
 };
 

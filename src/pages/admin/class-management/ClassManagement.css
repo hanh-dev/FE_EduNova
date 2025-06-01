@@ -17,7 +17,7 @@
   
 .wrapper-header button {
   position: absolute;
-  padding: 12px 16px;
+  padding: 12px 14px;
   background-color: #ef8607;
   color: white;
   border: none;
@@ -26,7 +26,6 @@
   font-size: 16px;
   transition: background-color 0.3s;
   margin-right: 45px;
-  width: 18%;
   display: flex;
   justify-content: space-around;
   align-items: center;
@@ -158,8 +157,16 @@
   border-radius: 6px;
   font-size: 14px;
   background-color: #fff;
-  min-width: 140px;
+  min-width: max-content;
   outline: none;
+}
+
+.filter-select.new {
+  min-width: 120px;
+}
+
+.filter-select option{
+  margin-left: 50px;
 }
 
 .tab-button {

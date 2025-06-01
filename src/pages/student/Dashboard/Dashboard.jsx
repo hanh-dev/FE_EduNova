@@ -3,8 +3,22 @@ import ProgressDashboard from "../../../components/student/Dashboard/ProgressDas
 import TaskTable from "../../../components/student/Dashboard/TaskTable/TaskTable"
 import CourseCards from "../../../components/student/Dashboard/Courses/CourseCards"
 import './Dashboard.css'
-    
+import { useEffect, useState } from 'react';
+import echo from "../../../utils/echo"
 export const Dashboard = () => {
+    const [test, setAllAnnouncements] = useState([]);
+    useEffect(() => {
+      console.log("Hello Viet Nam");
+      echo.channel('announcements')
+        .listen('AnnouncementCreated', (e) => {
+          console.log("Test data new: ", e.announcement);
+          setAllAnnouncements(prev => [...prev, e.announcement]);
+        });
+
+      return () => {
+        echo.leave('announcements');
+      };
+    }, []);
     return (
         <div className="dashboard">
             <ActionButtons/>
