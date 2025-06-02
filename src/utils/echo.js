@@ -38,21 +38,21 @@ echo.connector.pusher.connection.bind("disconnected", () => {
   console.warn("⚠️ Pusher disconnected!");
 });
 
-echo.private(`user.${63}`)
-    .subscribed(() => console.log("✅ Subscribed"))
-    .listen(".announcement.created", (e) => {
-        console.log("📢 Event received:", e);
-    });
+// echo.private(`user.${63}`)
+//     .subscribed(() => console.log("✅ Subscribed"))
+//     .listen(".announcement.created", (e) => {
+//         console.log("📢 Event received:", e);
+//     });
 
-const channel = echo.private(`user.${63}`);
+// const channel = echo.private(`user.${63}`);
 
-channel.subscribed(() => {
-  console.log("✅ Subscribed to private channel user.63");
-}).listen('.announcement.created', (e) => {
-  console.log("📢 Event received!", e); 
-}).error((err) => {
-  console.error("❌ Subscription error:", err);
-});
+// channel.subscribed(() => {
+//   console.log("✅ Subscribed to private channel user.63");
+// }).listen('.announcement.created', (e) => {
+//   console.log("📢 Event received!", e); 
+// }).error((err) => {
+//   console.error("❌ Subscription error:", err);
+// });
 
 
 export default echo;

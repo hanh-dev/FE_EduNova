@@ -31,7 +31,7 @@ function TeacherManagement() {
         setClassData(response);
         setTeachers(data);
         console.log('Teachers:', data.map(t => t.id));
-console.log('Class teacher_ids:', response.map(c => c.teacher_id));
+        console.log('Class teacher_ids:', response.map(c => c.teacher_id));
       } catch (error) {
         console.error('Failed to fetch teachers:', error);
       } finally {
