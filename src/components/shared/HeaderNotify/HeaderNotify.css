@@ -1,0 +1,135 @@
+.notify-dropdown {
+  width: 360px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  position: absolute;
+  right: 0;
+}
+
+.notify-header {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid #eee;
+  font-weight: bold;
+}
+
+.mark-read {
+  background: none;
+  border: none;
+  color: #007bff;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.notify-list {
+  max-height: 250px;
+  overflow-y: auto;
+}
+
+.notify-item {
+  display: flex;
+  padding: 12px 16px;
+  border-bottom: 1px solid #f0f0f0;
+  transition: background-color 0.2s ease;
+  cursor: pointer;
+  background-color: #e0eaf9 ;
+}
+
+.notify-item.read {
+  background-color: #fff;
+}
+
+.notify-icon {
+  margin-right: 12px;
+  display: flex;
+  align-items: start;
+  padding-top: 3px;
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+}
+
+.icon.blue {
+  color: #2563eb;
+}
+
+.icon.yellow {
+  color: #eab308;
+}
+
+.icon.green {
+  color: #22c55e;
+}
+
+.notify-content {
+  flex: 1;
+}
+
+.notify-content.medium {
+  background-color: #ca8a04;
+}
+
+.notify-title {
+  font-weight: 600;
+  font-size: 14px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.priority-badge {
+  background: #e11d48;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.priority-badge.low {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.priority-badge.medium {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+.notify-message {
+  font-size: 13px;
+  color: #555;
+  margin-top: 4px;
+}
+
+.notify-time {
+  font-size: 11px;
+  color: #999;
+  margin-top: 4px;
+}
+
+.notify-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.notify-list::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.notify-list::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1;
+  border-radius: 4px;
+}
+
+.notify-list::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8;
+}

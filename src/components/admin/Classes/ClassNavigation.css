@@ -1,0 +1,65 @@
+.students-tab-container {
+  display: flex;
+  gap: 20px;
+  padding: 0;
+}
+
+.students-tab-container .card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.05);
+  text-align: left; 
+  border: 1px solid #eaeaef; 
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; 
+  flex: 1;
+}
+
+.students-tab-container .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+}
+
+.students-tab-container .card h3 {
+  margin: 0;
+  color: #333;
+  font-size: 16px;
+  font-weight: 500;
+  flex-grow: 1;
+}
+
+.students-tab-container .card-icon-class {
+  font-size: 20px;
+  color: #888;
+}
+
+.students-tab-container .card .number {
+  font-size: 32px;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 5px; 
+}
+
+.students-tab-container .card .description {
+  color: #888; 
+  font-size: 13px; 
+  margin: 0;
+}
+
+.online-indicator {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background-color: #28a745;
+  border-radius: 50%;
+  margin-left: 5px; 
+}
+
+@media (max-width: 768px) {
+  .students-tab-container {
+    grid-template-columns: 1fr; 
+  }
+}

@@ -2,7 +2,7 @@
   padding: 20px;
   background-color: #f5f5f5;
   margin-top: 50px;
-  margin-left: 216px;
+  margin-left: 208px;
 }
 
 .student-header {
@@ -19,7 +19,7 @@
 
 .add-student-btn {
   display: flex;
-  justify-content: flex-start;
+  justify-content: flex-end;
   margin-bottom: 10px;
   margin-top: 10px;
 }
@@ -204,3 +204,4 @@
 .add-student-btn button img {
   color: rgb(0, 0, 0);
 }
+

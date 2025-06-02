@@ -1,0 +1,130 @@
+.analytics-tab-container {
+  padding: 20px;
+}
+
+.analytics-dashboard-header {
+  margin-bottom: 30px;
+}
+
+.analytics-dashboard-header h1 {
+  margin: 0;
+  font-size: 28px;
+  color: #333;
+  font-weight: 600;
+}
+
+.analytics-dashboard-header p {
+  margin: 5px 0 0 0;
+  color: #666;
+  font-size: 15px;
+}
+
+.analytics-content-layout {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.analytics-card, .placeholder-card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 20px 25px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  border: 1px solid #eaeaef;
+}
+
+.analytics-card .card-title, .placeholder-card h3 {
+  margin-top: 0;
+  margin-bottom: 20px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #333;
+}
+
+.activity-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.activity-item {
+  display: flex;
+  align-items: flex-start;
+  margin-bottom: 15px;
+}
+
+.activity-item:last-child {
+  margin-bottom: 0;
+}
+
+.activity-indicator {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 5px;
+  margin-right: 12px;
+  flex-shrink: 0; 
+}
+
+.activity-details {
+  display: flex;
+  flex-direction: column;
+}
+
+.activity-description {
+  margin: 0;
+  font-size: 15px;
+  color: #333;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.activity-time {
+  font-size: 13px;
+  color: #888;
+  margin-top: 3px;
+}
+
+.placeholder-card p {
+  color: #999;
+  font-style: italic;
+  margin-top: 5px;
+  margin-bottom: 20px;
+}
+
+.progress-item {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-size: 14px;
+  color: #555;
+}
+
+.progress-item span:first-child {
+  flex-basis: 150px;
+  flex-shrink: 0;
+}
+
+.progress-bar-container {
+  flex-grow: 1;
+  height: 6px;
+  background-color: #eee;
+  border-radius: 3px;
+  margin: 0 10px;
+  overflow: hidden;
+}
+
+.progress-bar {
+  height: 100%;
+  background-color: #333;
+  border-radius: 3px;
+  width: 0%;
+}
+
+@media (max-width: 768px) {
+  .analytics-content-layout {
+    grid-template-columns: 1fr;
+  }
+}

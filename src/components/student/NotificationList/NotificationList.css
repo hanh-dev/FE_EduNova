@@ -1,0 +1,170 @@
+.tabs-noti {
+  display: flex;
+  gap: 12px;
+  margin: 20px 0px;
+}
+
+.tabs-noti button {
+  display: flex;
+  background: #fff;
+  border: 1px solid #ddd;
+  padding: 6px 22px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  color: gray;
+  justify-content: center;
+  align-items: center;
+}
+
+.tabs-noti .active {
+  background: #222;
+  color: white;
+}
+
+.heading h2 {
+  margin: 0;
+  font-size: 22px;
+}
+
+.heading p {
+  color: gray;
+  margin-bottom: 20px;
+}
+
+.notif-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 300px;
+  overflow-y: auto;
+
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 12px;
+  background-color: #fff;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+
+  scrollbar-width: thin;
+  scrollbar-color: #bbb #f1f1f1;
+  padding: 10px;
+}
+
+.notif-list::-webkit-scrollbar {
+  width: 6px;
+}
+.notif-list::-webkit-scrollbar-thumb {
+  background-color: #bbb;
+  border-radius: 4px;
+}
+.notif-list::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+.notif-card {
+  display: flex;
+  background: #f0f4ff;
+  border-radius: 10px;
+  padding: 16px;
+  align-items: flex-start;
+  position: relative;
+  border: 1px solid #cce;
+}
+
+.notif-card.bg-blue {
+  background-color: #f0f6ff;
+}
+
+.notif-card.bg-yellow {
+  background-color: #fffbe6;
+}
+
+.notif-card.bg-white {
+  background-color: #fff;
+}
+
+.notif-icon {
+  margin-right: 12px;
+  margin-top: 5px;
+}
+
+.notif-content {
+  flex: 1;
+}
+
+.notif-title {
+  font-weight: 600;
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.notif-message {
+  font-size: 14px;
+  color: #333;
+  margin-bottom: 8px;
+}
+
+.notif-meta {
+  display: flex;
+  gap: 6px;
+}
+
+.notif-meta span {
+  display: flex;
+  gap: 4px;
+  font-size: 13px;
+  color: gray;
+  align-items: center;
+}
+
+.notif-tags {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 6px;
+  min-width: 100px;
+}
+
+.priority {
+  background: #e11d48;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  min-width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.dot {
+  width: 10px;
+  height: 10px;
+  background-color: #3b82f6;
+  border-radius: 50%;
+}
+
+.priority.low {
+  background: #e0f2fe;
+  color: #0284c7;
+}
+
+.priority.medium {
+  background: #fef9c3;
+  color: #ca8a04;
+}
+
+/* .priority.high {
+  background: #fee2e2;
+  color: #b91c1c;
+} */
+
+.check-icon {
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+
+.check-icon:hover {
+  color: green;
+}
