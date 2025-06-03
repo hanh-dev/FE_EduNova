@@ -111,3 +111,28 @@ width: calc(100% - 40px);
   border-color: #ff9933;
 }
 
+.study-table-wrapper {
+  overflow-x: auto; 
+  /* width: 100%; */
+}
+
+.study-table {
+  width: max-content;     
+  table-layout: fixed;     
+  border-collapse: collapse;
+  min-width: 100%;        
+}
+
+.study-table th,
+.study-table td {
+  max-width: 140px;
+  width: 140px;
+  border: 1px solid #ddd;
+  padding: 8px;
+  white-space: nowrap;     
+  overflow: hidden;        
+  text-overflow: ellipsis; 
+  vertical-align: middle;
+}
+
+

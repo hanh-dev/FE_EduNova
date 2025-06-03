@@ -34,7 +34,8 @@ export default function SemesterButton() {
     }
   };
 
-  const handleClick = async (id) => {
+  const handleSelectChange = async (e) => {
+    const id = Number(e.target.value);
     try {
       const semesterDetail = await getSemesterByID(id);
       setSemesterGoal(semesterDetail);
@@ -73,7 +74,9 @@ export default function SemesterButton() {
       await fetchSemesters();
 
       if (createdSemester && createdSemester.id) {
-        handleClick(createdSemester.id);
+        const semesterDetail = await getSemesterByID(createdSemester.id);
+        setSemesterGoal(semesterDetail);
+        setActiveSemesterId(createdSemester.id);
       }
     } catch (error) {
       console.error("Failed to create semester:", error);
@@ -82,32 +85,33 @@ export default function SemesterButton() {
 
   if (loading) return <p className="loading">Loading...</p>;
 
-  return (
-    <div>
-      {semesterGoal && (
-        <div style={{ marginTop: "20px" }}>
-          <SemesterGoal semester={semesterGoal} />
-        </div>
-      )}
-
-      <div className="fixed-buttons">
-        {semesters.map((semester) => (
-          <button
-            key={semester.id}
-            className={`semesterbutton ${semester.id === activeSemesterId ? "active" : ""}`}
-            onClick={() => handleClick(semester.id)}
-          >
-            {semester.name}
-          </button>
-        ))}
-        <button
-          className="semesterbutton add-button"
-          onClick={handleAddSemester}
-          title="Add new semester"
+ return (
+  <div>
+    {semesterGoal && (
+      <div style={{ marginTop: "20px" }}>
+        <SemesterGoal semester={semesterGoal} />
+      </div>
+    )}
+    <div className="fixed-buttons">
+      <div className="semester-select-wrapper">
+        <select
+          value={activeSemesterId || ""}
+          onChange={handleSelectChange}
+          className="semester-select"
         >
+          {semesters.map((semester) => (
+            <option key={semester.id} value={semester.id}>
+              {semester.name}
+            </option>
+          ))}
+        </select>
+
+        <button className="add-semester-btn" onClick={handleAddSemester} title="Add new semester">
           <i className="fa-solid fa-plus"></i>
         </button>
       </div>
     </div>
-  );
+  </div>
+);
+
 }

@@ -4,7 +4,7 @@ import { getTeachers, sendTagTeacher } from '../../../services/api/StudentAPI';
 import { useAuth } from '../../../services/providers/AuthContext';
 
 const TagTeacher = ({ onClose, goalId }) => {
-  const {user} = useAuth();
+  const { user } = useAuth();
   const user_id = user.user_id;
   const [teacher, setTeacher] = useState('');
   const [message, setMessage] = useState('');
@@ -14,9 +14,9 @@ const TagTeacher = ({ onClose, goalId }) => {
     const fetchTeachers = async () => {
       try {
         const response = await getTeachers();
-        setTeacherList(response);
+        setTeacherList(response.data);
       } catch (error) {
-        console.error('Lỗi khi lấy giáo viên:', error);
+        console.error('Error fetching teachers:', error);
       }
     };
 
@@ -25,7 +25,7 @@ const TagTeacher = ({ onClose, goalId }) => {
 
   const handleSendNotification = async () => {
     if (!teacher || !message.trim()) {
-      alert('Vui lòng chọn giáo viên và nhập thông điệp!');
+      alert('Please select a teacher and enter a message!');
       return;
     }
 
@@ -33,16 +33,16 @@ const TagTeacher = ({ onClose, goalId }) => {
       const response = await sendTagTeacher(user_id, teacher, message, goalId);
       console.log('Send notification response:', response);
       if (response.success) {
-        alert('Gửi thành công!');
+        alert('Sent successfully!');
         setMessage('');
         setTeacher('');
         onClose();
       } else {
-        alert('Gửi thất bại!');
+        alert('Failed to send!');
       }
     } catch (error) {
-      console.error('Lỗi khi gửi thông báo:', error);
-      alert('Có lỗi xảy ra khi gửi thông báo!');
+      console.error('Error sending notification:', error);
+      alert('An error occurred while sending the notification!');
     }
   };
 
@@ -56,12 +56,12 @@ const TagTeacher = ({ onClose, goalId }) => {
     <div className="modal-overlay" onClick={handleOverlayClick}>
       <div className="modal-content">
         <div className="notification-card">
-          <h2 className="title">Tag Teacher</h2>
+          <h2 className="title">Tag a Teacher</h2>
 
           <div className="form-group">
-            <label>Chọn Giáo Viên:</label>
+            <label>Select Teacher:</label>
             <select value={teacher} onChange={(e) => setTeacher(e.target.value)}>
-              <option value="">-- Chọn giáo viên --</option>
+              <option value="">-- Select a teacher --</option>
               {Array.isArray(teacherList) && teacherList.length > 0 ? (
                 teacherList.map((t) => (
                   <option key={t.id} value={t.id}>
@@ -69,24 +69,24 @@ const TagTeacher = ({ onClose, goalId }) => {
                   </option>
                 ))
               ) : (
-                <option disabled>Không có giáo viên nào</option>
+                <option disabled>No teachers available</option>
               )}
             </select>
           </div>
 
           <div className="form-group">
-            <label>Thông Điệp:</label>
+            <label>Message:</label>
             <textarea
               value={message}
               onChange={(e) => setMessage(e.target.value)}
-              placeholder="Nhập câu hỏi hoặc thông báo..."
+              placeholder="Enter your question or message..."
               rows="4"
             />
           </div>
 
           <div className="button-group">
-            <button onClick={handleSendNotification}>Gửi Thông Báo</button>
-            <button onClick={onClose}>Đóng</button>
+            <button onClick={onClose}>Close</button>
+            <button onClick={handleSendNotification}>Send Notification</button>
           </div>
         </div>
       </div>

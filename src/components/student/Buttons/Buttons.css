@@ -42,8 +42,15 @@
 }
 
 
-.button-group{
+.button-group-study{
   display: flex;
-  flex-direction: row;
+  /* flex-direction: row; */
   justify-content: center;
+
+}
+
+.button-group-study i{
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
 }

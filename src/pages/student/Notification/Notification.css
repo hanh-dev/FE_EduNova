@@ -10,6 +10,10 @@
   align-items: center;
 }
 
+.noti-header h2 {
+  color: #ff9900;
+}
+
 .mark-read-btn {
   background: white;
   border: 1px solid #ddd;
@@ -47,6 +51,7 @@
   font-size: 15px;
   margin-bottom: 12px;
 }
+
 
 .noti-card-body h3 {
   margin: 0;

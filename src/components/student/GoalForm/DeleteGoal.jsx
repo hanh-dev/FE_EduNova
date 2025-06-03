@@ -4,9 +4,11 @@ import "./DeleteGoal.css";
 
 export default function DeleteGoal({ id, onDeleteSuccess, onClose }) {
   const handleDelete = async () => {
+    console.log("Deleting goal id:", id);
     try {
       await deleteGoal(id);
       onDeleteSuccess(id);
+      onClose(); 
     } catch (error) {
       console.error("Failed to delete goal:", error);
     }
