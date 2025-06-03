@@ -7,6 +7,7 @@ const AddNewSelfStudy = ({ onAddNewStudy }) => {
     week_id: '',
     date: '',
     skill_module: '',
+    course: '',
     lesson_summary: '',
     time_allocation: '',
     learning_resources: '',
@@ -31,7 +32,6 @@ const AddNewSelfStudy = ({ onAddNewStudy }) => {
     { value: 'cancel', label: 'Cancel' },
   ];
 
-  // Lấy user_id từ localStorage khi component mount
   useEffect(() => {
     const user = JSON.parse(localStorage.getItem("user"));
     if (user?.user_id) {
@@ -41,7 +41,6 @@ const AddNewSelfStudy = ({ onAddNewStudy }) => {
     }
   }, []);
 
-  // Lấy danh sách tuần từ API
   useEffect(() => {
     const fetchWeeks = async () => {
       try {
@@ -74,6 +73,7 @@ const AddNewSelfStudy = ({ onAddNewStudy }) => {
         week_id: Number(formData.week_id),
         date: formData.date,
         skill_module: formData.skill_module,
+        course: formData.course,
         lesson_summary: formData.lesson_summary,
         time_allocation: formData.time_allocation ? Number(formData.time_allocation) : 0,
         learning_resources: formData.learning_resources,
@@ -89,7 +89,7 @@ const AddNewSelfStudy = ({ onAddNewStudy }) => {
 
       const created = await creatSelfStudy(payload);
       if (onAddNewStudy) onAddNewStudy(created);
-      setShowForm(false); // đóng form khi tạo thành công
+      setShowForm(false);
     } catch (error) {
       setErrorMessage('Failed to create self-study plan. Please try again.');
       console.error(error);
@@ -118,15 +118,15 @@ const AddNewSelfStudy = ({ onAddNewStudy }) => {
                 Week:
                 <select
                   name="week_id"
-                  value={formData.week_numnber}
+                  value={formData.week_id}
                   onChange={handleChange}
                   required
                 >
                   <option value="">-- Select Week --</option>
                   {weeks.map((week) => (
                     <option key={week.id} value={week.id}>
-                        Week {week.week_number}
-                      </option>
+                      Week {week.week_number}
+                    </option>
                   ))}
                 </select>
               </label>
@@ -147,13 +147,17 @@ const AddNewSelfStudy = ({ onAddNewStudy }) => {
 
             <div className="form-group-self">
               <label>
-                Skill Module:
-                <input
-                  type="text"
+                Skill_module:
+                <select
                   name="skill_module"
                   value={formData.skill_module}
                   onChange={handleChange}
-                />
+                >
+                  <option value="">-- Select Course --</option>
+                  <option value="English">English</option>
+                  <option value="IT-English">IT-English</option>
+                  <option value="Communicative">Communicative</option>
+                </select>
               </label>
             </div>
 
@@ -172,10 +176,11 @@ const AddNewSelfStudy = ({ onAddNewStudy }) => {
               <label>
                 Time Allocation:
                 <input
-                  type="text"
+                  type="number"
                   name="time_allocation"
                   value={formData.time_allocation}
                   onChange={handleChange}
+                  min="0"
                 />
               </label>
             </div>
@@ -206,10 +211,12 @@ const AddNewSelfStudy = ({ onAddNewStudy }) => {
               <label>
                 Concentration:
                 <input
-                  type="text"
+                  type="number"
                   name="concentration"
                   value={formData.concentration}
                   onChange={handleChange}
+                  min="0"
+                  max="100"
                 />
               </label>
             </div>
@@ -280,7 +287,12 @@ const AddNewSelfStudy = ({ onAddNewStudy }) => {
               <button type="submit" className="save" disabled={isSubmitting}>
                 {isSubmitting ? "Creating..." : "Save"}
               </button>
-              <button type="button" className="cancel" onClick={() => setShowForm(false)} disabled={isSubmitting}>
+              <button
+                type="button"
+                className="cancel"
+                onClick={() => setShowForm(false)}
+                disabled={isSubmitting}
+              >
                 Cancel
               </button>
             </div>

@@ -1,0 +1,94 @@
+.tab-container {
+  padding: 0px 20px;
+  border-radius: 12px;
+  margin-bottom: 30px;
+}
+
+.tab-title {
+  font-size: 30px;
+  font-weight: bold;
+  color: #000;
+  color:#ff9933;
+  margin-bottom: 30px;
+}
+
+.title{
+  display: flex;
+  font-size: 30px;
+  text-align: left;
+}
+.tab-subtitle {
+  font-size: 14px;
+  color: #6b7280;
+  margin-top: 4px;
+}
+
+.tab-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 40px;
+  margin-top: 24px;
+
+}
+
+.tab-card {
+  max-width: 350px;
+  background-color: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 8px;
+  padding: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  border: 1px solid #cccc;
+}
+
+.tab-icon-container {
+  padding: 8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 20px;
+  margin-left: 10px;
+}
+
+.tab-label {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000;
+}
+
+.tab-number {
+  font-size: 20px;
+  font-weight: bold;
+  color: #000;
+}
+
+
+
+.tab-card {
+  display: flex;
+  align-items: center; 
+  gap: 10px; 
+  padding: 10px;
+}
+
+.tab-icon-container {
+  display: flex;
+  align-items: center; 
+  justify-content: center;
+  width: 70px; 
+  height: 70px;
+}
+
+.tab-icon-container i {
+  font-size: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 40px;
+  vertical-align: middle;
+}

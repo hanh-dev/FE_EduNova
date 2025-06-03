@@ -1,4 +1,3 @@
-/* Overlay that covers the entire screen */
 .modal-overlay {
   position: fixed;
   top: 0;
@@ -14,7 +13,6 @@
   z-index: 1000; /* Ensure modal is above other content */
 }
 
-/* Modal content container */
 .modal-content {
   background: white;
   border-radius: 8px;
@@ -27,7 +25,7 @@
   padding: 20px;
 }
 
-/* Styling for the notification card inside the modal */
+
 .notification-card {
   display: flex;
   flex-direction: column;
@@ -63,7 +61,7 @@
 }
 
 .form-group textarea {
-  resize: vertical; /* Allow vertical resizing only */
+  resize: vertical; 
   min-height: 100px;
 }
 
@@ -83,21 +81,23 @@
 }
 
 .button-group button:first-child {
-  background-color: #007bff;
+  background-color: #dc3545;
   color: white;
+  cursor: pointer;
 }
 
 .button-group button:first-child:hover {
-  background-color: #0056b3;
+  background-color: #b02a37;
 }
 
 .button-group button:last-child {
-  background-color: #dc3545;
+  background-color: #007bff;
   color: white;
+  cursor: pointer;
 }
 
 .button-group button:last-child:hover {
-  background-color: #b02a37;
+  background-color: #0056b3;
 }
 
 /* Ensure the modal is centered and responsive */

@@ -22,6 +22,11 @@ const sidebarItems = [
   { label: 'Academic achievement', icon: <Trophy size={20} />, href: '/achievement' },
   { label: 'Logout', icon: <LogOut size={20} />, isLogout: true, href: '/login' },
 ];
+const sidebarItemsTeacher = [
+  { label: 'Dashboard', icon: <Home size={20} />, href: '/dashboard' },
+  { label: 'Alert', icon: <Bell size={20} />, href: '/notifications' },
+  { label: 'Logout', icon: <LogOut size={20} />, isLogout: true, href: '/login' },
+];
 
 const sidebarItemsAdmin = [
   { label: 'Dashboard', icon: <Home size={20} />, href: '/' },
@@ -30,4 +35,4 @@ const sidebarItemsAdmin = [
   { label: 'Student Management', icon: <Users size={20} />, href: '/student-management' },
 ];
 
-export { sidebarItems, sidebarItemsAdmin };
+export { sidebarItems, sidebarItemsAdmin, sidebarItemsTeacher };

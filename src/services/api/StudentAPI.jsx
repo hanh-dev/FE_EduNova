@@ -30,7 +30,7 @@ export const getClasses = async () => {
 export const getNameOfTeachers = async () => {
   try {
     const response = await api.get("/v1/teachers");
-    return response.data;
+    return response.data.name;
   } catch (error) {
     console.error("Error at fetching teacher data", error);
     return [];
@@ -41,7 +41,7 @@ export const getTeachers = async () => {
   try {
     const response = await api.get("/v1/teachers");
     console.log("Test teachers: ", response.data);
-    return response.data.data;
+    return response.data;
   } catch (error) {
     console.log("Failed to fetch teachers", error);
     throw error;
@@ -533,13 +533,74 @@ export const getTotals = async () => {
   }
 };
 
-// Gửi thông báo tag teacher
+// =========================
+// 🔔 Tag Teacher
+// =========================
 export const sendTagTeacher = async (user_id, teacherId, message, goalId) => {
   try {
     console.log("Test data", user_id, teacherId, message, goalId);
     const payload = { teacherId, message, user_id, goalId };
     const response = await api.post('/tag-teacher', payload);
     return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
+export const getTagTeacherByGoal = async (goalId, teacherId) => {
+  try {
+    const response = await api.get(`/tag-teacher/goal/${goalId}`, {
+      params: { teacherId },
+    });
+    if (!response.data.success) {
+      throw new Error(response.data.error || "No question found");
+    }
+    return response.data.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
+export const sendTeacherResponse = async (tagId, teacherResponse) => {
+  try {
+    const response = await api.post(`/tag-teacher/response`, {
+      tagId,
+      teacher_response: teacherResponse,
+    });
+    if (!response.data.success) {
+      throw new Error(response.data.error || "Failed to send response");
+    }
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
+export const getStudentResponses = async (studentId) => {
+  try {
+    const response = await api.get('/tag-teacher/student', {
+      params: { studentId },
+    });
+    if (!response.data.success) {
+      throw new Error(response.data.error || "Could not retrieve response list");
+    }
+    return response.data.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
+export const markResponseAsRead = async (tagId) => {
+  try {
+    const response = await api.post('/tag-teacher/mark-read', { tagId });
+    if (!response.data.success) {
+      throw new Error(response.data.error || "Could not mark as read");
+    }
+    return response.data.data;
   } catch (error) {
     handleApiError(error);
     throw error;
@@ -573,6 +634,71 @@ export const markAsRead = async (announcementId) => {
     }
   } catch (error) {
     console.error('Lỗi khi đánh dấu đã đọc:', error);
+  }
+};
+
+
+export const getWeekGoalById = async (id) => {
+  try {
+    const response = await api.get(`/week-goals/${id}`);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
+// Thêm mới week goal
+export const createWeekGoal = async (goalData) => {
+  try {
+    const response = await api.post('/week-goals', goalData);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
+// Cập nhật week goal theo ID
+export const updateWeekGoal = async (id, goalData) => {
+  try {
+    const response = await api.put(`/week-goals/${id}`, goalData);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+export const editWeekGoal = async (id, goalData) => { 
+  try {
+    const response = await api.put(`/week-goals/${id}`, goalData);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+};
+
+// Xoá week goal
+export const deleteWeekGoal = async (id) => {
+  try {
+    const response = await api.delete(`/week-goals/${id}`);
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
+  }
+}
+
+export const updateWeekGoalStatus = async (id, status) => {
+  try {
+    const response = await api.put(`/week-goals/${id}/status`, {
+      complete_status: status,
+    });
+    return response.data;
+  } catch (error) {
+    handleApiError(error);
+    throw error;
   }
 };
 

@@ -5,8 +5,6 @@ import SelfStudyPlanForm from "../AddForm/SelfStudyPlanForm";
 import { getInClassByID, getSelfStudyByID, deleteInClass } from "../../../services/api/StudentAPI";
 import DeleteSelfStudyButton from "../AddForm/DeleteSelfStudyButton";
 import DeleteClassPlanButton from "../AddForm/DeleteClassPlanForm";
-import TagTeacher from "../Form/TagTeacher"; // Import TagTeacher component
-// import { deleteInClass, getInClassByID } from "../../../services/api/StudentAPI";
 
 export default function Buttons({ type, recordData, onUpdate, onDelete }) {
   const [showForm, setShowForm] = useState(false);
@@ -25,7 +23,6 @@ export default function Buttons({ type, recordData, onUpdate, onDelete }) {
         data = await getInClassByID(recordData.id);
       } else if (type === "selfstudy") {
         data = await getSelfStudyByID(recordData.id);
-        console.log("data: ", data);
       }
       setRecord(data);
       setShowForm(true);
@@ -58,27 +55,21 @@ export default function Buttons({ type, recordData, onUpdate, onDelete }) {
     setRecord(null);
   };
 
-  // Handle comment button click
-  const handleCommentClick = () => {
-    setShowTagTeacher(true);
-  };
-
-  // Handle closing the TagTeacher modal
-  const handleTagTeacherClose = () => {
-    setShowTagTeacher(false);
-  };
-
   return (
     <>
-      <div className="button-group">
-        <button className="btn update btn-inclass" onClick={handleUpdateClick}>
-          Update
-        </button>
+      <div className="button-group-study" style={{ display: "flex", gap: "15px", alignItems: "center" }}>
+        <i
+          className="fa-solid fa-pen-to-square"
+          style={{ cursor: "pointer", fontSize: "18px" }}
+          title="Update"
+          onClick={handleUpdateClick}
+        ></i>
 
         {type === "class" ? (
           <DeleteClassPlanButton
             id={recordData?.id}
             onDeleted={() => onDelete && onDelete(recordData.id)}
+            customIcon={true} 
           />
         ) : (
           type === "selfstudy" && (
@@ -88,19 +79,10 @@ export default function Buttons({ type, recordData, onUpdate, onDelete }) {
             />
           )
         )}
-        <button className="btn delete btn-inclass" onClick={handleDelete}>
-          Delete
-        </button>
-        <i
-          className="fa-regular fa-comment"
-          style={{ color: "#007bff", cursor: "pointer", marginLeft: "10px" }}
-          title="Comment"
-          onClick={handleCommentClick}
-        />
       </div>
 
       {showForm && record && (
-        <div className="modal-overlay">
+        <div className="modal-overlay" key={`modal-${record.id}`}>
           {type === "class" ? (
             <ClassPlanForm
               inclass={record}
@@ -115,13 +97,6 @@ export default function Buttons({ type, recordData, onUpdate, onDelete }) {
             />
           )}
         </div>
-      )}
-
-      {showTagTeacher && (
-        <TagTeacher
-          onClose={handleTagTeacherClose}
-          goalId={inclass.id}
-        />
       )}
     </>
   );

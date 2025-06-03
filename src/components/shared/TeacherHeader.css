@@ -1,0 +1,40 @@
+.welcome-card1 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #FF9933; 
+    border-radius: 15px;
+    width: calc(93% - 250px);
+    margin-left: 300px !important;
+    padding: 20px 0;
+    margin: 0 auto; 
+    margin-top: 80px;
+  }
+  .welcome-cardd{
+    padding: 20px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  .welcome-text1 {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; 
+    padding: 30px;
+    align-items: center;
+  }
+  
+  .welcome-text1 h2 {
+    font-size: 28px; 
+    font-weight: bold;
+    margin: 0;
+    color: #fff;
+    padding: 10px; 
+  }
+  
+  .welcome-text1 p {
+    font-size: 20px;
+    margin: 0;
+    color: #fff; 
+    font-size: 20px !important;
+  }
