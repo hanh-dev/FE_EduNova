@@ -1,69 +1,121 @@
 import React, { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, useLocation, Link, useNavigate } from "react-router-dom";
 import "./StudentList.css";
-// import Header from "../../../components/teacher/Header/Header";
-import { getStudents } from "../../../services/api/StudentAPI";
+import { getStudentsByClassId } from "../../../services/api/StudentAPI";
+import { clearUser } from "../../../services/auth/authService";
+import { useAuth } from "../../../services/providers/AuthContext";
 
+const defaultStudentImage = "https://via.placeholder.com/100";
 
 const StudentList = () => {
-  const { className } = useParams();
+  const { classId } = useParams();
+  const location = useLocation();
   const [students, setStudents] = useState([]);
-
+  const className = location.state?.className || "Unknown";
+  const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchStudents = async () => {
       try {
-        // Giả sử getStudents nhận className để lấy danh sách học sinh lớp đó
-        const studentData = await getStudents(className);
-        console.log("Student data:", studentData);
-        setStudents(studentData);
+        const studentList = await getStudentsByClassId(classId);
+        setStudents(studentList);
       } catch (error) {
-        console.log("Error fetching students:", error);
+        console.error("Lỗi khi lấy danh sách học sinh:", error);
+        setStudents([]);
       }
     };
 
+    fetchStudents();
+  }, [classId]);
 
-    fetchData();
-  }, [className]);
+  const handleMovePage = (student) => {
+    try {
+      console.log("Test");
+      // Lấy thông tin giáo viên hiện tại
+      const userData = localStorage.getItem("user");
+      if (!userData) {
+        console.error("Không tìm thấy dữ liệu người dùng trong localStorage");
+        return;
+      }
 
+      const user = JSON.parse(userData);
+      console.log('test teacher', user );
+      // Lưu toàn bộ thông tin giáo viên
+      localStorage.setItem(
+        "teacherData",
+        JSON.stringify({
+          user_id: user.user_id,
+          name: user.username || user.name,
+          role: "teacher",
+          token: user.token,
+        })
+      );
+
+      // Xóa user hiện tại (giáo viên) và chuyển sang học sinh
+      clearUser();
+      const studentData = {
+        user_id: student.id,
+        name: student.name,
+        role: "student",
+      };
+      setUser(studentData);
+      localStorage.setItem("user", JSON.stringify(studentData));
+
+      // Điều hướng đến trang portfolio của học sinh
+      navigate("/semester-goals", {
+        state: {
+          isTeacherViewing: true,
+          classId: classId,
+          className: className,
+          from: `/classes/${classId}/students`,
+        },
+      });
+    } catch (error) {
+      console.error("Lỗi khi chuyển sang chế độ xem học sinh:", error);
+    }
+  };
 
   return (
-    <>
-      <div className="student-list-container">
-        <h2 className="class-title">{className}</h2>
-        <div className="student-grid">
-          {students && students.length > 0 ? (
-            students.map((student, index) => (
-              <div className="student-card" key={index}>
-                <div className="student-box">
-                  <img
-                    src={
-                      student.image ||
-                      "https://cdn-icons-png.flaticon.com/512/6997/6997662.png"
-                    }
-                    alt="avatar"
-                    className="avatar"
-                  />
+    <div className="student-list-container">
+      <div className="student-list-header">
+  <Link to="/dashboard" className="back-link">
+    ⬅ Back hahahhah
+  </Link>
+  <h3 className="class-title">
+    List of students in class: {className}
+  </h3>
+</div>
 
-
-                  <p className="student-name">{student.name || student}</p>
-                  <button className="portfolio-button">View Portfolio</button>
-                </div>
+      <div className="student-grid">
+        {Array.isArray(students) && students.length > 0 ? (
+          students.map((student) => (
+            <div className="student-card" key={student.id}>
+              <div className="student-box">
+                <img
+                  src={student.image || defaultStudentImage}
+                  alt="avatar"
+                  className="avatar"
+                />
+                <p className="student-name">{student.name}</p>
+                <button
+                  className="portfolio-btn"
+                  onClick={() => handleMovePage(student)}
+                >
+                  View Portfolio kjk
+                </button>
               </div>
-            ))
-          ) : (
-            <p>No students found.</p>
-          )}
-        </div>
-        <Link to="/" className="back-link">
-          ⬅ Back
-        </Link>
+            </div>
+          ))
+        ) : (
+          <p>Student not found.</p>
+        )}
       </div>
-    </>
+      {/* <Link to="/dashboard" className="back-link">
+        ⬅ Back
+      </Link> */}
+    </div>
   );
 };
 
-
 export default StudentList;
-
-

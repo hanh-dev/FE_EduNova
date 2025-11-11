@@ -5,14 +5,16 @@ import { Outlet } from 'react-router-dom';
 import StudentMessage from '../components/shared/StudentMessage/StudentMessage';
 import { useEffect, useState } from 'react';
 import { getNotificationsByUser } from '../services/api/StudentAPI';
-import echo from '../utils/echo';
+import { getUser } from '../services/auth/authService';
 const StudentLayout = () => {
   const [notificationsList, setNotifications] = useState([]);
   const [totalUnread, setTotalUnread] = useState(0);
+  const user = getUser();
+  const user_id = user.user_id;
 
   useEffect(() => {
     const fetchNotifications = async () => {
-      const response = await getNotificationsByUser();
+      const response = await getNotificationsByUser(user_id);
       const formatted = response.map((noti) => ({
         ...noti,
         isUnread: noti.pivot?.is_read === 0,

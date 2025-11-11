@@ -1,4 +1,4 @@
-.your-goal-big{
+/* .your-goal-big{
   margin-left: 232px;
    display: flex;
   flex-direction: column;
@@ -183,4 +183,228 @@ input[type="checkbox"].custom-checkbox:checked::after {
 
 .noti-card-header span {
   color: #22bbea;
+} */
+
+.your-goal-big {
+  margin-left: 232px;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;  
+  padding: 0px 20px;
+}
+
+.your-goal-big .noti-header {
+  color: #ff9933;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.back-button {
+  padding: 8px 16px;
+  background-color: #ccc;
+  color: #333;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.back-button:hover {
+  background-color: #bbb;
+}
+
+.goal-header {
+  display: flex;
+  justify-content: center;
+}
+
+.table-your-goal {
+  margin-right: 2%;
+  border-collapse: collapse; 
+}
+
+.table-goal thead th {
+  background-color: #ff9933;
+  color: #fff;
+  padding: 10px;
+  border-right: 1px solid #ccc;
+  font-size: 17px;
+}
+
+.table-goal thead th:last-child {
+  border-right: none;
+}
+
+.table-your-goal th:first-child {
+  border-top-left-radius: 10px;
+}
+
+.table-your-goal th:last-child {
+  border-top-right-radius: 10px;
+}
+
+.table-your-goal {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.table-your-goal tbody td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  word-wrap: break-word;
+  text-align: center;
+  max-width: 200px;
+  white-space: normal;
+}
+
+.add-goal-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+}
+
+tr {
+  border-radius: 10px !important;
+}
+
+.icon_add {
+  width: 24px;
+  height: 24px;
+  margin-bottom: 40px;
+}
+
+.table-your-goal thead {
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+}
+
+.goal-header {
+  display: flex;
+  align-items: center;        
+  justify-content: center;   
+  position: relative;
+  padding: 10px 40px;
+  margin-bottom: 40px;
+}
+
+.goal-header h2 {
+  margin: 0;
+  flex: 1;                    
+  text-align: center;
+  font-size: 30px;
+}
+
+.icon_add {
+  width: 30px;
+  height: 30px;
+  cursor: pointer;
+  position: absolute;
+  right: 0px;
+  top: 50%;
+  transform: translateY(-40%);
+  display: flex;
+}
+
+.goal {
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  gap: 20px;
+}
+
+.goal:hover {
+  cursor: pointer;
+}
+
+.goal + .goal {
+  margin-left: 10px;
+}
+
+.goal.delete {
+  color: #f57c00;
+}
+
+.goal.message {
+  color: #22bbea;
+}
+
+.highlighted-comment {
+  background-color: #e6f3ff;
+  border-color: #22bbea;
+}
+
+.highlighted-goal {
+  background-color: #e6f3ff;
+}
+
+.goal i {
+  background-color: #fff;
+}
+
+input[type="checkbox"].custom-checkbox {
+  width: 18px;
+  height: 18px;
+  appearance: none;
+  border: 2px solid #ccc;
+  border-radius: 3px;
+  cursor: pointer;
+  position: relative;
+}
+
+input[type="checkbox"].custom-checkbox:checked {
+  background-color: #4CAF50;
+  border-color: #4CAF50;
+}
+
+input[type="checkbox"].custom-checkbox:checked::after {
+  content: "✓";
+  color: white;
+  font-size: 14px;
+  position: absolute;
+  top: -2px;
+  left: 3px;
+}
+
+.goal-header .icon_add {
+  display: none;
+  font-size: 20px;
+  transition: opacity 0.3s ease;
+}
+
+.table-goal:hover .goal-header .icon_add {
+  display: inline-block;
+}
+
+.goal-header {
+  text-align: center;
+  margin-top: 10px;
+}
+.table-your-goal th,
+.table-your-goal td {
+  max-width: 120px;
+  word-wrap: break-word;
+  text-align: center;
+}
+
+.table-your-goal input,
+.table-your-goal textarea,
+.table-your-goal select {
+  max-width: 100px;
+  width: 100%;
+  font-size: 14px;
+}
+
+.noti-card-header span {
+  color: #22bbea;
+}
+
+.badge {
+  background-color: red;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 6px;
+  margin-left: 5px;
 }

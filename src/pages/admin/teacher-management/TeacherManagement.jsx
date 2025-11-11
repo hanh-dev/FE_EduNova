@@ -29,9 +29,8 @@ function TeacherManagement() {
         const response = await getClasses();
         console.log('Class Data:', response); 
         setClassData(response);
-        setTeachers(data);
-        console.log('Teachers:', data.map(t => t.id));
-        console.log('Class teacher_ids:', response.map(c => c.teacher_id));
+        console.log("Test teacher data teacher management: ", data);
+        setTeachers(Array.isArray(data.data) ? data.data : []);
       } catch (error) {
         console.error('Failed to fetch teachers:', error);
       } finally {

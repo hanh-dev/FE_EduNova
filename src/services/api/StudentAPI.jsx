@@ -30,7 +30,8 @@ export const getClasses = async () => {
 export const getNameOfTeachers = async () => {
   try {
     const response = await api.get("/v1/teachers");
-    return response.data.name;
+    console.log("Test teacher namess: ", response.data.data);
+    return response.data;
   } catch (error) {
     console.error("Error at fetching teacher data", error);
     return [];
@@ -40,7 +41,7 @@ export const getNameOfTeachers = async () => {
 export const getTeachers = async () => {
   try {
     const response = await api.get("/v1/teachers");
-    console.log("Test teachers: ", response.data);
+    console.log("Test teachers data: ", response.data);
     return response.data;
   } catch (error) {
     console.log("Failed to fetch teachers", error);
@@ -54,6 +55,18 @@ export const getStudents = async () => {
     return response.data.data;
   } catch (error) {
     console.log("Failed to fetch students", error);
+    throw error;
+  }
+};
+
+export const getStudentsByClassId = async (classId) => {
+  try {
+    console.log("Test class id: ", classId);
+    const response = await api.get(`/class-user/${classId}/students`);
+    console.log("Test response hhh: from", response.data.data);
+    return response.data.data;
+  } catch (error) {
+    console.error('Failed to fetch students by class:', error);
     throw error;
   }
 };
@@ -536,6 +549,107 @@ export const getTotals = async () => {
 // =========================
 // 🔔 Tag Teacher
 // =========================
+// export const sendTagTeacher = async (user_id, teacherId, message, goalId) => {
+//   try {
+//     console.log("Test data", user_id, teacherId, message, goalId);
+//     const payload = { teacherId, message, user_id, goalId };
+//     const response = await api.post('/tag-teacher', payload);
+//     return response.data;
+//   } catch (error) {
+//     handleApiError(error);
+//     throw error;
+//   }
+// };
+
+// export const getTagTeacherByGoal = async (goalId, teacherId) => {
+//   try {
+//     const response = await api.get(`/tag-teacher/goal/${goalId}`, {
+//       params: { teacherId },
+//     });
+//     if (!response.data.success) {
+//       throw new Error(response.data.error || "No question found");
+//     }
+//     return response.data.data;
+//   } catch (error) {
+//     handleApiError(error);
+//     throw error;
+//   }
+// };
+
+// export const sendTeacherResponse = async (tagId, teacherResponse) => {
+//   try {
+//     const response = await api.post(`/tag-teacher/response`, {
+//       tagId,
+//       teacher_response: teacherResponse,
+//     });
+//     if (!response.data.success) {
+//       throw new Error(response.data.error || "Failed to send response");
+//     }
+//     return response.data;
+//   } catch (error) {
+//     handleApiError(error);
+//     throw error;
+//   }
+// };
+
+// export const getStudentResponses = async (studentId) => {
+//   try {
+//     const response = await api.get('/tag-teacher/student', {
+//       params: { studentId },
+//     });
+//     if (!response.data.success) {
+//       throw new Error(response.data.error || "Could not retrieve response list");
+//     }
+//     return response.data.data;
+//   } catch (error) {
+//     handleApiError(error);
+//     throw error;
+//   }
+// };
+
+// export const markResponseAsRead = async (tagId) => {
+//   try {
+//     const response = await api.post('/tag-teacher/mark-read', { tagId });
+//     if (!response.data.success) {
+//       throw new Error(response.data.error || "Could not mark as read");
+//     }
+//     return response.data.data;
+//   } catch (error) {
+//     handleApiError(error);
+//     throw error;
+//   }
+// };
+
+// export const getNotificationsByUser = async () => {
+//   try {
+//     const user = getUser();
+//     const userId = user.user_id;
+//     const response = await api.get(`/v1/announcement/user/${userId}`);
+//     console.log("Test response: ", response);
+//     return response.data.data;
+//   } catch (error) {
+//     handleApiError(error);
+//     throw error;
+//   }
+// };
+
+// export const markAsRead = async (announcementId) => {
+//   try {
+//     const user = getUser();
+//     const user_id = user.user_id;
+//     const response = await api.post('/v1/announcement/markAsRead', {
+//       announcement_id: announcementId,
+//       user_id: user_id,
+//     });
+
+//     if (response.data.status) {
+//       console.log('Đã đánh dấu là đã đọc!');
+//     }
+//   } catch (error) {
+//     console.error('Lỗi khi đánh dấu đã đọc:', error);
+//   }
+// };
+
 export const sendTagTeacher = async (user_id, teacherId, message, goalId) => {
   try {
     console.log("Test data", user_id, teacherId, message, goalId);
@@ -550,6 +664,7 @@ export const sendTagTeacher = async (user_id, teacherId, message, goalId) => {
 
 export const getTagTeacherByGoal = async (goalId, teacherId) => {
   try {
+    console.log('Test teacher id: ', teacherId, 'goal id', goalId);
     const response = await api.get(`/tag-teacher/goal/${goalId}`, {
       params: { teacherId },
     });
@@ -581,6 +696,10 @@ export const sendTeacherResponse = async (tagId, teacherResponse) => {
 
 export const getStudentResponses = async (studentId) => {
   try {
+    if (!studentId) {
+      throw new Error("Student ID is required");
+    }
+    console.log("Fetching responses for studentId:", studentId);
     const response = await api.get('/tag-teacher/student', {
       params: { studentId },
     });
@@ -607,10 +726,8 @@ export const markResponseAsRead = async (tagId) => {
   }
 };
 
-export const getNotificationsByUser = async () => {
+export const getNotificationsByUser = async (userId) => {
   try {
-    const user = getUser();
-    const userId = user.user_id;
     const response = await api.get(`/v1/announcement/user/${userId}`);
     console.log("Test response: ", response);
     return response.data.data;
@@ -620,23 +737,20 @@ export const getNotificationsByUser = async () => {
   }
 };
 
-export const markAsRead = async (announcementId) => {
+export const markAsRead = async (announcementId, userId) => {
   try {
-    const user = getUser();
-    const user_id = user.user_id;
     const response = await api.post('/v1/announcement/markAsRead', {
       announcement_id: announcementId,
-      user_id: user_id,
+      user_id: userId,
     });
-
     if (response.data.status) {
       console.log('Đã đánh dấu là đã đọc!');
     }
   } catch (error) {
     console.error('Lỗi khi đánh dấu đã đọc:', error);
+    throw error;
   }
 };
-
 
 export const getWeekGoalById = async (id) => {
   try {

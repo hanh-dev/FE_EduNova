@@ -1,21 +1,18 @@
-.student-list-container {
-    padding: 40px;
-    font-family: 'Segoe UI', sans-serif;
-    margin-left: 300px;
-}
 
-.class-title {
-    font-size: 40px;
-    margin-bottom: 40px;
-    margin-right: 80px;
-    color: #2c3e50;
-    text-align: center;
+ .student-list-container {
+     position: relative;
+  padding: 40px;
+   margin-bottom: 30px;
+  height: 60px; 
+  font-family: 'Segoe UI', sans-serif;
+  margin-left: 210px; 
+  width: calc(100% - 215px); 
 }
 
 .student-grid {
     display: flex;
     flex-wrap: wrap;
-    gap: 45px;
+    gap: 80px;
 }
 
 .student-card {
@@ -29,7 +26,7 @@
     padding: 40px 30px;
     box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.1);
     background-color: #fff;
-    width: 280px;
+    width: 300px;
     transition: transform 0.3s ease;
 }
 
@@ -68,11 +65,32 @@
     color: white;
 }
 
+.student-list-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: calc(96% - 215px); /* giống phần header */
+  margin-left: 250px; /* né sidebar */
+  margin-bottom: 30px;
+}
+
 .back-link {
-    margin-top: 50px;
-    display: inline-block;
-    text-decoration: none;
-    color: #2980b9;
-    font-weight: bold;
-    font-size: 18px;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 18px;
+  text-decoration: none;
+  color: #2980b9;
+  font-weight: bold;
+  padding-left: 40px;
+}
+
+.class-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: bold;
+  margin-left: 60px;
+  color: #2c3e50;
+  line-height: 60px; 
 }
