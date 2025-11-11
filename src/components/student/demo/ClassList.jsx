@@ -39,7 +39,7 @@ const ClassList = () => {
 
   return (
     <div className="class-container1">
-      <h2>All Classes</h2>
+      <h2>All Classes sdfsd</h2>
       <div className="class-grid1">
         {classes.map((classItem) => (
           <div key={classItem.name} className="class-card1">

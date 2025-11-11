@@ -92,7 +92,7 @@
     object-fit: cover; 
 }
 
-.student-name {
+.student-name-2 {
     font-weight: 600;
 }
 
@@ -194,7 +194,7 @@
     overflow: hidden;
 }
 
-.student-name {
+.student-name-2 {
     font-weight: 600;
     white-space: nowrap;
     text-overflow: ellipsis;

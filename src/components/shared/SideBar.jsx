@@ -3,6 +3,7 @@ import { sidebarItems, sidebarItemsAdmin, sidebarItemsTeacher } from '../../asse
 import { handleLogout } from '../../utils/swal';
 import { useAuth } from '../../services/providers/AuthContext';
 import { GraduationCap } from 'lucide-react';
+import './sidebar.css'; 
 const Sidebar = () => {
   const {user} = useAuth();
   const itemsToRender = user?.role === 'admin'

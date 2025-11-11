@@ -145,7 +145,7 @@ const AdminMessage = () => {
                                             onError={(e) => handleImageError(e, 'https://i.pravatar.cc/40?img=12')}
                                         />
                                         <div>
-                                            <p className="student-name">{users[studentId]?.name || `Sinh viên ${studentId}`}</p>
+                                            <p className="student-name-2">{users[studentId]?.name || `Sinh viên ${studentId}`}</p>
                                         </div>
                                     </div>
                                 ))
@@ -202,7 +202,7 @@ const AdminMessage = () => {
                                 </>
                             ) : (
                                 <div className="no-student-selected">
-                                    <p className="empty-message">Chọn sinh viên để bắt đầu.</p>
+                                    <p className="empty-message">Choose a student to start conversation.</p>
                                 </div>
                             )}
                         </div>

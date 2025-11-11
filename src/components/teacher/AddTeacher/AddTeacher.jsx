@@ -53,7 +53,7 @@ const AddTeacher = ({ setStudents, userToEdit, setAddForm, setUpdateForm }) => {
 
       if (result.status == true) {
         const updatedUsers = await getTeachers();
-        setStudents(updatedUsers);
+        setStudents(updatedUsers.data || []);
         handleCloseForm();
         toast.success(`${userToEdit ? 'Teacher updated' : 'Teacher created'} successfully!`, { autoClose: 1500 });
       } else {

@@ -3,7 +3,6 @@ import { getToken } from "../services/auth/authService";
 
 const API_BASE_URL = 'http://localhost:8000/api';
 
-// Tạo instance của axios
 const api = axios.create({
     baseURL: API_BASE_URL,
     headers: {
@@ -11,7 +10,6 @@ const api = axios.create({
     }
 })
 
-// Gắn token nếu có
 api.interceptors.request.use((config) => {
   const token = getToken();
   console.log("Token:", token);
@@ -21,7 +19,6 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-// Hằng số định nghĩa
 const USER_ROLES = {
   ADMIN: 'admin',
   TEACHER: 'teacher',

@@ -5,7 +5,6 @@
     padding: 20px;
     gap: 50px;
     height: 100%;
-    
   }
   
   .progress-item {
@@ -35,8 +34,8 @@
 }
 
 .progress-item {
-  width: 45%;  /* Set width for each progress item */
-  text-align: center;  /* Center the text */
+  width: 50%;  
+  text-align: center; 
 }
 
 .error-message {
@@ -49,7 +48,6 @@ h3 {
   margin-top: 10px;
 }
 
-
 .progress-items-container {
   display: flex;
   flex-direction: row; 
@@ -58,3 +56,9 @@ h3 {
   gap: 100px;
 }
 
+.semester-dropdown {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #00aaff;
+  border-radius: 5px;
+}
